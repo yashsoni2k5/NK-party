@@ -25,9 +25,13 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (mobile, password) => {
-    const res = await api.post('/users/login', { mobile, password });
-    localStorage.setItem('token', res.data.token);
-    setUser(res.data.user);
+    try {
+      const res = await api.post('/users/login', { mobile, password });
+      localStorage.setItem('token', res.data.token);
+      setUser(res.data.user);
+    } catch (error) {
+      throw new Error(error.response?.data?.message || error.message);
+    }
   };
 
   const register = async (name, mobile, email, password) => {
