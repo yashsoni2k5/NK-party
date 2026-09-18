@@ -13,7 +13,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(name, email, password, mobile);
+      await register(name, mobile, email, password);
       alert("Registered successfully! Please login.");
       navigate('/login');
     } catch (error) {

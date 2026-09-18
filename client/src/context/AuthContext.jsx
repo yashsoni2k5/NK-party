@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       // Log them in immediately after register
       await login(mobile, password);
     } catch (error) {
-      throw error.response?.data?.message || error.message;
+      throw new Error(error.response?.data?.message || error.message);
     }
   };
 
