@@ -23,10 +23,12 @@ const app = express();
 
 connectToDatabase();
 
+const frontendOrigin = process.env.FRONTEND_URL || process.env.hosts || "*";
+
 app.use(
   cors({
-    origin: [hosts],
-    methods: ["GET", "POST", `PUT`, `PATCH`, `DELETE`],
+    origin: frontendOrigin === "*" ? "*" : frontendOrigin.split(","),
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
 );
