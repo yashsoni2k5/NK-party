@@ -9,7 +9,8 @@ export default function AdminAddProduct() {
     tag: '',
     image: '',
     price: '',
-    stock: ''
+    stock: '',
+    itemType: 'product' // default
   });
   const navigate = useNavigate();
 
@@ -24,10 +25,10 @@ export default function AdminAddProduct() {
       };
       
       await api.post('/products', payload);
-      alert('Product created successfully!');
+      alert(`${productData.itemType === 'service' ? 'Service' : 'Product'} created successfully!`);
       navigate('/admin');
     } catch (error) {
-      alert(error.message);
+      alert(error.response?.data?.message || error.message);
     }
   };
 
@@ -36,17 +37,42 @@ export default function AdminAddProduct() {
   };
 
   return (
-    <div>
-      <h1>Add New Product (Admin)</h1>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '400px' }}>
-        <input name="title" placeholder="Title" value={productData.title} onChange={handleChange} required />
-        <input name="category" placeholder="Category" value={productData.category} onChange={handleChange} required />
-        <input name="tag" placeholder="Tags (comma separated)" value={productData.tag} onChange={handleChange} required />
-        <input name="image" placeholder="Image URL" value={productData.image} onChange={handleChange} required />
-        <input name="price" type="number" placeholder="Price" value={productData.price} onChange={handleChange} required />
-        <input name="stock" type="number" placeholder="Stock" value={productData.stock} onChange={handleChange} required />
+    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '2rem' }}>
+      <h1 style={{ marginBottom: '2rem' }}>Add New Item (Product/Service)</h1>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         
-        <button type="submit" style={{ padding: '0.5rem', background: '#333', color: 'white' }}>Create Product</button>
+        <label style={{ fontWeight: 'bold' }}>Item Type</label>
+        <select 
+          name="itemType" 
+          value={productData.itemType} 
+          onChange={handleChange} 
+          style={{ padding: '0.8rem', borderRadius: '4px', border: '1px solid #ccc' }}
+        >
+          <option value="product">Physical Product</option>
+          <option value="service">Service (e.g., Party Decoration)</option>
+        </select>
+
+        <label style={{ fontWeight: 'bold' }}>Title</label>
+        <input name="title" placeholder="e.g., Wireless Mouse" value={productData.title} onChange={handleChange} required style={{ padding: '0.8rem', borderRadius: '4px', border: '1px solid #ccc' }} />
+        
+        <label style={{ fontWeight: 'bold' }}>Category</label>
+        <input name="category" placeholder="e.g., Electronics" value={productData.category} onChange={handleChange} required style={{ padding: '0.8rem', borderRadius: '4px', border: '1px solid #ccc' }} />
+        
+        <label style={{ fontWeight: 'bold' }}>Tags</label>
+        <input name="tag" placeholder="e.g., tech, gadgets, new (comma separated)" value={productData.tag} onChange={handleChange} required style={{ padding: '0.8rem', borderRadius: '4px', border: '1px solid #ccc' }} />
+        
+        <label style={{ fontWeight: 'bold' }}>Image URL</label>
+        <input name="image" placeholder="https://example.com/image.jpg" value={productData.image} onChange={handleChange} required style={{ padding: '0.8rem', borderRadius: '4px', border: '1px solid #ccc' }} />
+        
+        <label style={{ fontWeight: 'bold' }}>Price (₹)</label>
+        <input name="price" type="number" placeholder="999" value={productData.price} onChange={handleChange} required style={{ padding: '0.8rem', borderRadius: '4px', border: '1px solid #ccc' }} />
+        
+        <label style={{ fontWeight: 'bold' }}>Stock (Use 999+ for unlimited services)</label>
+        <input name="stock" type="number" placeholder="50" value={productData.stock} onChange={handleChange} required style={{ padding: '0.8rem', borderRadius: '4px', border: '1px solid #ccc' }} />
+        
+        <button type="submit" style={{ padding: '1rem', background: '#000', color: 'white', marginTop: '1rem', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '1.1rem', fontWeight: 'bold' }}>
+          Create {productData.itemType === 'service' ? 'Service' : 'Product'}
+        </button>
       </form>
     </div>
   );

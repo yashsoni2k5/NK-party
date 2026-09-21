@@ -27,14 +27,27 @@ const UserServices = {
 
   registerUserService: async (registrationDetails) => {
     try {
-      const { mobile, email, password } = registrationDetails;
-      if (!password) {
-        throw new HttpException(400, "Please provide a password");
+      const { mobile, email, password, name } = registrationDetails;
+      
+      if (!name || name.trim().length === 0) {
+        throw new HttpException(400, "Please provide a valid name");
+      }
+
+      if (!mobile || !/^[6-9]\d{9}$/.test(mobile)) {
+        throw new HttpException(400, "Please provide a valid 10-digit Indian mobile number");
+      }
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        throw new HttpException(400, "Please provide a valid email address");
+      }
+
+      if (!password || password.length < 6) {
+        throw new HttpException(400, "Password must be at least 6 characters long");
       }
 
       const existingUser = await UserModel.findOne({ $or: [{ mobile }, { email }] });
       if (existingUser) {
-        throw new HttpException(404, "User already registered please login");
+        throw new HttpException(409, "User already registered, please login");
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -66,12 +79,16 @@ const UserServices = {
     try {
       const { mobile, password } = loginDetails;
       if (!mobile || !password) {
-        throw new HttpException(404, "Please provide mobile number and password");
+        throw new HttpException(400, "Please provide mobile number and password");
+      }
+
+      if (!/^[6-9]\d{9}$/.test(mobile)) {
+        throw new HttpException(400, "Please provide a valid 10-digit mobile number");
       }
 
       const user = await UserModel.findOne({ mobile });
       if (!user) {
-        throw new HttpException(404, "No registered user found please sign up");
+        throw new HttpException(401, "Invalid mobile number or password");
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -111,6 +128,15 @@ const UserServices = {
     } catch (error) {
       if (error instanceof HttpException) throw error;
       throw new HttpException(500, "Error updating current user");
+    }
+  },
+
+  getAllUsersService: async () => {
+    try {
+      const users = await UserModel.find().select("-password").sort({ createdAt: -1 });
+      return users;
+    } catch (error) {
+      throw new HttpException(500, "Error fetching all users");
     }
   },
 };

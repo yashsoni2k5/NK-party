@@ -50,6 +50,15 @@ const UserController = {
     }
   },
 
+  getAllUsers: async (req, res, next) => {
+    try {
+      const users = await UserServices.getAllUsersService();
+      res.status(200).send(users);
+    } catch (error) {
+      next(error);
+    }
+  },
+
 };
 
 module.exports = UserController;

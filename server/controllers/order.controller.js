@@ -55,6 +55,16 @@ const OrderController = {
       next(error);
     }
   },
+  cancelOrder: async (req, res, next) => {
+    const orderId = req.params.orderId;
+    const userId = req.body.user;
+    try {
+      const order = await OrderServices.cancelOrderService(orderId, userId);
+      res.status(200).send(order);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = OrderController;

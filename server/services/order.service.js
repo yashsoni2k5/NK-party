@@ -43,6 +43,10 @@ const OrderServices = {
         data.total = calculatedTotal;
       }
 
+      if (!data.total || data.total < 500) {
+        throw new HttpException(400, "Minimum order value is ₹500. Please add more products to continue.");
+      }
+
       const order = new OrderModel({ ...data, user: userId });
       await order.save();
       return order;
@@ -125,12 +129,41 @@ const OrderServices = {
         .populate("products.product")
         .populate("deliveryAddress");
 
+      if (changes.status === "SHIPPED") {
+        try {
+          const DeliveryServices = require("./delivery.service");
+          await DeliveryServices.dispatchOrder(order);
+        } catch (dispatchError) {
+          console.error("Failed to dispatch delivery:", dispatchError);
+        }
+      }
+
       return order;
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
       } else {
         throw new HttpException(500, "Error updating order details");
+      }
+    }
+  },
+  cancelOrderService: async (orderId, userId) => {
+    try {
+      const order = await OrderModel.findOne({ _id: orderId, user: userId });
+      if (!order) {
+        throw new HttpException(404, "Order not found");
+      }
+      if (order.status !== "PENDING" && order.status !== "PROCESSING") {
+        throw new HttpException(400, "Order cannot be cancelled at this stage");
+      }
+      order.status = "CANCELLED";
+      await order.save();
+      return order;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new HttpException(500, "Error cancelling order");
       }
     }
   },

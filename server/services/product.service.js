@@ -23,7 +23,8 @@ const ProductServices = {
     perPage = 15,
     category,
     tag,
-    sort
+    sort,
+    itemType
   ) => {
     const query = {};
     if (category) {
@@ -32,6 +33,10 @@ const ProductServices = {
 
     if (tag) {
       query.tag = { $in: tag };
+    }
+    
+    if (itemType) {
+      query.itemType = itemType;
     }
     try {
       const totalProducts = await ProductModel.countDocuments(query);
@@ -180,6 +185,42 @@ const ProductServices = {
       }
     }
   },
+  addReviewService: async (productId, userId, rating, comment) => {
+    try {
+      const product = await ProductModel.findById(productId);
+      if (!product) {
+        throw new HttpException(404, "Product not found");
+      }
+
+      const alreadyReviewed = product.reviews.find(
+        (r) => r.user.toString() === userId.toString()
+      );
+
+      if (alreadyReviewed) {
+        throw new HttpException(400, "You have already reviewed this product");
+      }
+
+      const review = {
+        user: userId,
+        rating: Number(rating),
+        comment,
+      };
+
+      product.reviews.push(review);
+
+      product.averageRating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.reviews.length;
+
+      await product.save();
+      return product;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new HttpException(500, "Error adding review");
+    }
+  }
 };
 
 module.exports = ProductServices;

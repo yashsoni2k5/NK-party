@@ -9,6 +9,7 @@ router.get("/all", EnsureAdmin, OrderController.getAllOrders);
 router.get("/", EnsureAuth, OrderController.getUserOrders);
 router.get("/:orderId", EnsureAuth, OrderController.getOrdersById);
 router.post("/", EnsureAuth, OrderController.createOrder);
+router.patch("/:orderId/cancel", EnsureAuth, OrderController.cancelOrder);
 router.patch("/:orderId", EnsureAdmin, OrderController.updateOrderById);
 
 module.exports = { path, router };

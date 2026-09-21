@@ -11,4 +11,7 @@ router.get("/user-details/:userId", EnsureAuth, UserController.getUser);
 router.get("/me", EnsureAuth, UserController.getCurrentOnlineUser);
 router.patch("/me", EnsureAuth, UserController.updateCurrentOnlineUser);
 
+const EnsureAdmin = require("../middlewares/AdminAuth.middleware");
+router.get("/all", EnsureAdmin, UserController.getAllUsers);
+
 module.exports = { path, router };

@@ -56,6 +56,7 @@ const ProductController = {
     const category = req.query.category;
     const tag = req.query.tag || "";
     const sort = req.query.sort || "";
+    const itemType = req.query.itemType || "";
 
     try {
       const result = await ProductServices.getAllProductsService(
@@ -63,7 +64,8 @@ const ProductController = {
         perPage,
         category,
         tag,
-        sort
+        sort,
+        itemType
       );
       res.status(200).send(result);
     } catch (error) {
@@ -83,6 +85,17 @@ const ProductController = {
     try {
       const products = await ProductServices.getSearchResultService(text);
       res.status(200).send(products);
+    } catch (error) {
+      next(error);
+    }
+  },
+  addReview: async (req, res, next) => {
+    const productId = req.params.productId;
+    const userId = req.body.user;
+    const { rating, comment } = req.body;
+    try {
+      const product = await ProductServices.addReviewService(productId, userId, rating, comment);
+      res.status(200).send(product);
     } catch (error) {
       next(error);
     }

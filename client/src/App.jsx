@@ -12,6 +12,11 @@ import Profile from './pages/Profile';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminAddProduct from './pages/AdminAddProduct';
 import AdminAllOrders from './pages/AdminAllOrders';
+import AdminReplacements from './pages/AdminReplacements';
+import AdminUsers from './pages/AdminUsers';
+import AdminBanners from './pages/AdminBanners';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
@@ -29,16 +34,20 @@ const AdminRoute = ({ children }) => {
   return children;
 };
 
+import SupportWidget from './components/SupportWidget';
+
 function AppRoutes() {
   return (
     <>
       <Navbar />
-      <div style={{ padding: '2rem' }}>
+      <div className="bg-[#003725] min-h-screen text-white">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           
           <Route path="/profile" element={
             <ProtectedRoute>
@@ -80,8 +89,24 @@ function AppRoutes() {
               <AdminAllOrders />
             </AdminRoute>
           } />
+          <Route path="/admin/replacements" element={
+            <AdminRoute>
+              <AdminReplacements />
+            </AdminRoute>
+          } />
+          <Route path="/admin/users" element={
+            <AdminRoute>
+              <AdminUsers />
+            </AdminRoute>
+          } />
+          <Route path="/admin/banners" element={
+            <AdminRoute>
+              <AdminBanners />
+            </AdminRoute>
+          } />
         </Routes>
       </div>
+      <SupportWidget />
     </>
   );
 }

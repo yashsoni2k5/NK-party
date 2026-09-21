@@ -12,5 +12,6 @@ router.delete("/:productId", EnsureAdmin, ProductController.deleteProduct);
 router.get("/", ProductController.getAllProducts);
 router.get("/home/random", ProductController.getRandomProducts);
 router.get("/search/:search", ProductController.getSearchResults);
+router.post("/:productId/review", EnsureAuth, ProductController.addReview);
 
 module.exports = { path, router };
