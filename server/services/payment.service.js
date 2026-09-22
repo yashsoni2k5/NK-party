@@ -1,4 +1,4 @@
-const Razorpay = require("Razorpay");
+const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const HttpException = require("../exceptions/HttpException");
 
