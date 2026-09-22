@@ -6,6 +6,8 @@ const path = "/users";
 
 router.post("/register", UserController.registerUser);
 router.post("/login", UserController.loginUser);
+router.post("/forgot-password", UserController.forgotPassword);
+router.post("/reset-password", UserController.resetPassword);
 router.get("/user-details/:userId", EnsureAuth, UserController.getUser);
 
 router.get("/me", EnsureAuth, UserController.getCurrentOnlineUser);

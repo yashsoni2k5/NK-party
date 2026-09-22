@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react';
 import api from '../api';
+import { Link } from 'react-router-dom';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Replacement State
-  const [replacingItem, setReplacingItem] = useState(null); // { orderId, productId }
-  const [replacementReason, setReplacementReason] = useState('');
-  const [replacementImage, setReplacementImage] = useState(null);
-  const [uploadingImage, setUploadingImage] = useState(false);
 
   const fetchOrders = () => {
     setLoading(true);
@@ -34,146 +29,126 @@ export default function Orders() {
     }
   };
 
-  const submitReplacement = async (e) => {
-    e.preventDefault();
-    if (!replacementImage) return alert("Please upload a picture of the damage.");
-    
-    setUploadingImage(true);
-    try {
-      // 1. Upload Image
-      const formData = new FormData();
-      formData.append('image', replacementImage);
-      
-      const uploadRes = await api.post('/upload', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
-      
-      const imageUrl = uploadRes.data.secure_url;
-      
-      // 2. Submit Replacement Request
-      await api.post('/replacements', {
-        orderId: replacingItem.orderId,
-        productId: replacingItem.productId,
-        reason: replacementReason,
-        damageImageUrl: imageUrl
-      });
-
-      alert("Replacement requested successfully!");
-      setReplacingItem(null);
-      setReplacementReason('');
-      setReplacementImage(null);
-      fetchOrders();
-
-    } catch (error) {
-      alert(error.response?.data?.message || "Failed to request replacement");
-    } finally {
-      setUploadingImage(false);
-    }
-  };
-
   const getStatusColor = (status) => {
     switch(status) {
-      case 'PENDING': return 'orange';
-      case 'PROCESSING': return 'blue';
-      case 'SHIPPED': return 'purple';
-      case 'DELIVERED': return 'green';
-      case 'CANCELLED': return 'red';
-      case 'REPLACEMENT_REQUESTED': return 'darkorange';
-      case 'REPLACED': return 'teal';
-      default: return 'gray';
+      case 'PENDING': return 'text-orange-400 bg-orange-400/10 border-orange-400/30';
+      case 'PROCESSING': return 'text-blue-400 bg-blue-400/10 border-blue-400/30';
+      case 'SHIPPED': return 'text-purple-400 bg-purple-400/10 border-purple-400/30';
+      case 'DELIVERED': return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30';
+      case 'CANCELLED': return 'text-red-400 bg-red-400/10 border-red-400/30';
+      case 'REPLACEMENT_REQUESTED': return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30';
+      case 'REPLACED': return 'text-teal-400 bg-teal-400/10 border-teal-400/30';
+      default: return 'text-gray-400 bg-gray-400/10 border-gray-400/30';
     }
   };
 
-  if (loading) return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading your orders...</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#003725] flex justify-center items-center text-[#E3BA63]">
+        <svg className="animate-spin h-10 w-10 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span className="font-bold text-lg text-[#FAF7F0]">Loading your orders...</span>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
-      <h1 style={{ marginBottom: '2rem' }}>Your Orders</h1>
-      {orders?.length === 0 && (
-        <div style={{ textAlign: 'center', padding: '3rem', border: '1px solid #eee', borderRadius: '8px' }}>
-          <p style={{ color: '#666' }}>You have not placed any orders yet.</p>
-        </div>
-      )}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        {orders?.map(order => (
-          <div key={order._id} style={{ border: '1px solid #e0e0e0', padding: '1.5rem', borderRadius: '8px', backgroundColor: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #eee', paddingBottom: '1rem', marginBottom: '1rem' }}>
-              <div>
-                <p style={{ margin: '0 0 0.5rem 0', color: '#666', fontSize: '0.9rem' }}>Order ID: {order._id}</p>
-                <h3 style={{ margin: 0, color: getStatusColor(order.status) }}>{order.status.replace(/_/g, ' ')}</h3>
+    <div className="min-h-screen bg-[#003725] text-[#FAF7F0] py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-[#FAF7F0] mb-8 flex items-center gap-3 pb-4 border-b border-[#E3BA63]/20">
+          <span className="bg-[#E3BA63]/15 text-[#E3BA63] p-2 rounded-2xl border border-[#E3BA63]/30 text-xl sm:text-2xl">📦</span>
+          Your Orders
+        </h1>
+        
+        {orders?.length === 0 && (
+          <div className="bg-[#011E15] border border-[#E3BA63]/30 p-12 rounded-3xl text-center shadow-xl">
+            <div className="text-6xl mb-4">🛍️</div>
+            <h2 className="text-2xl font-bold text-[#E3BA63] mb-2">No Orders Found</h2>
+            <p className="text-gray-400 mb-6">Looks like you haven't placed any orders yet.</p>
+            <Link to="/" className="bg-[#E3BA63] text-[#011E15] px-6 py-3 rounded-xl font-bold hover:bg-[#cda24d] transition-colors shadow-lg">
+              Start Shopping
+            </Link>
+          </div>
+        )}
+
+        <div className="flex flex-col gap-6">
+          {orders?.map(order => (
+            <div key={order._id} className="bg-[#011E15] border border-[#E3BA63]/30 rounded-2xl shadow-xl overflow-hidden hover:border-[#E3BA63]/60 transition-colors duration-300">
+              
+              {/* Order Header */}
+              <div className="p-5 sm:p-6 border-b border-[#E3BA63]/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-black/20">
+                <div>
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Order ID</p>
+                  <p className="text-[#FAF7F0] font-mono text-sm sm:text-base">{order._id}</p>
+                </div>
+                <div className="flex flex-col sm:items-end gap-2">
+                  <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border ${getStatusColor(order.status)}`}>
+                    {order.status.replace(/_/g, ' ')}
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-gray-400 uppercase tracking-wider">Total</p>
+                    <p className="text-[#E3BA63] font-extrabold text-lg">₹{order.total}</p>
+                  </div>
+                </div>
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <p style={{ margin: '0 0 0.5rem 0', color: '#666', fontSize: '0.9rem' }}>Total Amount</p>
-                <h3 style={{ margin: 0 }}>₹{order.total}</h3>
-              </div>
-            </div>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-              {order.products?.map((item, i) => (
-                <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    {item.product?.image && <img src={item.product.image} alt="product" style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }} />}
-                    <div style={{ flexGrow: 1 }}>
-                      <strong style={{ display: 'block' }}>{item.product?.title || 'Product Unavailable'}</strong>
-                      <span style={{ color: '#666', fontSize: '0.9rem' }}>Qty: {item.quantity} | Price at purchase: ₹{item.priceAtPurchase}</span>
+              
+              {/* Order Items */}
+              <div className="p-5 sm:p-6 flex flex-col gap-5">
+                {order.products?.map((item, i) => (
+                  <div key={i} className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <div className="w-20 h-20 bg-black/40 rounded-xl overflow-hidden border border-[#E3BA63]/20 flex-shrink-0 flex items-center justify-center">
+                      {item.product?.image ? (
+                        <img src={item.product.image} alt="product" className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-gray-500 text-xs">No image</span>
+                      )}
+                    </div>
+                    <div className="flex-grow">
+                      <strong className="block text-[#FAF7F0] font-bold text-base mb-1">{item.product?.title || 'Product Unavailable'}</strong>
+                      <div className="flex items-center gap-3 text-sm text-gray-400">
+                        <span>Qty: <span className="font-bold text-gray-300">{item.quantity}</span></span>
+                        <span>•</span>
+                        <span>Price: <span className="font-bold text-[#E3BA63]">₹{item.priceAtPurchase}</span></span>
+                      </div>
                     </div>
                     
                     {order.status === 'DELIVERED' && (
-                      <button 
-                        onClick={() => setReplacingItem({ orderId: order._id, productId: item.product._id })}
-                        style={{ padding: '0.4rem 0.8rem', background: '#e3f2fd', color: '#1976d2', border: '1px solid #bbdefb', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem' }}
+                      <a 
+                        href={`https://wa.me/919999999999?text=${encodeURIComponent(`Hi, I want to contact for return and replacement regarding Order ID: ${order._id} for product: ${item.product?.title || 'Unknown Product'}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-[#25D366]/20 hover:bg-[#25D366] text-[#25D366] hover:text-white border border-[#25D366]/50 rounded-xl text-xs font-bold transition-all mt-3 sm:mt-0 shadow-lg"
                       >
-                        Replace Item
-                      </button>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.592 6.592-6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                        </svg>
+                        Contact for return
+                      </a>
                     )}
                   </div>
+                ))}
+              </div>
 
-                  {replacingItem?.orderId === order._id && replacingItem?.productId === item.product._id && (
-                    <div style={{ background: '#f9f9f9', padding: '1rem', borderRadius: '8px', border: '1px solid #eee', marginTop: '0.5rem' }}>
-                      <h4 style={{ margin: '0 0 1rem 0' }}>Request Replacement</h4>
-                      <form onSubmit={submitReplacement} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <textarea 
-                          placeholder="Please describe the damage or issue..."
-                          value={replacementReason}
-                          onChange={(e) => setReplacementReason(e.target.value)}
-                          required
-                          style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc', minHeight: '60px', fontFamily: 'inherit' }}
-                        />
-                        <div>
-                          <label style={{ display: 'block', fontSize: '0.9rem', marginBottom: '0.5rem', color: '#555' }}>Upload Image Proof:</label>
-                          <input type="file" accept="image/*" onChange={(e) => setReplacementImage(e.target.files[0])} required />
-                        </div>
-                        <div style={{ display: 'flex', gap: '1rem' }}>
-                          <button type="submit" disabled={uploadingImage} style={{ padding: '0.5rem 1rem', background: 'black', color: 'white', border: 'none', borderRadius: '4px', cursor: uploadingImage ? 'not-allowed' : 'pointer' }}>
-                            {uploadingImage ? 'Uploading & Submitting...' : 'Submit Request'}
-                          </button>
-                          <button type="button" onClick={() => setReplacingItem(null)} style={{ padding: '0.5rem 1rem', background: 'white', color: 'black', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer' }}>
-                            Cancel
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  )}
-
+              {/* Order Footer */}
+              <div className="p-5 sm:p-6 border-t border-[#E3BA63]/20 bg-black/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div className="text-sm text-gray-400">
+                  <span className="font-semibold text-gray-300">Delivering to:</span> {order.deliveryAddress?.house_no}, {order.deliveryAddress?.city}
                 </div>
-              ))}
+                
+                {(order.status === 'PENDING' || order.status === 'PROCESSING') && (
+                  <button 
+                    onClick={() => handleCancelOrder(order._id)}
+                    className="px-5 py-2.5 bg-red-500/10 hover:bg-red-500 text-red-400 hover:text-white border border-red-500/30 rounded-xl font-bold transition-all text-sm w-full sm:w-auto"
+                  >
+                    Cancel Order
+                  </button>
+                )}
+              </div>
             </div>
-
-            <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>
-                Delivering to: {order.deliveryAddress?.house_no}, {order.deliveryAddress?.city}
-              </p>
-              {(order.status === 'PENDING' || order.status === 'PROCESSING') && (
-                <button 
-                  onClick={() => handleCancelOrder(order._id)}
-                  style={{ padding: '0.6rem 1rem', background: '#fff', color: '#c62828', border: '1px solid #c62828', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
-                >
-                  Cancel Order
-                </button>
-              )}
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

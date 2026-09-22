@@ -39,6 +39,17 @@ const BannerServices = {
       if (error instanceof HttpException) throw error;
       throw new HttpException(500, "Error deleting banner");
     }
+  },
+
+  updateBanner: async (id, updateData) => {
+    try {
+      const banner = await BannerModel.findByIdAndUpdate(id, updateData, { new: true });
+      if (!banner) throw new HttpException(404, "Banner not found");
+      return banner;
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(500, "Error updating banner");
+    }
   }
 };
 

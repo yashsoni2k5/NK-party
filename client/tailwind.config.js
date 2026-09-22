@@ -6,8 +6,14 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+      },
       colors: {
-        // We will add the custom colors here when the user provides them
+        primaryBg: '#003725',
+        secondaryBg: '#011E15',
+        accentGold: '#E3BA63',
+        bannerCream: '#FAF7F0',
       },
     },
   },

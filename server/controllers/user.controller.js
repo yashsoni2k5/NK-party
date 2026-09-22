@@ -59,6 +59,24 @@ const UserController = {
     }
   },
 
+  forgotPassword: async (req, res, next) => {
+    try {
+      const { identifier } = req.body;
+      const response = await UserServices.forgotPasswordService(identifier);
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  resetPassword: async (req, res, next) => {
+    try {
+      const response = await UserServices.resetPasswordService(req.body);
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = UserController;

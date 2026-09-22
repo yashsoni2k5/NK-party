@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import api from '../api';
+import { Link } from 'react-router-dom';
+import { FiImage, FiArrowLeft, FiPlus, FiUpload, FiTrash2, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 
 export default function AdminBanners() {
   const [banners, setBanners] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [imageUrl, setImageUrl] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [order, setOrder] = useState(0);
 
   const loadBanners = () => {
@@ -19,82 +23,246 @@ export default function AdminBanners() {
     loadBanners();
   }, []);
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    } else {
+      setImageFile(null);
+      setImagePreview(null);
+    }
+  };
+
   const handleAddBanner = async (e) => {
     e.preventDefault();
+    if (!imageFile) {
+      return alert("Please select an image file to upload");
+    }
+
+    setIsSubmitting(true);
     try {
-      await api.post('/banners', { imageUrl, order });
-      setImageUrl('');
+      const formData = new FormData();
+      formData.append('image', imageFile);
+      formData.append('order', order);
+
+      await api.post('/banners', formData);
+      setImageFile(null);
+      setImagePreview(null);
       setOrder(0);
+      e.target.reset();
       loadBanners();
     } catch (error) {
-      alert(error.response?.data?.message || error.message);
+      alert(error.response?.data?.message || error.message || "Failed to upload banner");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleToggleActive = async (banner) => {
+    try {
+      await api.put(`/banners/${banner._id}`, { isActive: !banner.isActive });
+      loadBanners();
+    } catch (error) {
+      alert(error.response?.data?.message || "Failed to update banner status");
     }
   };
 
   const handleDeleteBanner = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this banner?")) return;
     try {
       await api.delete(`/banners/${id}`);
       loadBanners();
     } catch (error) {
-      alert(error.response?.data?.message || error.message);
+      alert(error.response?.data?.message || error.message || "Failed to delete banner");
     }
   };
 
-  if (loading) return <div className="p-8">Loading banners...</div>;
-
   return (
-    <div className="max-w-4xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6">Manage Banners</h1>
-      
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-        <h2 className="text-xl font-semibold mb-4">Add New Banner</h2>
-        <form onSubmit={handleAddBanner} className="flex gap-4 items-end">
-          <div className="flex-1">
-            <label className="block text-sm font-medium mb-1">Image URL</label>
-            <input 
-              type="url" 
-              value={imageUrl} 
-              onChange={(e) => setImageUrl(e.target.value)} 
-              placeholder="https://example.com/banner.jpg" 
-              required 
-              className="w-full p-2 border border-gray-300 rounded"
-            />
+    <div className="min-h-screen bg-[#003725] text-[#FAF7F0] py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto space-y-10">
+        
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-[#E3BA63]/20 pb-6">
+          <div className="space-y-1">
+            <Link 
+              to="/admin"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#E3BA63] hover:text-white transition-colors mb-2"
+            >
+              <FiArrowLeft /> Back to Dashboard
+            </Link>
+            <h1 className="text-3xl font-extrabold text-[#FAF7F0] flex items-center gap-3">
+              <FiImage className="text-[#E3BA63]" /> Manage Homepage Banners
+            </h1>
+            <p className="text-gray-400 text-sm">
+              Upload and arrange promotional carousel banners for your store homepage.
+            </p>
           </div>
-          <div className="w-24">
-            <label className="block text-sm font-medium mb-1">Order</label>
-            <input 
-              type="number" 
-              value={order} 
-              onChange={(e) => setOrder(Number(e.target.value))} 
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <button type="submit" className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors">
-            Add Banner
-          </button>
-        </form>
-      </div>
 
-      <div>
-        <h2 className="text-xl font-semibold mb-4">Current Banners</h2>
-        {banners.length === 0 && <p className="text-gray-500">No banners found.</p>}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {banners.map(banner => (
-            <div key={banner._id} className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
-              <img src={banner.imageUrl} alt="banner" className="w-full h-40 object-cover" />
-              <div className="p-4 flex justify-between items-center bg-gray-50">
-                <span className="text-sm text-gray-600">Order: {banner.order}</span>
-                <button 
-                  onClick={() => handleDeleteBanner(banner._id)}
-                  className="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition-colors"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          ))}
+          <div className="text-xs font-bold bg-[#E3BA63]/15 text-[#E3BA63] border border-[#E3BA63]/30 px-4 py-2 rounded-2xl">
+            Total Banners: {banners.length}
+          </div>
         </div>
+
+        {/* Add New Banner Form Card */}
+        <div className="bg-[#011E15] border border-[#E3BA63]/30 p-6 sm:p-8 rounded-3xl shadow-2xl">
+          <h2 className="text-xl font-extrabold text-[#E3BA63] mb-6 flex items-center gap-2">
+            <FiPlus className="w-5 h-5" /> Add New Banner
+          </h2>
+
+          <form onSubmit={handleAddBanner} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+              
+              {/* File Input */}
+              <div className="md:col-span-2">
+                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                  Banner Image File
+                </label>
+                <div className="flex items-center gap-4">
+                  <label className="flex-1 border-2 border-dashed border-[#E3BA63]/30 hover:border-[#E3BA63] rounded-2xl p-4 text-center cursor-pointer bg-[#00271a] transition-colors">
+                    <FiUpload className="w-6 h-6 mx-auto text-[#E3BA63] mb-1" />
+                    <span className="text-xs text-gray-300 font-semibold block">
+                      {imageFile ? imageFile.name : 'Click to select or drag banner image'}
+                    </span>
+                    <input 
+                      type="file" 
+                      accept="image/*"
+                      onChange={handleFileChange} 
+                      required 
+                      disabled={isSubmitting}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+                <p className="text-[11px] text-gray-400 mt-2">Recommended aspect ratio: 16:9 or banner dimension (e.g. 1200x400px)</p>
+              </div>
+
+              {/* Display Order */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                  Display Order
+                </label>
+                <input 
+                  type="number" 
+                  value={order} 
+                  onChange={(e) => setOrder(Number(e.target.value))} 
+                  disabled={isSubmitting}
+                  className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] focus:outline-none focus:border-[#E3BA63]"
+                />
+                <p className="text-[11px] text-gray-400 mt-2">Lower numbers appear first in slider</p>
+              </div>
+
+            </div>
+
+            {/* Image Preview Thumbnail */}
+            {imagePreview && (
+              <div className="p-3 bg-black/40 rounded-2xl border border-[#E3BA63]/30 inline-block">
+                <p className="text-xs text-[#E3BA63] mb-2 font-bold">Preview:</p>
+                <img 
+                  src={imagePreview} 
+                  alt="Banner Preview" 
+                  className="h-32 rounded-xl object-cover border border-[#E3BA63]/20" 
+                />
+              </div>
+            )}
+
+            {/* Submit Button */}
+            <div className="flex justify-end pt-2">
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="bg-[#E3BA63] hover:bg-[#cda24d] text-[#011E15] font-extrabold px-6 py-3 rounded-xl transition-all shadow-lg flex items-center gap-2 text-sm disabled:opacity-50"
+              >
+                {isSubmitting ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-[#011E15]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Uploading Banner...
+                  </>
+                ) : (
+                  <>
+                    <FiUpload /> Upload Banner
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Existing Banners Grid */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold text-[#FAF7F0]">Current Banners</h2>
+          
+          {loading ? (
+            <div className="flex justify-center items-center py-12 text-[#E3BA63]">
+              <svg className="animate-spin h-8 w-8 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span className="font-bold text-lg text-[#FAF7F0]">Loading banners...</span>
+            </div>
+          ) : banners.length === 0 ? (
+            <div className="text-center py-12 bg-[#011E15] rounded-3xl border border-dashed border-[#E3BA63]/30">
+              <FiImage className="w-12 h-12 mx-auto text-gray-500 mb-3" />
+              <p className="text-gray-400">No banners found. Upload your first banner above!</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {banners.map(banner => (
+                <div 
+                  key={banner._id} 
+                  className="bg-[#011E15] border border-[#E3BA63]/30 rounded-3xl overflow-hidden shadow-xl hover:border-[#E3BA63]/60 transition-all duration-300"
+                >
+                  <div className="relative h-48 bg-black/40 border-b border-[#E3BA63]/20">
+                    <img 
+                      src={banner.imageUrl} 
+                      alt="banner" 
+                      className="w-full h-full object-cover" 
+                    />
+                    <div className="absolute top-3 left-3 bg-[#011E15]/90 backdrop-blur-md px-3 py-1 rounded-full text-xs text-[#E3BA63] font-bold border border-[#E3BA63]/40">
+                      Order: {banner.order}
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
+                        banner.isActive 
+                          ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/40' 
+                          : 'bg-red-500/20 text-red-400 border-red-500/40'
+                      }`}>
+                        {banner.isActive ? 'Active' : 'Disabled'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 flex justify-between items-center bg-black/20">
+                    <button
+                      onClick={() => handleToggleActive(banner)}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold border transition-colors flex items-center gap-1.5 ${
+                        banner.isActive
+                          ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30 hover:bg-yellow-500/20'
+                          : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
+                      }`}
+                    >
+                      {banner.isActive ? <FiXCircle /> : <FiCheckCircle />}
+                      {banner.isActive ? 'Deactivate' : 'Activate'}
+                    </button>
+
+                    <button 
+                      onClick={() => handleDeleteBanner(banner._id)}
+                      className="bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white border border-red-500/30 px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+                    >
+                      <FiTrash2 /> Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
       </div>
     </div>
   );
 }
+

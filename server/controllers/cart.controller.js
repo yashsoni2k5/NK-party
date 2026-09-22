@@ -13,8 +13,9 @@ const CartController = {
   addToCart: async (req, res, next) => {
     const productId = req.params.productId;
     const userId = req.body.user;
+    const quantity = req.body.quantity || 1;
     try {
-      const cart = await CartServices.addToCart(userId, productId);
+      const cart = await CartServices.addToCart(userId, productId, quantity);
       res.status(201).send(cart);
     } catch (error) {
       next(error);

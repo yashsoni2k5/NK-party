@@ -18,7 +18,7 @@ const OrderServices = {
         data = { ...data, deliveryAddress: address };
       }
 
-      // Fetch prices for each product to prevent price spoofing
+      // Fetch prices and check stock for each product to prevent price spoofing & out-of-stock orders
       if (data.products && Array.isArray(data.products)) {
         let calculatedTotal = 0;
         const formattedProducts = [];
@@ -30,6 +30,14 @@ const OrderServices = {
           }
           const price = productDoc.price;
           const quantity = item.quantity || 1;
+
+          if (productDoc.stock < quantity) {
+            throw new HttpException(
+              400,
+              `Insufficient stock for "${productDoc.title}". Available: ${productDoc.stock}, Requested: ${quantity}`
+            );
+          }
+
           calculatedTotal += price * quantity;
           
           formattedProducts.push({
@@ -49,6 +57,16 @@ const OrderServices = {
 
       const order = new OrderModel({ ...data, user: userId });
       await order.save();
+
+      // Deduct stock for all ordered items
+      if (data.products && Array.isArray(data.products)) {
+        for (const item of data.products) {
+          await ProductModel.findByIdAndUpdate(item.product, {
+            $inc: { stock: -item.quantity }
+          });
+        }
+      }
+
       return order;
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -122,6 +140,25 @@ const OrderServices = {
 
   updateOrderByIdService: async (orderId, changes) => {
     try {
+      const oldOrder = await OrderModel.findById(orderId);
+      if (!oldOrder) {
+        throw new HttpException(404, "Order not found");
+      }
+
+      // If updating status to CANCELLED, restore stock
+      if (changes.status === "CANCELLED" && oldOrder.status !== "CANCELLED") {
+        if (oldOrder.products && Array.isArray(oldOrder.products)) {
+          for (const item of oldOrder.products) {
+            const prodId = item.product?._id || item.product;
+            if (prodId) {
+              await ProductModel.findByIdAndUpdate(prodId, {
+                $inc: { stock: item.quantity }
+              });
+            }
+          }
+        }
+      }
+
       const order = await OrderModel.findByIdAndUpdate(orderId, changes, {
         new: true,
       })
@@ -156,8 +193,24 @@ const OrderServices = {
       if (order.status !== "PENDING" && order.status !== "PROCESSING") {
         throw new HttpException(400, "Order cannot be cancelled at this stage");
       }
-      order.status = "CANCELLED";
-      await order.save();
+
+      if (order.status !== "CANCELLED") {
+        order.status = "CANCELLED";
+        await order.save();
+
+        // Restore stock for cancelled items
+        if (order.products && Array.isArray(order.products)) {
+          for (const item of order.products) {
+            const prodId = item.product?._id || item.product;
+            if (prodId) {
+              await ProductModel.findByIdAndUpdate(prodId, {
+                $inc: { stock: item.quantity }
+              });
+            }
+          }
+        }
+      }
+
       return order;
     } catch (error) {
       if (error instanceof HttpException) {
@@ -170,3 +223,4 @@ const OrderServices = {
 };
 
 module.exports = OrderServices;
+

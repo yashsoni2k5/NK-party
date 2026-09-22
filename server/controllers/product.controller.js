@@ -12,6 +12,12 @@ const ProductController = {
   },
 
   addProduct: async (req, res, next) => {
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
+    if (typeof req.body.tag === 'string') {
+      try { req.body.tag = JSON.parse(req.body.tag); } catch (e) { req.body.tag = [req.body.tag]; }
+    }
     const productDetails = req.body;
     console.log(productDetails);
     try {
@@ -26,6 +32,9 @@ const ProductController = {
 
   updateProduct: async (req, res, next) => {
     const productId = req.params.productId;
+    if (req.file) {
+      req.body.image = req.file.path;
+    }
     const updatedProductDetails = req.body;
     try {
       const product = await ProductServices.updateProductService(

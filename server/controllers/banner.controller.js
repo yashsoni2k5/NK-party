@@ -21,6 +21,9 @@ const BannerController = {
 
   createBanner: async (req, res, next) => {
     try {
+      if (req.file) {
+        req.body.imageUrl = req.file.path;
+      }
       const banner = await BannerServices.createBanner(req.body);
       res.status(201).send(banner);
     } catch (error) {
@@ -32,6 +35,18 @@ const BannerController = {
     try {
       const response = await BannerServices.deleteBanner(req.params.id);
       res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  updateBanner: async (req, res, next) => {
+    try {
+      if (req.file) {
+        req.body.imageUrl = req.file.path;
+      }
+      const banner = await BannerServices.updateBanner(req.params.id, req.body);
+      res.status(200).send(banner);
     } catch (error) {
       next(error);
     }

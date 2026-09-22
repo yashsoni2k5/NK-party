@@ -2,8 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-bg: #003725;
+  --secondary-bg: #011E15;
+  --accent-gold: #E3BA63;
+  --banner-cream: #FAF7F0;
+}
+
+@layer base {
+  html, body, button, input, select, textarea {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  background-color: #003725;
+  color: #ffffff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

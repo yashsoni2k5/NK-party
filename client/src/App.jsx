@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminProducts from './pages/AdminProducts';
 import AdminAddProduct from './pages/AdminAddProduct';
 import AdminAllOrders from './pages/AdminAllOrders';
 import AdminReplacements from './pages/AdminReplacements';
@@ -79,7 +80,17 @@ function AppRoutes() {
               <AdminDashboard />
             </AdminRoute>
           } />
+          <Route path="/admin/products" element={
+            <AdminRoute>
+              <AdminProducts />
+            </AdminRoute>
+          } />
           <Route path="/admin/add-product" element={
+            <AdminRoute>
+              <AdminAddProduct />
+            </AdminRoute>
+          } />
+          <Route path="/admin/edit-product/:id" element={
             <AdminRoute>
               <AdminAddProduct />
             </AdminRoute>
