@@ -22,58 +22,58 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-black text-[#FAF7F0] px-4 md:px-6 py-4 flex items-center justify-between shadow-xl relative z-50">
+      <nav className="bg-black text-[#FAF7F0] px-3 sm:px-6 py-3 md:py-4 flex items-center justify-between shadow-xl relative z-50">
         
         {/* Left Side - Burger Menu */}
-        <div className="flex items-center gap-4 z-10">
+        <div className="flex items-center gap-2 sm:gap-4 z-10">
           <button 
             onClick={toggleMenu} 
-            className="text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1"
+            className="text-xl sm:text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1"
             aria-label="Open Navigation Menu"
           >
             <FiMenu />
           </button>
         </div>
 
-        {/* Center - Logo & Text */}
+        {/* Center - Logo & Text (Perfectly centered in navbar) */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
           <Link to="/" className="hover:opacity-90 transition-opacity flex flex-col items-center">
-            <img src="/nkparty.jpeg" alt="NKparty Logo" className="h-10 md:h-12 object-contain rounded-md shadow-md" />
-            <span className="text-[10px] md:text-xs text-white font-medium tracking-widest mt-1 uppercase">
+            <img src="/nkparty.jpeg" alt="NKparty Logo" className="h-8 sm:h-10 md:h-12 object-contain rounded-md shadow-md" />
+            <span className="text-[8px] sm:text-[10px] md:text-xs text-white font-medium tracking-widest mt-0.5 uppercase">
               Celebrate With Style
             </span>
           </Link>
         </div>
         
-        {/* Right Side - Search & Cart Icons */}
-        <div className="flex items-center gap-4 md:gap-5 z-10">
+        {/* Right Side - Search, Cart, Home & Profile Icons */}
+        <div className="flex items-center gap-2 sm:gap-4 md:gap-5 z-10">
 
           {/* Home Icon */}
           <Link 
             to="/" 
-            className="text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1"
+            className="text-xl sm:text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1"
             aria-label="Home"
           >
             <FiHome />
           </Link>
           
           {/* Expandable Search */}
-          <div className="flex items-center">
+          <div className="flex items-center relative">
             {isSearchOpen && (
-              <form onSubmit={handleSearchSubmit} className="mr-2">
+              <form onSubmit={handleSearchSubmit} className="absolute right-8 top-1/2 -translate-y-1/2 z-20">
                 <input 
                   type="text" 
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search products..."
+                  placeholder="Search..."
                   autoFocus
-                  className="bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 px-3 py-1 rounded-full outline-none text-sm w-36 md:w-52 placeholder-gray-400 focus:ring-2 focus:ring-[#E3BA63]"
+                  className="bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 px-3 py-1 rounded-full outline-none text-xs sm:text-sm w-36 sm:w-48 md:w-52 placeholder-gray-400 focus:ring-2 focus:ring-[#E3BA63] shadow-2xl"
                 />
               </form>
             )}
             <button 
               onClick={() => setIsSearchOpen(!isSearchOpen)} 
-              className="text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1"
+              className="text-xl sm:text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1"
               aria-label="Search"
             >
               <FiSearch />
@@ -83,16 +83,16 @@ export default function Navbar() {
           {/* Cart Icon */}
           <Link 
             to="/cart" 
-            className="text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1 relative"
+            className="text-xl sm:text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1 relative"
             aria-label="View Shopping Cart"
           >
             <FiShoppingCart />
           </Link>
 
-          {/* Profile Icon */}
+          {/* Profile Icon - Hidden on mobile screens (sm and below), visible on desktop/tablets */}
           <Link
             to={user ? "/profile" : "/login"}
-            className="text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1"
+            className="hidden sm:inline-flex text-xl sm:text-2xl text-[#FAF7F0] hover:text-[#E3BA63] transition-colors p-1"
             aria-label="User Profile"
           >
             <FiUser />
