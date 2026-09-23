@@ -72,7 +72,7 @@ export default function Profile() {
             My Profile
           </h1>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
             <div className="bg-black/30 border border-[#E3BA63]/20 p-5 rounded-2xl">
               <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
                 <FiUser className="text-[#E3BA63]" /> Full Name
@@ -85,7 +85,13 @@ export default function Profile() {
               </p>
               <p className="text-xl font-bold text-[#FAF7F0]">{user.mobile}</p>
             </div>
-            <div className="bg-black/30 border border-[#E3BA63]/20 p-5 rounded-2xl sm:col-span-2 flex justify-between items-center">
+            <div className="bg-black/30 border border-[#E3BA63]/20 p-5 rounded-2xl">
+              <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
+                💳 Wallet Balance
+              </p>
+              <p className="text-xl font-bold text-[#E3BA63]">₹{user.walletBalance || 0}</p>
+            </div>
+            <div className="bg-black/30 border border-[#E3BA63]/20 p-5 rounded-2xl sm:col-span-2 lg:col-span-3 flex justify-between items-center">
               <div>
                 <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
                   Role

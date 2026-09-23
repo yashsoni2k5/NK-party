@@ -11,5 +11,6 @@ router.get("/:orderId", EnsureAuth, OrderController.getOrdersById);
 router.post("/", EnsureAuth, OrderController.createOrder);
 router.patch("/:orderId/cancel", EnsureAuth, OrderController.cancelOrder);
 router.patch("/:orderId", EnsureAdmin, OrderController.updateOrderById);
+router.post("/:orderId/refund", EnsureAdmin, OrderController.refundOrder);
 
 module.exports = { path, router };

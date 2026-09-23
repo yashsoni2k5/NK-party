@@ -16,6 +16,9 @@ export default function Checkout() {
   const [savedAddresses, setSavedAddresses] = useState([]);
   const [selectedAddressId, setSelectedAddressId] = useState('');
   
+  const [walletBalance, setWalletBalance] = useState(0);
+  const [useWallet, setUseWallet] = useState(false);
+  
   const [address, setAddress] = useState({
     name: '', mobile: '', house_no: '', area: '', city: '', pincode: ''
   });
@@ -40,6 +43,15 @@ export default function Checkout() {
       setSavedAddresses(addrRes.data || []);
       if (addrRes.data && addrRes.data.length > 0) {
         setSelectedAddressId(addrRes.data[0]._id);
+      }
+      
+      try {
+        const userRes = await api.get('/users/me');
+        if (userRes.data?.walletBalance) {
+          setWalletBalance(userRes.data.walletBalance);
+        }
+      } catch (userErr) {
+        console.error("Failed to fetch user balance:", userErr);
       }
     } catch (err) {
       console.error(err);
@@ -105,8 +117,54 @@ export default function Checkout() {
         finalAddressId = addressRes.data._id;
       }
 
-      // Step 1: Create Razorpay Order
-      const rzpOrderRes = await api.post('/payment/orders', { amount: total });
+      const payableAmount = useWallet ? Math.max(0, total - walletBalance) : total;
+      const usedWalletAmount = useWallet ? Math.min(total, walletBalance) : 0;
+
+      const placeActualOrder = async (razorpayData = null) => {
+        const productsPayload = checkoutItems.map(item => ({
+          product: item.product._id,
+          quantity: item.quantity
+        }));
+
+        const payload = {
+          deliveryAddress: finalAddressId,
+          products: productsPayload,
+          checkedOut: true
+        };
+        
+        if (usedWalletAmount > 0) payload.usedWalletAmount = usedWalletAmount;
+        if (razorpayData) {
+          payload.razorpay_order_id = razorpayData.razorpay_order_id;
+          payload.razorpay_payment_id = razorpayData.razorpay_payment_id;
+          payload.razorpay_signature = razorpayData.razorpay_signature;
+        }
+
+        await api.post('/order', payload);
+
+        if (!singleProductId) {
+          await api.delete('/cart'); // Clear cart
+        }
+
+        alert('Payment Successful & Order placed securely!');
+        navigate('/orders');
+      };
+
+      if (payableAmount === 0) {
+        // Bypass Razorpay completely
+        await placeActualOrder(null);
+        return;
+      }
+
+      // Step 1: Create Secure Razorpay Order by passing products to backend
+      const productsPayload = checkoutItems.map(item => ({
+        product: item.product._id,
+        quantity: item.quantity
+      }));
+      
+      const rzpOrderRes = await api.post('/payment/orders', { 
+        products: productsPayload,
+        usedWalletAmount
+      });
       const rzpOrder = rzpOrderRes.data;
 
       // Step 2: Open Razorpay Checkout Modal
@@ -121,31 +179,12 @@ export default function Checkout() {
         order_id: rzpOrder.id,
         handler: async function (response) {
           try {
-            // Step 3: Verify Signature
-            await api.post('/payment/verify', {
+            // Step 3: Create Actual Order (Signature is verified in the backend)
+            await placeActualOrder({
               razorpay_order_id: response.razorpay_order_id || rzpOrder.id,
               razorpay_payment_id: response.razorpay_payment_id || "pay_dummy123",
               razorpay_signature: response.razorpay_signature || "dummy_sig"
             });
-
-            // Step 4: Create Actual Order
-            const productsPayload = checkoutItems.map(item => ({
-              product: item.product._id,
-              quantity: item.quantity
-            }));
-
-            await api.post('/order', {
-              deliveryAddress: finalAddressId,
-              products: productsPayload,
-              checkedOut: true
-            });
-
-            if (!singleProductId) {
-              await api.delete('/cart'); // Clear cart
-            }
-
-            alert('Payment Successful & Order placed securely!');
-            navigate('/orders');
           } catch (verifyError) {
             alert(verifyError.response?.data?.message || 'Payment verification failed');
           }
@@ -256,10 +295,38 @@ export default function Checkout() {
                 );
               })}
             </div>
-            <div className="mt-6 pt-4 border-t border-[#E3BA63]/20">
-              <div className="flex justify-between items-end mb-2">
+            <div className="mt-6 pt-4 border-t border-[#E3BA63]/20 space-y-3">
+              <div className="flex justify-between items-center text-sm">
                 <span className="text-gray-300">Subtotal</span>
-                <span className="text-2xl font-extrabold text-[#E3BA63]">₹{total}</span>
+                <span className="font-bold text-[#E3BA63]">₹{total}</span>
+              </div>
+              
+              <div className="flex items-center justify-between py-2 border-y border-[#E3BA63]/10">
+                <div className="flex items-center gap-2">
+                  <input 
+                    type="checkbox" 
+                    id="useWallet" 
+                    checked={useWallet}
+                    onChange={(e) => setUseWallet(e.target.checked)}
+                    disabled={walletBalance <= 0}
+                    className="w-4 h-4 accent-[#E3BA63] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                  <label htmlFor="useWallet" className={`text-sm cursor-pointer ${walletBalance > 0 ? 'text-gray-300' : 'text-gray-500'}`}>
+                    Use Wallet Points (₹{walletBalance || 0} available)
+                  </label>
+                </div>
+                {useWallet && walletBalance > 0 && (
+                  <span className="text-sm font-bold text-red-400">
+                    - ₹{Math.min(total, walletBalance)}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex justify-between items-end pt-2">
+                <span className="text-gray-300 font-bold">Payable Amount</span>
+                <span className="text-2xl font-extrabold text-[#E3BA63]">
+                  ₹{useWallet ? Math.max(0, total - walletBalance) : total}
+                </span>
               </div>
               <p className="text-[10px] text-gray-400 text-right uppercase tracking-wider flex items-center justify-end gap-1">
                 <span className="text-[#E3BA63]">✓</span> Secure Backend Verification
@@ -336,7 +403,7 @@ export default function Checkout() {
               >
                 {total >= 500 ? (
                   <>
-                    <span>💳</span> Place Secure Order (₹{total})
+                    <span>💳</span> {useWallet && Math.max(0, total - walletBalance) === 0 ? "Place Order using Wallet" : `Place Secure Order (₹${useWallet ? Math.max(0, total - walletBalance) : total})`}
                   </>
                 ) : (
                   'Add more items (Min ₹500)'

@@ -5,6 +5,62 @@ const AddressModel = require("../models/address.model");
 const ProductModel = require("../models/product.model");
 
 const OrderServices = {
+  calculateOrderTotals: async (products, usedWalletAmount, userId) => {
+    let calculatedTotal = 0;
+    const formattedProducts = [];
+
+    if (!products || !Array.isArray(products) || products.length === 0) {
+      throw new HttpException(400, "Cart is empty");
+    }
+
+    for (const item of products) {
+      const productDoc = await ProductModel.findById(item.product);
+      if (!productDoc) {
+        throw new HttpException(404, `Product not found: ${item.product}`);
+      }
+      const price = productDoc.price;
+      const quantity = item.quantity || 1;
+
+      if (productDoc.stock < quantity) {
+        throw new HttpException(
+          400,
+          `Insufficient stock for "${productDoc.title}". Available: ${productDoc.stock}, Requested: ${quantity}`
+        );
+      }
+
+      calculatedTotal += price * quantity;
+      
+      formattedProducts.push({
+        product: productDoc._id,
+        quantity: quantity,
+        priceAtPurchase: price
+      });
+    }
+
+    if (calculatedTotal < 500) {
+      throw new HttpException(400, "Minimum order value is ₹500.");
+    }
+
+    let finalWalletDeduction = 0;
+    if (usedWalletAmount > 0) {
+      const UserModel = require("../models/user.model");
+      const userDoc = await UserModel.findById(userId);
+      if (!userDoc || userDoc.walletBalance < usedWalletAmount) {
+        throw new HttpException(400, "Insufficient wallet balance");
+      }
+      finalWalletDeduction = Math.min(calculatedTotal, usedWalletAmount);
+    }
+
+    const payableAmount = Math.max(0, calculatedTotal - finalWalletDeduction);
+
+    return {
+      calculatedTotal,
+      payableAmount,
+      formattedProducts,
+      finalWalletDeduction
+    };
+  },
+
   createOrderService: async (data, userId) => {
     try {
       const isValidObjectId = mongoose.Types.ObjectId.isValid(userId);
@@ -18,44 +74,43 @@ const OrderServices = {
         data = { ...data, deliveryAddress: address };
       }
 
-      // Fetch prices and check stock for each product to prevent price spoofing & out-of-stock orders
-      if (data.products && Array.isArray(data.products)) {
-        let calculatedTotal = 0;
-        const formattedProducts = [];
+      // Securely calculate totals on the server
+      const { 
+        calculatedTotal, 
+        payableAmount, 
+        formattedProducts, 
+        finalWalletDeduction 
+      } = await OrderServices.calculateOrderTotals(data.products, data.usedWalletAmount, userId);
 
-        for (const item of data.products) {
-          const productDoc = await ProductModel.findById(item.product);
-          if (!productDoc) {
-            throw new HttpException(404, `Product not found: ${item.product}`);
-          }
-          const price = productDoc.price;
-          const quantity = item.quantity || 1;
-
-          if (productDoc.stock < quantity) {
-            throw new HttpException(
-              400,
-              `Insufficient stock for "${productDoc.title}". Available: ${productDoc.stock}, Requested: ${quantity}`
-            );
-          }
-
-          calculatedTotal += price * quantity;
-          
-          formattedProducts.push({
-            product: productDoc._id,
-            quantity: quantity,
-            priceAtPurchase: price
-          });
+      // Verify Razorpay Payment if amount > 0
+      if (payableAmount > 0) {
+        if (!data.razorpay_order_id || !data.razorpay_payment_id || !data.razorpay_signature) {
+          throw new HttpException(400, "Payment verification details are missing.");
         }
-        
-        data.products = formattedProducts;
-        data.total = calculatedTotal;
+        const PaymentServices = require("./payment.service");
+        await PaymentServices.verifyRazorpaySignature(
+          data.razorpay_order_id, 
+          data.razorpay_payment_id, 
+          data.razorpay_signature
+        );
       }
 
-      if (!data.total || data.total < 500) {
-        throw new HttpException(400, "Minimum order value is ₹500. Please add more products to continue.");
+      data.products = formattedProducts;
+      data.total = calculatedTotal;
+      // Handle wallet points deduction
+      if (finalWalletDeduction > 0) {
+        const UserModel = require("../models/user.model");
+        const userDoc = await UserModel.findById(userId);
+        userDoc.walletBalance -= finalWalletDeduction;
+        await userDoc.save();
       }
 
-      const order = new OrderModel({ ...data, user: userId });
+      const orderData = { ...data, user: userId };
+      if (data.razorpay_payment_id) {
+        orderData.razorpayPaymentId = data.razorpay_payment_id;
+      }
+
+      const order = new OrderModel(orderData);
       await order.save();
 
       // Deduct stock for all ordered items
@@ -217,6 +272,51 @@ const OrderServices = {
         throw error;
       } else {
         throw new HttpException(500, "Error cancelling order");
+      }
+    }
+  },
+
+  refundOrderService: async (orderId, refundMethod) => {
+    try {
+      const order = await OrderModel.findById(orderId);
+      if (!order) {
+        throw new HttpException(404, "Order not found");
+      }
+      if (order.status !== "CANCELLED" && order.status !== "RETURNED" && order.status !== "DELIVERED") {
+        throw new HttpException(400, "Order must be CANCELLED or RETURNED to initiate a refund");
+      }
+      if (order.refundStatus !== "NONE") {
+        throw new HttpException(400, "Order is already refunded");
+      }
+
+      if (refundMethod === "WALLET") {
+        const UserModel = require("../models/user.model");
+        const userDoc = await UserModel.findById(order.user);
+        if (userDoc) {
+          userDoc.walletBalance = (userDoc.walletBalance || 0) + order.total;
+          await userDoc.save();
+        }
+        order.refundStatus = "REFUNDED_WALLET";
+        order.status = "REFUNDED";
+        await order.save();
+      } else if (refundMethod === "BANK") {
+        if (order.razorpayPaymentId) {
+          const PaymentServices = require("./payment.service");
+          await PaymentServices.refundPayment(order.razorpayPaymentId, order.total);
+        }
+        order.refundStatus = "REFUNDED_BANK";
+        order.status = "REFUNDED";
+        await order.save();
+      } else {
+        throw new HttpException(400, "Invalid refund method");
+      }
+
+      return order;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new HttpException(500, "Error processing refund");
       }
     }
   },

@@ -65,6 +65,16 @@ const OrderController = {
       next(error);
     }
   },
+  refundOrder: async (req, res, next) => {
+    const orderId = req.params.orderId;
+    const { refundMethod } = req.body; // "BANK" or "WALLET"
+    try {
+      const order = await OrderServices.refundOrderService(orderId, refundMethod);
+      res.status(200).send(order);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = OrderController;
