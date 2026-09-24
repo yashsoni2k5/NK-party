@@ -7,7 +7,7 @@ const EnsureAuth = (req, res, next) => {
   if (token) {
     token = token.split(" ")[1];
     try {
-      const decodedToken = jwt.verify(token, "your-secret-key"); // Replace with your actual secret key
+      const decodedToken = jwt.verify(token, process.env.jwtsecret || "your-secret-key");
       console.log(decodedToken);
       const userId = decodedToken.userId;
       req.body.user = userId;

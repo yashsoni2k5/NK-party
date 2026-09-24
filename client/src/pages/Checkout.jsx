@@ -261,7 +261,7 @@ export default function Checkout() {
                     {item.product?.image ? (
                       <img src={item.product.image} alt={item.product.title} className="w-20 h-20 object-cover rounded-lg border border-[#E3BA63]/20 flex-shrink-0" />
                     ) : (
-                      <div className="w-20 h-20 bg-black/40 rounded-lg border border-[#E3BA63]/20 flex items-center justify-center text-xs text-gray-500 flex-shrink-0">No Image</div>
+                      <div className="w-20 h-20 bg-black/40 rounded-lg border border-[#E3BA63]/20 flex items-center justify-center text-xs text-[#FAF7F0] flex-shrink-0">No Image</div>
                     )}
                     <div className="flex-1">
                       <h4 className="font-bold text-sm sm:text-base text-[#FAF7F0] mb-1 leading-tight">{item.product?.title}</h4>
@@ -269,7 +269,7 @@ export default function Checkout() {
                       
                       {/* Quantity Selector */}
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-400">Qty:</span>
+                        <span className="text-xs text-[#FAF7F0]">Qty:</span>
                         <div className="flex items-center bg-black/40 border border-[#E3BA63]/30 rounded-lg p-0.5">
                           <button 
                             type="button"
@@ -297,7 +297,7 @@ export default function Checkout() {
             </div>
             <div className="mt-6 pt-4 border-t border-[#E3BA63]/20 space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-gray-300">Subtotal</span>
+                <span className="text-[#FAF7F0]">Subtotal</span>
                 <span className="font-bold text-[#E3BA63]">₹{total}</span>
               </div>
               
@@ -311,7 +311,7 @@ export default function Checkout() {
                     disabled={walletBalance <= 0}
                     className="w-4 h-4 accent-[#E3BA63] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   />
-                  <label htmlFor="useWallet" className={`text-sm cursor-pointer ${walletBalance > 0 ? 'text-gray-300' : 'text-gray-500'}`}>
+                  <label htmlFor="useWallet" className={`text-sm cursor-pointer ${walletBalance > 0 ? 'text-[#FAF7F0]' : 'text-[#FAF7F0]'}`}>
                     Use Wallet Points (₹{walletBalance || 0} available)
                   </label>
                 </div>
@@ -323,12 +323,12 @@ export default function Checkout() {
               </div>
 
               <div className="flex justify-between items-end pt-2">
-                <span className="text-gray-300 font-bold">Payable Amount</span>
+                <span className="text-[#FAF7F0] font-bold">Payable Amount</span>
                 <span className="text-2xl font-extrabold text-[#E3BA63]">
                   ₹{useWallet ? Math.max(0, total - walletBalance) : total}
                 </span>
               </div>
-              <p className="text-[10px] text-gray-400 text-right uppercase tracking-wider flex items-center justify-end gap-1">
+              <p className="text-[10px] text-[#FAF7F0] text-right uppercase tracking-wider flex items-center justify-end gap-1">
                 <span className="text-[#E3BA63]">✓</span> Secure Backend Verification
               </p>
             </div>
@@ -343,11 +343,11 @@ export default function Checkout() {
               
               {savedAddresses.length > 0 && (
                 <div>
-                  <label className="block text-sm font-semibold text-gray-200 mb-2">Select Saved Address</label>
+                  <label className="block text-sm font-semibold text-[#FAF7F0] mb-2">Select Saved Address</label>
                   <select 
                     value={selectedAddressId} 
                     onChange={(e) => setSelectedAddressId(e.target.value)}
-                    className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] appearance-none cursor-pointer"
+                    className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] appearance-none cursor-pointer"
                   >
                     <option value="">-- Or enter a new address below --</option>
                     {savedAddresses.map(addr => (
@@ -365,28 +365,28 @@ export default function Checkout() {
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-gray-400 mb-1">Full Name</label>
-                      <input name="name" placeholder="Full Name" value={address.name} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
+                      <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Full Name</label>
+                      <input name="name" placeholder="Full Name" value={address.name} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-400 mb-1">Mobile Number</label>
-                      <input name="mobile" placeholder="10-digit mobile" value={address.mobile} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
+                      <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Mobile Number</label>
+                      <input name="mobile" placeholder="10-digit mobile" value={address.mobile} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-400 mb-1">House No / Flat</label>
-                      <input name="house_no" placeholder="House Number" value={address.house_no} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
+                      <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">House No / Flat</label>
+                      <input name="house_no" placeholder="House Number" value={address.house_no} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-400 mb-1">Area / Locality</label>
-                      <input name="area" placeholder="Area / Locality" value={address.area} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
+                      <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Area / Locality</label>
+                      <input name="area" placeholder="Area / Locality" value={address.area} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-400 mb-1">City</label>
-                      <input name="city" placeholder="City" value={address.city} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
+                      <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">City</label>
+                      <input name="city" placeholder="City" value={address.city} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-gray-400 mb-1">Pincode</label>
-                      <input name="pincode" type="number" placeholder="6-digit PIN" value={address.pincode} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
+                      <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Pincode</label>
+                      <input name="pincode" type="number" placeholder="6-digit PIN" value={address.pincode} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#E3BA63] placeholder-gray-500"/>
                     </div>
                   </div>
                 </div>
@@ -398,7 +398,7 @@ export default function Checkout() {
                 className={`w-full py-4 mt-4 rounded-xl text-lg font-extrabold transition-all duration-200 shadow-lg flex items-center justify-center gap-2 ${
                   total >= 500 
                     ? 'bg-[#E3BA63] hover:bg-[#cda24d] text-[#011E15] active:scale-[0.98] cursor-pointer' 
-                    : 'bg-gray-700 text-gray-500 cursor-not-allowed border border-gray-600'
+                    : 'bg-gray-700 text-[#FAF7F0] cursor-not-allowed border border-gray-600'
                 }`}
               >
                 {total >= 500 ? (

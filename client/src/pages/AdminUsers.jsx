@@ -43,7 +43,7 @@ export default function AdminUsers() {
             <h1 className="text-3xl font-extrabold text-[#FAF7F0] flex items-center gap-3">
               <FiUsers className="text-[#E3BA63]" /> Platform Users
             </h1>
-            <p className="text-gray-400 text-sm">
+            <p className="text-[#FAF7F0] text-sm">
               List of all registered customer and admin accounts.
             </p>
           </div>
@@ -53,7 +53,7 @@ export default function AdminUsers() {
           <div className="bg-[#011E15] border border-[#E3BA63]/30 p-12 rounded-3xl text-center shadow-xl">
             <FiUsers className="w-16 h-16 mx-auto text-[#E3BA63]/40 mb-4" />
             <h2 className="text-xl font-bold text-[#FAF7F0] mb-2">No Users Found</h2>
-            <p className="text-gray-400 text-sm">No user accounts registered yet.</p>
+            <p className="text-[#FAF7F0] text-sm">No user accounts registered yet.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -69,14 +69,14 @@ export default function AdminUsers() {
                     </div>
                     <div>
                       <h3 className="font-bold text-[#FAF7F0] text-lg leading-snug">{user.name}</h3>
-                      <p className="text-[10px] text-gray-400 font-mono">ID: {user._id}</p>
+                      <p className="text-[10px] text-[#FAF7F0] font-mono">ID: {user._id}</p>
                     </div>
                   </div>
 
                   <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
                     user.role === 'admin' 
                       ? 'bg-[#E3BA63]/20 text-[#E3BA63] border-[#E3BA63]/40' 
-                      : 'bg-black/40 text-gray-300 border-gray-700'
+                      : 'bg-black/40 text-[#FAF7F0] border-gray-700'
                   }`}>
                     {user.role}
                   </span>
@@ -84,11 +84,11 @@ export default function AdminUsers() {
 
                 <div className="pt-2 border-t border-[#E3BA63]/10 space-y-2 text-xs">
                   {user.email && (
-                    <p className="text-gray-300 flex items-center gap-2">
+                    <p className="text-[#FAF7F0] flex items-center gap-2">
                       <FiMail className="text-[#E3BA63]" /> {user.email}
                     </p>
                   )}
-                  <p className="text-gray-300 flex items-center gap-2">
+                  <p className="text-[#FAF7F0] flex items-center gap-2">
                     <FiPhone className="text-[#E3BA63]" /> {user.mobile}
                   </p>
                 </div>

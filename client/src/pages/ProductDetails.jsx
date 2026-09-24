@@ -92,7 +92,7 @@ export default function ProductDetails() {
     return (
       <div className="max-w-4xl mx-auto py-16 px-4 text-center">
         <h2 className="text-2xl font-bold text-[#FAF7F0] mb-4">Product Not Found</h2>
-        <p className="text-gray-300 mb-6">The requested product could not be loaded or doesn't exist.</p>
+        <p className="text-[#FAF7F0] mb-6">The requested product could not be loaded or doesn't exist.</p>
         <Link to="/" className="bg-[#E3BA63] text-[#011E15] px-6 py-2.5 rounded-xl font-bold hover:bg-[#cda24d] transition-colors">
           Back to Store
         </Link>
@@ -106,12 +106,12 @@ export default function ProductDetails() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 text-[#FAF7F0]">
       
       {/* Breadcrumb */}
-      <div className="mb-6 text-sm text-gray-300 flex items-center gap-2">
+      <div className="mb-6 text-sm text-[#FAF7F0] flex items-center gap-2">
         <Link to="/" className="hover:text-[#E3BA63] transition-colors">Home</Link>
         <span>/</span>
         <span className="text-[#E3BA63] capitalize">{product.itemType?.toLowerCase() || 'product'}</span>
         <span>/</span>
-        <span className="text-gray-400 truncate max-w-xs">{product.title}</span>
+        <span className="text-[#FAF7F0] truncate max-w-xs">{product.title}</span>
       </div>
 
       {/* Product Details Section */}
@@ -126,7 +126,7 @@ export default function ProductDetails() {
               className="w-full h-full object-contain max-h-[450px] rounded-xl hover:scale-105 transition-transform duration-500 ease-out" 
             />
           ) : (
-            <div className="text-gray-400 flex flex-col items-center gap-2">
+            <div className="text-[#FAF7F0] flex flex-col items-center gap-2">
               <span className="text-5xl">📷</span>
               <span>No image available</span>
             </div>
@@ -141,7 +141,7 @@ export default function ProductDetails() {
               <span className="text-xs font-bold uppercase tracking-widest bg-[#E3BA63]/15 text-[#E3BA63] border border-[#E3BA63]/40 px-3 py-1 rounded-full">
                 {product.category || 'General'}
               </span>
-              <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider">
                 {product.itemType === 'SERVICE' ? '🎉 Party Service' : '📦 Product'}
               </span>
             </div>
@@ -157,7 +157,7 @@ export default function ProductDetails() {
                 <span>★</span>
                 <span>{product.averageRating ? product.averageRating.toFixed(1) : '5.0'}</span>
               </div>
-              <span className="text-sm text-gray-300">
+              <span className="text-sm text-[#FAF7F0]">
                 {product.reviews?.length || 0} Customer Ratings
               </span>
             </div>
@@ -216,7 +216,7 @@ export default function ProductDetails() {
                 +
               </button>
             </div>
-            <span className="text-xs text-gray-400 font-medium">
+            <span className="text-xs text-[#FAF7F0] font-medium">
               Subtotal: <strong className="text-[#E3BA63] font-bold text-sm">₹{product.stock === 0 ? 0 : product.price * selectedQuantity}</strong>
             </span>
           </div>
@@ -283,7 +283,7 @@ export default function ProductDetails() {
             <h3 className="text-lg font-bold text-[#FAF7F0] mb-4">Write a Product Review</h3>
             <form onSubmit={submitReview} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-200 mb-1">Rating</label>
+                <label className="block text-sm font-medium text-[#FAF7F0] mb-1">Rating</label>
                 <select 
                   value={rating} 
                   onChange={(e) => setRating(Number(e.target.value))} 
@@ -298,7 +298,7 @@ export default function ProductDetails() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-200 mb-1">Your Feedback</label>
+                <label className="block text-sm font-medium text-[#FAF7F0] mb-1">Your Feedback</label>
                 <textarea 
                   placeholder="Share details about what you liked or disliked about this product..." 
                   value={comment} 
@@ -327,7 +327,7 @@ export default function ProductDetails() {
         )}
 
         {!user && (
-          <div className="bg-black/30 border border-[#E3BA63]/20 p-4 rounded-xl text-gray-300 text-sm mb-8">
+          <div className="bg-black/30 border border-[#E3BA63]/20 p-4 rounded-xl text-[#FAF7F0] text-sm mb-8">
             Want to write a review? Please <Link to="/login" className="text-[#E3BA63] font-bold underline">login to your account</Link>.
           </div>
         )}
@@ -335,7 +335,7 @@ export default function ProductDetails() {
         {/* Existing Reviews List */}
         <div className="space-y-4">
           {!product.reviews || product.reviews.length === 0 ? (
-            <p className="text-gray-400 italic py-4">No reviews yet for this product. Be the first to share your experience!</p>
+            <p className="text-[#FAF7F0] italic py-4">No reviews yet for this product. Be the first to share your experience!</p>
           ) : (
             product.reviews.map((r, i) => (
               <div key={i} className="bg-black/30 border border-[#E3BA63]/20 p-4 rounded-xl space-y-2">
@@ -349,7 +349,7 @@ export default function ProductDetails() {
                 </div>
                 <p className="text-[#FAF7F0]/90 text-sm leading-relaxed">{r.comment}</p>
                 {r.createdAt && (
-                  <span className="text-[11px] text-gray-400 block pt-1">
+                  <span className="text-[11px] text-[#FAF7F0] block pt-1">
                     {new Date(r.createdAt).toLocaleDateString()}
                   </span>
                 )}

@@ -35,7 +35,7 @@ export default function AdminReplacements() {
       case 'APPROVED': return 'text-blue-400 bg-blue-400/10 border-blue-400/30';
       case 'REJECTED': return 'text-red-400 bg-red-400/10 border-red-400/30';
       case 'REPLACED': return 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30';
-      default: return 'text-gray-400 bg-gray-400/10 border-gray-400/30';
+      default: return 'text-[#FAF7F0] bg-gray-400/10 border-gray-400/30';
     }
   };
 
@@ -67,7 +67,7 @@ export default function AdminReplacements() {
             <h1 className="text-3xl font-extrabold text-[#FAF7F0] flex items-center gap-3">
               <FiRefreshCw className="text-[#E3BA63]" /> Replacement Requests
             </h1>
-            <p className="text-gray-400 text-sm">
+            <p className="text-[#FAF7F0] text-sm">
               Review customer damage claims, inspect photos, and update replacement statuses.
             </p>
           </div>
@@ -77,7 +77,7 @@ export default function AdminReplacements() {
           <div className="bg-[#011E15] border border-[#E3BA63]/30 p-12 rounded-3xl text-center shadow-xl">
             <FiRefreshCw className="w-16 h-16 mx-auto text-[#E3BA63]/40 mb-4" />
             <h2 className="text-xl font-bold text-[#FAF7F0] mb-2">No Replacement Requests</h2>
-            <p className="text-gray-400 text-sm">No customers have submitted replacement requests.</p>
+            <p className="text-[#FAF7F0] text-sm">No customers have submitted replacement requests.</p>
           </div>
         ) : (
           <div className="space-y-6">
@@ -89,15 +89,15 @@ export default function AdminReplacements() {
                 {/* Header Info */}
                 <div className="p-6 border-b border-[#E3BA63]/20 bg-black/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="space-y-1">
-                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Request ID: {req._id}</p>
+                    <p className="text-xs font-semibold text-[#FAF7F0] uppercase tracking-widest">Request ID: {req._id}</p>
                     <p className="text-[#FAF7F0] font-mono font-bold text-sm sm:text-base">Order ID: {req.order?._id || req.order}</p>
-                    <p className="text-xs text-gray-400 flex items-center gap-1">
-                      <FiUser className="text-[#E3BA63]" /> Customer: <span className="text-gray-200 font-semibold">{req.user?.name || req.user} ({req.user?.mobile})</span>
+                    <p className="text-xs text-[#FAF7F0] flex items-center gap-1">
+                      <FiUser className="text-[#E3BA63]" /> Customer: <span className="text-[#FAF7F0] font-semibold">{req.user?.name || req.user} ({req.user?.mobile})</span>
                     </p>
                   </div>
 
                   <div className="space-y-1 w-full sm:w-auto">
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-400">Request Status</label>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-[#FAF7F0]">Request Status</label>
                     <select 
                       value={req.status} 
                       onChange={(e) => handleStatusChange(req._id, e.target.value)}
@@ -122,19 +122,19 @@ export default function AdminReplacements() {
                       {req.product?.image ? (
                         <img src={req.product.image} alt="product" className="w-14 h-14 object-cover rounded-xl border border-[#E3BA63]/20 shrink-0" />
                       ) : (
-                        <div className="w-14 h-14 bg-black/50 rounded-xl flex items-center justify-center text-xs text-gray-500">No Img</div>
+                        <div className="w-14 h-14 bg-black/50 rounded-xl flex items-center justify-center text-xs text-[#FAF7F0]">No Img</div>
                       )}
                       <div>
                         <p className="font-bold text-[#FAF7F0] text-sm">{req.product?.title || 'Unknown Product'}</p>
-                        <p className="text-xs text-gray-400 font-mono">ID: {req.product?._id || req.product}</p>
+                        <p className="text-xs text-[#FAF7F0] font-mono">ID: {req.product?._id || req.product}</p>
                       </div>
                     </div>
 
-                    <div className="bg-[#00271a] border border-[#E3BA63]/30 p-4 rounded-2xl space-y-2">
+                    <div className="bg-[#011E15] border border-[#E3BA63]/30 p-4 rounded-2xl space-y-2">
                       <h4 className="text-xs font-bold text-[#E3BA63] uppercase tracking-wider flex items-center gap-1.5">
                         <FiAlertTriangle /> Claim Reason
                       </h4>
-                      <p className="text-gray-200 text-xs sm:text-sm leading-relaxed">{req.reason}</p>
+                      <p className="text-[#FAF7F0] text-xs sm:text-sm leading-relaxed">{req.reason}</p>
                     </div>
                   </div>
                   
@@ -160,7 +160,7 @@ export default function AdminReplacements() {
                         </div>
                       </a>
                     ) : (
-                      <div className="bg-black/30 border border-dashed border-[#E3BA63]/20 rounded-2xl p-6 text-center text-xs text-gray-400">
+                      <div className="bg-black/30 border border-dashed border-[#E3BA63]/20 rounded-2xl p-6 text-center text-xs text-[#FAF7F0]">
                         No image proof uploaded by customer.
                       </div>
                     )}

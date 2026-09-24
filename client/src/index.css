@@ -10,7 +10,13 @@
 }
 
 @layer base {
-  html, body, button, input, select, textarea {
+
+  html,
+  body,
+  button,
+  input,
+  select,
+  textarea {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
   }
 }
@@ -23,7 +29,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #003725;
-  color: #ffffff;
+  color: #011E15;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

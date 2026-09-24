@@ -46,7 +46,7 @@ export default function Register() {
             <span className="text-2xl">✨</span>
           </div>
           <h1 className="text-3xl font-extrabold text-[#FAF7F0]">Create Account</h1>
-          <p className="text-gray-300 text-sm mt-1">Join NKparty to start shopping</p>
+          <p className="text-[#FAF7F0] text-sm mt-1">Join NKparty to start shopping</p>
         </div>
 
         {error && (
@@ -57,19 +57,19 @@ export default function Register() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-200 mb-1.5">Full Name</label>
+            <label className="block text-sm font-medium text-[#FAF7F0] mb-1.5">Full Name</label>
             <input 
               type="text" 
               placeholder="Enter your full name" 
               value={name} 
               onChange={e => setName(e.target.value)} 
               required 
-              className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
+              className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-200 mb-1.5">Mobile Number</label>
+            <label className="block text-sm font-medium text-[#FAF7F0] mb-1.5">Mobile Number</label>
             <input 
               type="text" 
               placeholder="Enter 10-digit mobile number" 
@@ -77,24 +77,24 @@ export default function Register() {
               onChange={e => setMobile(e.target.value.replace(/\D/g, ''))} 
               required 
               maxLength={10}
-              className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
+              className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-200 mb-1.5">Email Address</label>
+            <label className="block text-sm font-medium text-[#FAF7F0] mb-1.5">Email Address</label>
             <input 
               type="email" 
               placeholder="Enter your email address" 
               value={email} 
               onChange={e => setEmail(e.target.value)} 
               required 
-              className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
+              className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-200 mb-1.5">Password</label>
+            <label className="block text-sm font-medium text-[#FAF7F0] mb-1.5">Password</label>
             <input 
               type="password" 
               placeholder="At least 6 characters" 
@@ -102,7 +102,7 @@ export default function Register() {
               onChange={e => setPassword(e.target.value)} 
               required 
               minLength={6}
-              className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
+              className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
             />
           </div>
 
@@ -125,7 +125,7 @@ export default function Register() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-300">
+        <div className="mt-6 text-center text-sm text-[#FAF7F0]">
           {"Already have an account?"}{' '}
           <Link to="/login" className="text-[#E3BA63] font-bold hover:underline">
             Login Here

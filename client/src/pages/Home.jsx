@@ -124,7 +124,7 @@ export default function Home() {
             disabled={isAdding || isOutOfStock}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 flex items-center gap-1.5 shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${
               isOutOfStock
-                ? 'bg-gray-700 text-gray-400 border border-gray-600'
+                ? 'bg-gray-700 text-[#FAF7F0] border border-gray-600'
                 : isRecentlyAdded
                 ? 'bg-emerald-600 text-white border border-emerald-400'
                 : 'bg-[#E3BA63] hover:bg-[#cda24d] text-[#011E15] hover:shadow-lg'
@@ -193,7 +193,7 @@ export default function Home() {
                 <span>📦</span> Products
               </h2>
               {products.length === 0 ? (
-                <p className="text-gray-300">No products found.</p>
+                <p className="text-[#FAF7F0]">No products found.</p>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                   {products.map(renderCard)}
@@ -207,7 +207,7 @@ export default function Home() {
                 <span>🎉</span> Party Services
               </h2>
               {services.length === 0 ? (
-                <p className="text-gray-300">No party services available right now.</p>
+                <p className="text-[#FAF7F0]">No party services available right now.</p>
               ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                   {services.map(renderCard)}

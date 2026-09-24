@@ -94,7 +94,7 @@ export default function AdminBanners() {
             <h1 className="text-3xl font-extrabold text-[#FAF7F0] flex items-center gap-3">
               <FiImage className="text-[#E3BA63]" /> Manage Homepage Banners
             </h1>
-            <p className="text-gray-400 text-sm">
+            <p className="text-[#FAF7F0] text-sm">
               Upload and arrange promotional carousel banners for your store homepage.
             </p>
           </div>
@@ -115,13 +115,13 @@ export default function AdminBanners() {
               
               {/* File Input */}
               <div className="md:col-span-2">
-                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">
                   Banner Image File
                 </label>
                 <div className="flex items-center gap-4">
-                  <label className="flex-1 border-2 border-dashed border-[#E3BA63]/30 hover:border-[#E3BA63] rounded-2xl p-4 text-center cursor-pointer bg-[#00271a] transition-colors">
+                  <label className="flex-1 border-2 border-dashed border-[#E3BA63]/30 hover:border-[#E3BA63] rounded-2xl p-4 text-center cursor-pointer bg-[#011E15] transition-colors">
                     <FiUpload className="w-6 h-6 mx-auto text-[#E3BA63] mb-1" />
-                    <span className="text-xs text-gray-300 font-semibold block">
+                    <span className="text-xs text-[#FAF7F0] font-semibold block">
                       {imageFile ? imageFile.name : 'Click to select or drag banner image'}
                     </span>
                     <input 
@@ -134,12 +134,12 @@ export default function AdminBanners() {
                     />
                   </label>
                 </div>
-                <p className="text-[11px] text-gray-400 mt-2">Recommended aspect ratio: 16:9 or banner dimension (e.g. 1200x400px)</p>
+                <p className="text-[11px] text-[#FAF7F0] mt-2">Recommended aspect ratio: 16:9 or banner dimension (e.g. 1200x400px)</p>
               </div>
 
               {/* Display Order */}
               <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">
                   Display Order
                 </label>
                 <input 
@@ -147,9 +147,9 @@ export default function AdminBanners() {
                   value={order} 
                   onChange={(e) => setOrder(Number(e.target.value))} 
                   disabled={isSubmitting}
-                  className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] focus:outline-none focus:border-[#E3BA63]"
+                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] focus:outline-none focus:border-[#E3BA63]"
                 />
-                <p className="text-[11px] text-gray-400 mt-2">Lower numbers appear first in slider</p>
+                <p className="text-[11px] text-[#FAF7F0] mt-2">Lower numbers appear first in slider</p>
               </div>
 
             </div>
@@ -205,8 +205,8 @@ export default function AdminBanners() {
             </div>
           ) : banners.length === 0 ? (
             <div className="text-center py-12 bg-[#011E15] rounded-3xl border border-dashed border-[#E3BA63]/30">
-              <FiImage className="w-12 h-12 mx-auto text-gray-500 mb-3" />
-              <p className="text-gray-400">No banners found. Upload your first banner above!</p>
+              <FiImage className="w-12 h-12 mx-auto text-[#FAF7F0] mb-3" />
+              <p className="text-[#FAF7F0]">No banners found. Upload your first banner above!</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

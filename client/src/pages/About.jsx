@@ -15,7 +15,7 @@ export default function About() {
             Crafting Unforgettable <br />
             <span className="text-[#E3BA63]">Moments & Celebrations</span>
           </h1>
-          <p className="text-gray-300 max-w-3xl mx-auto text-base sm:text-xl leading-relaxed">
+          <p className="text-[#FAF7F0] max-w-3xl mx-auto text-base sm:text-xl leading-relaxed">
             Welcome to <span className="text-[#E3BA63] font-bold">NK Party</span>, where luxury meets celebration. We curate premium party decor, high-end celebration supplies, and bespoke event packages designed to turn every milestone into a timeless memory.
           </p>
         </div>
@@ -27,7 +27,7 @@ export default function About() {
               <FiHeart />
             </div>
             <h2 className="text-2xl font-bold text-[#FAF7F0] mb-4">Our Mission</h2>
-            <p className="text-gray-300 leading-relaxed text-base">
+            <p className="text-[#FAF7F0] leading-relaxed text-base">
               To bring unparalleled elegance, joy, and luxury to every event. From intimate family gatherings to grand wedding galas, we deliver curated decor items that elevate your space with flawless aesthetics.
             </p>
           </div>
@@ -37,7 +37,7 @@ export default function About() {
               <FiAward />
             </div>
             <h2 className="text-2xl font-bold text-[#FAF7F0] mb-4">Uncompromising Quality</h2>
-            <p className="text-gray-300 leading-relaxed text-base">
+            <p className="text-[#FAF7F0] leading-relaxed text-base">
               Every balloon arc, table accent, and lighting piece in our collection is handpicked for its superior build and visual flair. We don't just sell decor; we design experience.
             </p>
           </div>
@@ -55,7 +55,7 @@ export default function About() {
                 <FiShield />
               </div>
               <h3 className="font-bold text-[#FAF7F0] text-lg">Premium Guarantee</h3>
-              <p className="text-gray-400 text-sm">100% genuine and durable celebration supplies checked for quality.</p>
+              <p className="text-[#FAF7F0] text-sm">100% genuine and durable celebration supplies checked for quality.</p>
             </div>
 
             <div className="text-center space-y-3">
@@ -63,7 +63,7 @@ export default function About() {
                 <FiTruck />
               </div>
               <h3 className="font-bold text-[#FAF7F0] text-lg">Express Delivery</h3>
-              <p className="text-gray-400 text-sm">Fast, safe dispatch to make sure your party prep never hits a delay.</p>
+              <p className="text-[#FAF7F0] text-sm">Fast, safe dispatch to make sure your party prep never hits a delay.</p>
             </div>
 
             <div className="text-center space-y-3">
@@ -71,7 +71,7 @@ export default function About() {
                 <FiSmile />
               </div>
               <h3 className="font-bold text-[#FAF7F0] text-lg">Customer Joy</h3>
-              <p className="text-gray-400 text-sm">Thousands of delighted hosts and unforgettable party setups created.</p>
+              <p className="text-[#FAF7F0] text-sm">Thousands of delighted hosts and unforgettable party setups created.</p>
             </div>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function About() {
         {/* CTA Section */}
         <div className="bg-gradient-to-r from-[#011E15] via-[#002b1d] to-[#011E15] border border-[#E3BA63]/40 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-2xl">
           <h2 className="text-3xl font-extrabold text-[#FAF7F0]">Ready to Plan Your Next Grand Event?</h2>
-          <p className="text-gray-300 max-w-xl mx-auto">
+          <p className="text-[#FAF7F0] max-w-xl mx-auto">
             Explore our curated catalog of luxury themes, balloons, banners, and table settings.
           </p>
           <Link

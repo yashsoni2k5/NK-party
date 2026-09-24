@@ -24,7 +24,7 @@ export default function AdminDashboard() {
             <h1 className="text-3xl sm:text-4xl font-extrabold text-[#FAF7F0]">
               Admin <span className="text-[#E3BA63]">Dashboard</span>
             </h1>
-            <p className="text-gray-300 text-sm sm:text-base max-w-xl">
+            <p className="text-[#FAF7F0] text-sm sm:text-base max-w-xl">
               Select a control module below to manage store products, process orders, manage users, or update banners.
             </p>
           </div>
@@ -45,7 +45,7 @@ export default function AdminDashboard() {
                 <h2 className="text-xl font-bold text-[#FAF7F0] group-hover:text-[#E3BA63] transition-colors mb-2">
                   {link.title}
                 </h2>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-[#FAF7F0] text-sm leading-relaxed">
                   {link.desc}
                 </p>
               </div>

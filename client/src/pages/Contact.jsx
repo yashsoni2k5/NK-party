@@ -22,7 +22,7 @@ export default function Contact() {
           <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FAF7F0] tracking-tight">
             Contact <span className="text-[#E3BA63]">Customer Support</span>
           </h1>
-          <p className="text-gray-300 max-w-2xl mx-auto text-base sm:text-lg">
+          <p className="text-[#FAF7F0] max-w-2xl mx-auto text-base sm:text-lg">
             Have questions about an order, customized requirements, or general inquiries? We are here to ensure your experience is seamless and luxurious.
           </p>
         </div>
@@ -40,7 +40,7 @@ export default function Contact() {
                   <FiMail className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Email Us</p>
+                  <p className="text-xs text-[#FAF7F0] font-semibold uppercase tracking-wider">Email Us</p>
                   <a href="mailto:support@nkparty.com" className="text-[#FAF7F0] font-bold hover:text-[#E3BA63] transition-colors">
                     support@nkparty.com
                   </a>
@@ -52,7 +52,7 @@ export default function Contact() {
                   <FiPhone className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Call Us</p>
+                  <p className="text-xs text-[#FAF7F0] font-semibold uppercase tracking-wider">Call Us</p>
                   <a href="tel:+919999988888" className="text-[#FAF7F0] font-bold hover:text-[#E3BA63] transition-colors">
                     +91 99999 88888
                   </a>
@@ -64,7 +64,7 @@ export default function Contact() {
                   <FiMapPin className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Headquarters</p>
+                  <p className="text-xs text-[#FAF7F0] font-semibold uppercase tracking-wider">Headquarters</p>
                   <p className="text-[#FAF7F0] font-medium leading-snug">
                     123 Party Street, Celebration City, India
                   </p>
@@ -77,7 +77,7 @@ export default function Contact() {
               <h3 className="text-lg font-bold text-[#25D366] flex items-center gap-2">
                 💬 Instant WhatsApp Support
               </h3>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-[#FAF7F0]">
                 Need immediate response regarding an urgent order? Chat directly with our customer concierge.
               </p>
               <a
@@ -106,50 +106,50 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Your Name</label>
+                  <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Your Name</label>
                   <input
                     type="text"
                     required
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                    className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Email Address</label>
+                  <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Email Address</label>
                   <input
                     type="email"
                     required
                     placeholder="john@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                    className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Subject</label>
+                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Subject</label>
                 <input
                   type="text"
                   required
                   placeholder="Order Inquiry / Feedback"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Message</label>
+                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Message</label>
                 <textarea
                   rows={5}
                   required
                   placeholder="Describe your inquiry in detail..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63] resize-none"
+                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63] resize-none"
                 />
               </div>
 

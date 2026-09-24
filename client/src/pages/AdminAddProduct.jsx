@@ -128,7 +128,7 @@ export default function AdminAddProduct() {
               <h1 className="text-2xl sm:text-3xl font-extrabold text-[#FAF7F0]">
                 {isEditMode ? 'Edit Item Details' : 'Add New Item'}
               </h1>
-              <p className="text-gray-400 text-xs sm:text-sm">
+              <p className="text-[#FAF7F0] text-xs sm:text-sm">
                 Fill in the product or service specifications below.
               </p>
             </div>
@@ -137,12 +137,12 @@ export default function AdminAddProduct() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Item Type</label>
+                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Item Type</label>
                 <select 
                   name="itemType" 
                   value={productData.itemType} 
                   onChange={handleChange} 
-                  className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] focus:outline-none focus:border-[#E3BA63]"
+                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] focus:outline-none focus:border-[#E3BA63]"
                 >
                   <option value="PRODUCT">Physical Product</option>
                   <option value="SERVICE">Service (e.g., Party Decoration)</option>
@@ -150,45 +150,45 @@ export default function AdminAddProduct() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Category</label>
+                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Category</label>
                 <input 
                   name="category" 
                   placeholder="e.g. Birthday Decor, Balloons" 
                   value={productData.category} 
                   onChange={handleChange} 
                   required 
-                  className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Title</label>
+              <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Title</label>
               <input 
                 name="title" 
                 placeholder="e.g. Royal Gold Metallic Balloon Set" 
                 value={productData.title} 
                 onChange={handleChange} 
                 required 
-                className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Tags (Comma Separated)</label>
+              <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Tags (Comma Separated)</label>
               <input 
                 name="tag" 
                 placeholder="e.g. luxury, wedding, balloons, gold" 
                 value={productData.tag} 
                 onChange={handleChange} 
                 required 
-                className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
               />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Price (₹)</label>
+                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Price (₹)</label>
                 <input 
                   name="price" 
                   type="number" 
@@ -196,12 +196,12 @@ export default function AdminAddProduct() {
                   value={productData.price} 
                   onChange={handleChange} 
                   required 
-                  className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Stock (Qty or 999+ for Services)</label>
+                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Stock (Qty or 999+ for Services)</label>
                 <input 
                   name="stock" 
                   type="number" 
@@ -209,13 +209,13 @@ export default function AdminAddProduct() {
                   value={productData.stock} 
                   onChange={handleChange} 
                   required 
-                  className="w-full bg-[#00271a] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">
                 {isEditMode ? 'Update Product Image (Optional)' : 'Upload Product Image'}
               </label>
               <div className="flex items-center gap-4">
@@ -224,9 +224,9 @@ export default function AdminAddProduct() {
                     <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                 )}
-                <label className="flex-1 border-2 border-dashed border-[#E3BA63]/30 hover:border-[#E3BA63] rounded-2xl p-4 text-center cursor-pointer bg-[#00271a]/50 hover:bg-[#00271a] transition-colors">
+                <label className="flex-1 border-2 border-dashed border-[#E3BA63]/30 hover:border-[#E3BA63] rounded-2xl p-4 text-center cursor-pointer bg-[#011E15]/50 hover:bg-[#011E15] transition-colors">
                   <FiUpload className="w-6 h-6 mx-auto text-[#E3BA63] mb-1" />
-                  <span className="text-xs text-gray-300 font-semibold block">
+                  <span className="text-xs text-[#FAF7F0] font-semibold block">
                     {imageFile ? imageFile.name : 'Click to select or drag image file'}
                   </span>
                   <input type="file" accept="image/*" onChange={handleImageChange} required={!isEditMode} className="hidden" />

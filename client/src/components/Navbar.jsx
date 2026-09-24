@@ -67,7 +67,7 @@ export default function Navbar() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search..."
                   autoFocus
-                  className="bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 px-3 py-1 rounded-full outline-none text-xs sm:text-sm w-36 sm:w-48 md:w-52 placeholder-gray-400 focus:ring-2 focus:ring-[#E3BA63] shadow-2xl"
+                  className="bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 px-3 py-1 rounded-full outline-none text-xs sm:text-sm w-36 sm:w-48 md:w-52 placeholder-gray-400 focus:ring-2 focus:ring-[#E3BA63] shadow-2xl"
                 />
               </form>
             )}
@@ -124,7 +124,7 @@ export default function Navbar() {
         <div className="flex flex-col p-5 space-y-4">
           {user ? (
             <>
-              <div className="flex items-center gap-3 p-3.5 bg-[#00271a] border border-[#E3BA63]/30 rounded-xl">
+              <div className="flex items-center gap-3 p-3.5 bg-[#011E15] border border-[#E3BA63]/30 rounded-xl">
                 <div className="bg-[#E3BA63] text-[#011E15] p-2 rounded-full font-bold">
                   <FiUser />
                 </div>

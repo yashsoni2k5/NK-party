@@ -105,7 +105,7 @@ export default function Login() {
             <span className="text-2xl">🔐</span>
           </div>
           <h1 className="text-3xl font-extrabold text-[#FAF7F0]">Welcome Back</h1>
-          <p className="text-gray-300 text-sm mt-1">Login to access your NKparty account</p>
+          <p className="text-[#FAF7F0] text-sm mt-1">Login to access your NKparty account</p>
         </div>
 
         {error && (
@@ -116,7 +116,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-200 mb-1.5">Mobile Number</label>
+            <label className="block text-sm font-medium text-[#FAF7F0] mb-1.5">Mobile Number</label>
             <input 
               type="text" 
               placeholder="Enter 10-digit mobile number" 
@@ -124,13 +124,13 @@ export default function Login() {
               onChange={e => setMobile(e.target.value.replace(/\D/g, ''))} 
               required 
               maxLength={10}
-              className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
+              className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
             />
           </div>
 
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="text-sm font-medium text-gray-200">Password</label>
+              <label className="text-sm font-medium text-[#FAF7F0]">Password</label>
               <button
                 type="button"
                 onClick={() => {
@@ -150,7 +150,7 @@ export default function Login() {
               value={password} 
               onChange={e => setPassword(e.target.value)} 
               required 
-              className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
+              className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63] placeholder-gray-400"
             />
           </div>
 
@@ -173,7 +173,7 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-gray-300">
+        <div className="mt-6 text-center text-sm text-[#FAF7F0]">
           {"Don't have an account?"}{' '}
           <Link to="/register" className="text-[#E3BA63] font-bold hover:underline">
             Create Account
@@ -188,13 +188,13 @@ export default function Login() {
           <div className="bg-[#011E15] border border-[#E3BA63]/40 rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl relative">
             <button 
               onClick={() => setIsForgotModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white text-xl"
+              className="absolute top-4 right-4 text-[#FAF7F0] hover:text-white text-xl"
             >
               ✕
             </button>
 
             <h2 className="text-2xl font-bold text-[#E3BA63] mb-2">Reset Password</h2>
-            <p className="text-xs text-gray-300 mb-6">
+            <p className="text-xs text-[#FAF7F0] mb-6">
               {forgotStep === 1 
                 ? "Enter your registered email address or mobile number to receive a reset OTP." 
                 : "Enter the OTP sent to your account along with your new password."}
@@ -220,14 +220,14 @@ export default function Login() {
             {forgotStep === 1 ? (
               <form onSubmit={handleRequestOTP} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-200 mb-1">Email or Mobile Number</label>
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Email or Mobile Number</label>
                   <input 
                     type="text" 
                     placeholder="Enter email or 10-digit mobile" 
                     value={forgotIdentifier}
                     onChange={(e) => setForgotIdentifier(e.target.value)}
                     required
-                    className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63]"
+                    className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63]"
                   />
                 </div>
 
@@ -242,7 +242,7 @@ export default function Login() {
             ) : (
               <form onSubmit={handleResetPassword} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-200 mb-1">Enter 6-digit OTP</label>
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Enter 6-digit OTP</label>
                   <input 
                     type="text" 
                     placeholder="Enter OTP (e.g. 123456)" 
@@ -250,19 +250,19 @@ export default function Login() {
                     onChange={(e) => setOtpInput(e.target.value.replace(/\D/g, ''))}
                     maxLength={6}
                     required
-                    className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63]"
+                    className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-200 mb-1">New Password</label>
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">New Password</label>
                   <input 
                     type="password" 
                     placeholder="At least 6 characters" 
                     value={newPasswordInput}
                     onChange={(e) => setNewPasswordInput(e.target.value)}
                     required
-                    className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63]"
+                    className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63]"
                   />
                 </div>
 

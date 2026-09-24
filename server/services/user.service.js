@@ -60,7 +60,11 @@ const UserServices = {
 
       await newUser.save();
       
-      const token = jwt.sign({ userId: newUser._id }, process.env.jwtsecret || "your-secret-key");
+      const token = jwt.sign(
+        { userId: newUser._id }, 
+        process.env.jwtsecret || "your-secret-key",
+        { expiresIn: "7d" }
+      );
       const userToReturn = newUser.toObject();
       delete userToReturn.password;
 
@@ -96,7 +100,11 @@ const UserServices = {
         throw new HttpException(400, "Invalid credentials");
       }
 
-      const token = jwt.sign({ userId: user._id }, process.env.jwtsecret || "your-secret-key");
+      const token = jwt.sign(
+        { userId: user._id }, 
+        process.env.jwtsecret || "your-secret-key",
+        { expiresIn: "7d" }
+      );
       const userToReturn = user.toObject();
       delete userToReturn.password;
 

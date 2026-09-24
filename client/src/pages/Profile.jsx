@@ -74,26 +74,26 @@ export default function Profile() {
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
             <div className="bg-black/30 border border-[#E3BA63]/20 p-5 rounded-2xl">
-              <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
+              <p className="text-xs text-[#FAF7F0] uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
                 <FiUser className="text-[#E3BA63]" /> Full Name
               </p>
               <p className="text-xl font-bold text-[#FAF7F0]">{user.name}</p>
             </div>
             <div className="bg-black/30 border border-[#E3BA63]/20 p-5 rounded-2xl">
-              <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
+              <p className="text-xs text-[#FAF7F0] uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
                 <FiPhone className="text-[#E3BA63]" /> Mobile Number
               </p>
               <p className="text-xl font-bold text-[#FAF7F0]">{user.mobile}</p>
             </div>
             <div className="bg-black/30 border border-[#E3BA63]/20 p-5 rounded-2xl">
-              <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
+              <p className="text-xs text-[#FAF7F0] uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
                 💳 Wallet Balance
               </p>
               <p className="text-xl font-bold text-[#E3BA63]">₹{user.walletBalance || 0}</p>
             </div>
             <div className="bg-black/30 border border-[#E3BA63]/20 p-5 rounded-2xl sm:col-span-2 lg:col-span-3 flex justify-between items-center">
               <div>
-                <p className="text-xs text-gray-400 uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
+                <p className="text-xs text-[#FAF7F0] uppercase tracking-widest font-semibold mb-1 flex items-center gap-2">
                   Role
                 </p>
                 <p className="text-lg font-bold text-[#FAF7F0] capitalize">{user.role}</p>
@@ -125,34 +125,34 @@ export default function Profile() {
             <div className="bg-black/40 border border-[#E3BA63]/30 p-6 rounded-2xl mb-8">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl font-bold text-[#FAF7F0]">Add New Address</h3>
-                <button onClick={() => setShowAddForm(false)} className="text-gray-400 hover:text-red-400 transition-colors">
+                <button onClick={() => setShowAddForm(false)} className="text-[#FAF7F0] hover:text-red-400 transition-colors">
                   <FiX className="w-6 h-6" />
                 </button>
               </div>
               <form onSubmit={handleAddAddress} className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-semibold text-gray-400 mb-1">Full Name</label>
-                  <input name="name" placeholder="E.g. John Doe" value={newAddress.name} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Full Name</label>
+                  <input name="name" placeholder="E.g. John Doe" value={newAddress.name} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1">Mobile Number</label>
-                  <input name="mobile" placeholder="10-digit mobile" value={newAddress.mobile} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Mobile Number</label>
+                  <input name="mobile" placeholder="10-digit mobile" value={newAddress.mobile} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1">Pincode</label>
-                  <input name="pincode" type="number" placeholder="6-digit PIN" value={newAddress.pincode} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Pincode</label>
+                  <input name="pincode" type="number" placeholder="6-digit PIN" value={newAddress.pincode} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-semibold text-gray-400 mb-1">House No / Flat / Building</label>
-                  <input name="house_no" placeholder="E.g. Flat 402, Signature Towers" value={newAddress.house_no} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">House No / Flat / Building</label>
+                  <input name="house_no" placeholder="E.g. Flat 402, Signature Towers" value={newAddress.house_no} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1">Area / Locality</label>
-                  <input name="area" placeholder="E.g. Sector 15" value={newAddress.area} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">Area / Locality</label>
+                  <input name="area" placeholder="E.g. Sector 15" value={newAddress.area} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1">City</label>
-                  <input name="city" placeholder="E.g. New Delhi" value={newAddress.city} onChange={handleChange} required className="w-full bg-[#00271a] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
+                  <label className="block text-xs font-semibold text-[#FAF7F0] mb-1">City</label>
+                  <input name="city" placeholder="E.g. New Delhi" value={newAddress.city} onChange={handleChange} required className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#E3BA63]" />
                 </div>
                 
                 <div className="sm:col-span-2 flex gap-3 mt-4">
@@ -169,8 +169,8 @@ export default function Profile() {
 
           {addresses.length === 0 ? (
             <div className="text-center py-10 bg-black/20 rounded-2xl border border-dashed border-[#E3BA63]/30">
-              <FiMapPin className="w-12 h-12 mx-auto text-gray-500 mb-3" />
-              <p className="text-gray-400">You have no saved addresses yet.</p>
+              <FiMapPin className="w-12 h-12 mx-auto text-[#FAF7F0] mb-3" />
+              <p className="text-[#FAF7F0]">You have no saved addresses yet.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -184,7 +184,7 @@ export default function Profile() {
                   <p className="font-bold text-[#FAF7F0] text-lg">{addr.name}</p>
                   <p className="text-[#E3BA63] font-semibold text-sm mb-2">{addr.mobile}</p>
                   
-                  <div className="text-gray-300 text-sm leading-relaxed">
+                  <div className="text-[#FAF7F0] text-sm leading-relaxed">
                     <p>{addr.house_no}, {addr.area}</p>
                     <p>{addr.city}, {addr.pincode}</p>
                   </div>

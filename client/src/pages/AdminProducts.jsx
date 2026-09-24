@@ -62,7 +62,7 @@ export default function AdminProducts() {
             <h1 className="text-3xl font-extrabold text-[#FAF7F0] flex items-center gap-3">
               <FiPackage className="text-[#E3BA63]" /> Inventory Management
             </h1>
-            <p className="text-gray-400 text-sm">
+            <p className="text-[#FAF7F0] text-sm">
               Manage your products and party decoration services catalog.
             </p>
           </div>
@@ -79,7 +79,7 @@ export default function AdminProducts() {
           <div className="bg-[#011E15] border border-[#E3BA63]/30 p-12 rounded-3xl text-center shadow-xl">
             <FiPackage className="w-16 h-16 mx-auto text-[#E3BA63]/40 mb-4" />
             <h2 className="text-xl font-bold text-[#FAF7F0] mb-2">No Items in Inventory</h2>
-            <p className="text-gray-400 mb-6 text-sm">Click the button above to add your first product or service.</p>
+            <p className="text-[#FAF7F0] mb-6 text-sm">Click the button above to add your first product or service.</p>
             <Link to="/admin/add-product" className="inline-flex items-center gap-2 bg-[#E3BA63] text-[#011E15] px-6 py-3 rounded-xl font-bold">
               <FiPlus /> Add Item
             </Link>
@@ -104,7 +104,7 @@ export default function AdminProducts() {
 
                 <div className="p-5 flex-1 flex flex-col space-y-3">
                   <div>
-                    <span className="text-xs text-gray-400 font-semibold uppercase tracking-wider block mb-1">
+                    <span className="text-xs text-[#FAF7F0] font-semibold uppercase tracking-wider block mb-1">
                       {item.category}
                     </span>
                     <h3 className="font-bold text-[#FAF7F0] text-base truncate group-hover:text-[#E3BA63] transition-colors">
@@ -114,7 +114,7 @@ export default function AdminProducts() {
 
                   <div className="flex justify-between items-baseline pt-2">
                     <p className="text-[#E3BA63] font-extrabold text-xl">₹{item.price}</p>
-                    <p className="text-xs text-gray-400">Stock: <span className="font-bold text-gray-200">{item.stock}</span></p>
+                    <p className="text-xs text-[#FAF7F0]">Stock: <span className="font-bold text-[#FAF7F0]">{item.stock}</span></p>
                   </div>
 
                   <div className="mt-auto pt-4 flex gap-3 border-t border-[#E3BA63]/10">

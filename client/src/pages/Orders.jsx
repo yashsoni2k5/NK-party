@@ -38,7 +38,7 @@ export default function Orders() {
       case 'CANCELLED': return 'text-red-400 bg-red-400/10 border-red-400/30';
       case 'REPLACEMENT_REQUESTED': return 'text-yellow-400 bg-yellow-400/10 border-yellow-400/30';
       case 'REPLACED': return 'text-teal-400 bg-teal-400/10 border-teal-400/30';
-      default: return 'text-gray-400 bg-gray-400/10 border-gray-400/30';
+      default: return 'text-[#FAF7F0] bg-gray-400/10 border-gray-400/30';
     }
   };
 
@@ -66,7 +66,7 @@ export default function Orders() {
           <div className="bg-[#011E15] border border-[#E3BA63]/30 p-12 rounded-3xl text-center shadow-xl">
             <div className="text-6xl mb-4">🛍️</div>
             <h2 className="text-2xl font-bold text-[#E3BA63] mb-2">No Orders Found</h2>
-            <p className="text-gray-400 mb-6">Looks like you haven't placed any orders yet.</p>
+            <p className="text-[#FAF7F0] mb-6">Looks like you haven't placed any orders yet.</p>
             <Link to="/" className="bg-[#E3BA63] text-[#011E15] px-6 py-3 rounded-xl font-bold hover:bg-[#cda24d] transition-colors shadow-lg">
               Start Shopping
             </Link>
@@ -80,7 +80,7 @@ export default function Orders() {
               {/* Order Header */}
               <div className="p-5 sm:p-6 border-b border-[#E3BA63]/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-black/20">
                 <div>
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1">Order ID</p>
+                  <p className="text-xs font-semibold text-[#FAF7F0] uppercase tracking-widest mb-1">Order ID</p>
                   <p className="text-[#FAF7F0] font-mono text-sm sm:text-base">{order._id}</p>
                 </div>
                 <div className="flex flex-col sm:items-end gap-2">
@@ -88,7 +88,7 @@ export default function Orders() {
                     {order.status.replace(/_/g, ' ')}
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-gray-400 uppercase tracking-wider">Total</p>
+                    <p className="text-xs text-[#FAF7F0] uppercase tracking-wider">Total</p>
                     <p className="text-[#E3BA63] font-extrabold text-lg">₹{order.total}</p>
                   </div>
                 </div>
@@ -102,13 +102,13 @@ export default function Orders() {
                       {item.product?.image ? (
                         <img src={item.product.image} alt="product" className="w-full h-full object-cover" />
                       ) : (
-                        <span className="text-gray-500 text-xs">No image</span>
+                        <span className="text-[#FAF7F0] text-xs">No image</span>
                       )}
                     </div>
                     <div className="flex-grow">
                       <strong className="block text-[#FAF7F0] font-bold text-base mb-1">{item.product?.title || 'Product Unavailable'}</strong>
-                      <div className="flex items-center gap-3 text-sm text-gray-400">
-                        <span>Qty: <span className="font-bold text-gray-300">{item.quantity}</span></span>
+                      <div className="flex items-center gap-3 text-sm text-[#FAF7F0]">
+                        <span>Qty: <span className="font-bold text-[#FAF7F0]">{item.quantity}</span></span>
                         <span>•</span>
                         <span>Price: <span className="font-bold text-[#E3BA63]">₹{item.priceAtPurchase}</span></span>
                       </div>
@@ -133,8 +133,8 @@ export default function Orders() {
 
               {/* Order Footer */}
               <div className="p-5 sm:p-6 border-t border-[#E3BA63]/20 bg-black/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className="text-sm text-gray-400">
-                  <span className="font-semibold text-gray-300">Delivering to:</span> {order.deliveryAddress?.house_no}, {order.deliveryAddress?.city}
+                <div className="text-sm text-[#FAF7F0]">
+                  <span className="font-semibold text-[#FAF7F0]">Delivering to:</span> {order.deliveryAddress?.house_no}, {order.deliveryAddress?.city}
                 </div>
                 
                 {(order.status === 'PENDING' || order.status === 'PROCESSING') && (

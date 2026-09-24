@@ -67,7 +67,7 @@ export default function Cart() {
         <div className="max-w-lg w-full bg-[#011E15] border border-[#E3BA63]/30 rounded-3xl p-8 sm:p-12 text-center shadow-2xl">
           <div className="text-6xl mb-6">🛒</div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-[#FAF7F0] mb-3">Your Cart is Empty</h2>
-          <p className="text-gray-300 mb-8 text-sm sm:text-base leading-relaxed">
+          <p className="text-[#FAF7F0] mb-8 text-sm sm:text-base leading-relaxed">
             Looks like you haven't added any luxury items or party essentials to your shopping cart yet.
           </p>
           <button 
@@ -115,7 +115,7 @@ export default function Cart() {
                     {p.image ? (
                       <img src={p.image} alt={p.title} className="w-full h-full object-cover" />
                     ) : (
-                      <span className="text-gray-500 text-xs">No image</span>
+                      <span className="text-[#FAF7F0] text-xs">No image</span>
                     )}
                   </div>
 
@@ -125,7 +125,7 @@ export default function Cart() {
                       {p.title || "Product Unavailable"}
                     </h3>
                     <p className="text-[#E3BA63] font-extrabold text-lg mb-2">
-                      ₹{p.price || 0} <span className="text-xs text-gray-400 font-normal">/ unit</span>
+                      ₹{p.price || 0} <span className="text-xs text-[#FAF7F0] font-normal">/ unit</span>
                     </p>
                     <p className="text-xs text-emerald-400 font-medium">In Stock • Fast Delivery</p>
                   </div>
@@ -160,7 +160,7 @@ export default function Cart() {
 
                     {/* Subtotal & Delete */}
                     <div className="flex items-center justify-between sm:justify-end gap-4 w-full">
-                      <span className="text-xs text-gray-300">
+                      <span className="text-xs text-[#FAF7F0]">
                         Total: <strong className="text-[#E3BA63] font-bold text-sm">₹{(p.price || 0) * item.quantity}</strong>
                       </span>
                       
@@ -186,11 +186,11 @@ export default function Cart() {
             </h2>
             
             <div className="space-y-3 mb-6">
-              <div className="flex justify-between text-sm text-gray-300">
+              <div className="flex justify-between text-sm text-[#FAF7F0]">
                 <span>Items Subtotal ({cartItems.reduce((acc, item) => acc + item.quantity, 0)})</span>
                 <span className="font-semibold text-[#FAF7F0]">₹{cartTotal}</span>
               </div>
-              <div className="flex justify-between text-sm text-gray-300">
+              <div className="flex justify-between text-sm text-[#FAF7F0]">
                 <span>Shipping & Delivery</span>
                 <span className="text-emerald-400 font-bold">FREE</span>
               </div>
@@ -218,7 +218,7 @@ export default function Cart() {
               className={`w-full py-4 rounded-xl font-extrabold text-base transition-all duration-200 shadow-xl flex items-center justify-center gap-2 ${
                 cartTotal >= 500
                   ? 'bg-[#E3BA63] hover:bg-[#cda24d] text-[#011E15] active:scale-95 cursor-pointer'
-                  : 'bg-gray-800 text-gray-500 cursor-not-allowed border border-gray-700'
+                  : 'bg-gray-800 text-[#FAF7F0] cursor-not-allowed border border-gray-700'
               }`}
             >
               {cartTotal >= 500 ? (
@@ -232,7 +232,7 @@ export default function Cart() {
             </button>
 
             <div className="mt-4 text-center">
-              <span className="text-[11px] text-gray-400 uppercase tracking-widest flex items-center justify-center gap-1">
+              <span className="text-[11px] text-[#FAF7F0] uppercase tracking-widest flex items-center justify-center gap-1">
                 <span className="text-[#E3BA63]">🔒</span> 100% Safe & Secure Checkout
               </span>
             </div>
