@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 require("dotenv").config();
 const cors = require("cors");
 const morgan = require("morgan");
@@ -54,6 +55,13 @@ app.use(limiter);
 // Removed obsolete Cloudinary config and /upload route
 
 Routes.map(({ path, router }) => app.use(path, router));
+
+// Serve static frontend in production or if running server directly
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+});
 
 app.use(errorMiddleware);
 
