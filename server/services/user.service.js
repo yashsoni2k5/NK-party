@@ -68,7 +68,7 @@ const UserServices = {
       const newUser = new UserModel({
         ...registrationDetails,
         password: hashedPassword,
-        isEmailVerified: false,
+        isEmailVerified: true, // TEMPORARY: Auto-verify so users can login on Render free tier
         emailVerificationOTP: hashedOTP,
         emailVerificationExpires: expiresAt,
         otpAttempts: 0,
@@ -77,13 +77,13 @@ const UserServices = {
 
       await newUser.save();
 
-      // Send the email
-      await EmailService.sendVerificationEmail(email, name, otp, process.env.OTP_EXPIRY_MINUTES || 10);
+      // TEMPORARY: Skip sending email due to Render free tier SMTP blocks
+      // await EmailService.sendVerificationEmail(email, name, otp, process.env.OTP_EXPIRY_MINUTES || 10);
 
       return {
         success: true,
-        message: "Registration successful. Please verify your email.",
-        requiresVerification: true,
+        message: "Registration successful. Please login.",
+        requiresVerification: false,
         email: email
       };
     } catch (error) {
