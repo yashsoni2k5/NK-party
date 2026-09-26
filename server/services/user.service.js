@@ -296,7 +296,12 @@ const UserServices = {
       user.lastOtpSentAt = new Date();
       await user.save();
       
-      await EmailService.sendPasswordResetEmail(user.email, user.name, otp, process.env.OTP_EXPIRY_MINUTES || 15);
+      try {
+        await EmailService.sendPasswordResetEmail(user.email, user.name, otp, process.env.OTP_EXPIRY_MINUTES || 15);
+      } catch (emailErr) {
+        // We throw a 400 instead of a 500 so the exact SMTP error string appears on the frontend UI
+        throw new HttpException(400, `SMTP Failed: ${emailErr.message}. Check your Render Env variables!`);
+      }
 
       return {
         success: true,
