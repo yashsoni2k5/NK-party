@@ -304,7 +304,7 @@ const UserServices = {
       };
     } catch (error) {
       if (error instanceof HttpException) throw error;
-      throw new HttpException(500, "Error processing forgot password request");
+      throw new HttpException(500, error.message || "Error processing forgot password request");
     }
   },
   
