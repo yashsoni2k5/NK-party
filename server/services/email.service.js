@@ -13,6 +13,12 @@ const transporter = nodemailer.createTransport({
 const EmailService = {
   sendVerificationEmail: async (email, name, otp, expiresInMinutes = 10) => {
     try {
+      if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+        console.log(`[SMTP MOCK] Verification Email to ${email}`);
+        console.log(`[SMTP MOCK] OTP: ${otp}`);
+        return;
+      }
+
       const mailOptions = {
         from: `"${process.env.SMTP_FROM_NAME || 'Meesho Clone'}" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
         to: email,
@@ -39,6 +45,12 @@ const EmailService = {
 
   sendPasswordResetEmail: async (email, name, otp, expiresInMinutes = 15) => {
     try {
+      if (!process.env.SMTP_USER || !process.env.SMTP_PASSWORD) {
+        console.log(`[SMTP MOCK] Password Reset Email to ${email}`);
+        console.log(`[SMTP MOCK] OTP: ${otp}`);
+        return;
+      }
+
       const mailOptions = {
         from: `"${process.env.SMTP_FROM_NAME || 'Meesho Clone'}" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
         to: email,
