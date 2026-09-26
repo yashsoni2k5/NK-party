@@ -69,7 +69,7 @@ const EmailService = {
       await transporter.sendMail(mailOptions);
     } catch (error) {
       console.error("Error sending password reset email:", error);
-      throw new Error("Unable to send password reset email. Please try again.");
+      throw new Error(error.message || "Unable to send password reset email. Please try again.");
     }
   }
 };
