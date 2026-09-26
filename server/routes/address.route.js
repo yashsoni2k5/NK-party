@@ -6,5 +6,6 @@ const path = "/address";
 
 router.get("/", EnsureAuth, AddressController.getUserAddresses);
 router.post("/", EnsureAuth, AddressController.createAddress);
+router.get("/pincode/:pincode", AddressController.lookupPincode);
 
 module.exports = { path, router };

@@ -36,9 +36,28 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, mobile, email, password) => {
     try {
-      await api.post('/users/register', { name, mobile, email, password });
-      // Log them in immediately after register
-      await login(mobile, password);
+      const res = await api.post('/users/register', { name, mobile, email, password });
+      return res.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || error.message);
+    }
+  };
+
+  const verifyEmailOTP = async (email, otp) => {
+    try {
+      const res = await api.post('/users/verify-email-otp', { email, otp });
+      localStorage.setItem('token', res.data.token);
+      setUser(res.data.user);
+      return res.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || error.message);
+    }
+  };
+
+  const resendEmailOTP = async (email) => {
+    try {
+      const res = await api.post('/users/resend-email-otp', { email });
+      return res.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || error.message);
     }
@@ -50,7 +69,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, verifyEmailOTP, resendEmailOTP, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

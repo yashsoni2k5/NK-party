@@ -39,13 +39,8 @@ const orderSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED", "REFUNDED"],
+      enum: ["PENDING", "PROCESSING", "SHIPPED", "DELIVERED", "CANCELLED"],
       default: "PENDING",
-    },
-    refundStatus: {
-      type: String,
-      enum: ["NONE", "REFUNDED_BANK", "REFUNDED_WALLET"],
-      default: "NONE",
     },
     razorpayPaymentId: {
       type: String,

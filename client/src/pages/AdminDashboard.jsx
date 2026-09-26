@@ -12,19 +12,19 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#003725] text-[#FAF7F0] py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FAFAFA] text-gray-800 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto space-y-10">
         
         {/* Header */}
-        <div className="bg-[#011E15] border border-[#E3BA63]/30 rounded-3xl p-8 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative overflow-hidden">
+        <div className="bg-white border border-[#AC666D]/30 rounded-3xl p-8 shadow-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 relative overflow-hidden">
           <div className="space-y-2 relative z-10">
-            <span className="bg-[#E3BA63]/20 text-[#E3BA63] px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-widest border border-[#E3BA63]/40 flex items-center gap-1.5 w-max">
+            <span className="bg-[#AC666D]/20 text-[#AC666D] px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-widest border border-[#AC666D]/40 flex items-center gap-1.5 w-max">
               <FiShield /> Executive Control Panel
             </span>
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#FAF7F0]">
-              Admin <span className="text-[#E3BA63]">Dashboard</span>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800">
+              Admin <span className="text-[#AC666D]">Dashboard</span>
             </h1>
-            <p className="text-[#FAF7F0] text-sm sm:text-base max-w-xl">
+            <p className="text-gray-800 text-sm sm:text-base max-w-xl">
               Select a control module below to manage store products, process orders, manage users, or update banners.
             </p>
           </div>
@@ -36,16 +36,16 @@ export default function AdminDashboard() {
             <Link 
               key={idx} 
               to={link.path} 
-              className="bg-[#011E15] border border-[#E3BA63]/30 hover:border-[#E3BA63] rounded-3xl p-6 sm:p-8 flex flex-col items-start text-left space-y-4 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group relative overflow-hidden"
+              className="bg-white border border-[#AC666D]/30 hover:border-[#AC666D] rounded-3xl p-6 sm:p-8 flex flex-col items-start text-left space-y-4 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group relative overflow-hidden"
             >
-              <div className="bg-[#E3BA63]/10 border border-[#E3BA63]/30 group-hover:bg-[#E3BA63] group-hover:text-[#011E15] text-[#E3BA63] p-4 rounded-2xl transition-colors duration-300">
+              <div className="bg-[#AC666D]/10 border border-[#AC666D]/30 group-hover:bg-[#AC666D] group-hover:text-white text-[#AC666D] p-4 rounded-2xl transition-colors duration-300">
                 {link.icon}
               </div>
               <div>
-                <h2 className="text-xl font-bold text-[#FAF7F0] group-hover:text-[#E3BA63] transition-colors mb-2">
+                <h2 className="text-xl font-bold text-gray-800 group-hover:text-[#AC666D] transition-colors mb-2">
                   {link.title}
                 </h2>
-                <p className="text-[#FAF7F0] text-sm leading-relaxed">
+                <p className="text-gray-800 text-sm leading-relaxed">
                   {link.desc}
                 </p>
               </div>

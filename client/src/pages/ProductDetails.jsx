@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../api';
 import { useAuth } from '../context/AuthContext';
+import { FiStar, FiShoppingCart, FiCreditCard, FiChevronRight, FiCheck } from 'react-icons/fi';
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -78,12 +79,11 @@ export default function ProductDetails() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-[#E3BA63]">
-        <svg className="animate-spin h-10 w-10 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <div className="flex flex-col items-center justify-center min-h-[60vh] text-gray-500">
+        <svg className="animate-spin h-8 w-8 mb-4 text-[#AC666D]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <p className="text-lg font-medium text-[#FAF7F0]">Loading product details...</p>
       </div>
     );
   }
@@ -91,9 +91,9 @@ export default function ProductDetails() {
   if (!product) {
     return (
       <div className="max-w-4xl mx-auto py-16 px-4 text-center">
-        <h2 className="text-2xl font-bold text-[#FAF7F0] mb-4">Product Not Found</h2>
-        <p className="text-[#FAF7F0] mb-6">The requested product could not be loaded or doesn't exist.</p>
-        <Link to="/" className="bg-[#E3BA63] text-[#011E15] px-6 py-2.5 rounded-xl font-bold hover:bg-[#cda24d] transition-colors">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Product Not Found</h2>
+        <p className="text-gray-500 mb-6">The requested product could not be loaded or doesn't exist.</p>
+        <Link to="/" className="bg-gray-800 text-white px-6 py-2 rounded font-medium hover:bg-gray-700 transition-colors">
           Back to Store
         </Link>
       </div>
@@ -103,263 +103,257 @@ export default function ProductDetails() {
   const hasReviewed = product.reviews?.some(r => r.user?._id === user?._id || r.user === user?._id);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 text-[#FAF7F0]">
-      
-      {/* Breadcrumb */}
-      <div className="mb-6 text-sm text-[#FAF7F0] flex items-center gap-2">
-        <Link to="/" className="hover:text-[#E3BA63] transition-colors">Home</Link>
-        <span>/</span>
-        <span className="text-[#E3BA63] capitalize">{product.itemType?.toLowerCase() || 'product'}</span>
-        <span>/</span>
-        <span className="text-[#FAF7F0] truncate max-w-xs">{product.title}</span>
-      </div>
-
-      {/* Product Details Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16 bg-[#011E15] border border-[#E3BA63]/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
+    <div className="bg-white min-h-screen pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 text-gray-800">
         
-        {/* Product Image */}
-        <div className="flex items-center justify-center bg-black/40 rounded-2xl overflow-hidden border border-[#E3BA63]/20 p-4 min-h-[350px] sm:min-h-[420px]">
-          {product.image ? (
-            <img 
-              src={product.image} 
-              alt={product.title} 
-              className="w-full h-full object-contain max-h-[450px] rounded-xl hover:scale-105 transition-transform duration-500 ease-out" 
-            />
-          ) : (
-            <div className="text-[#FAF7F0] flex flex-col items-center gap-2">
-              <span className="text-5xl">📷</span>
-              <span>No image available</span>
-            </div>
-          )}
+        {/* Breadcrumb */}
+        <div className="mb-6 text-xs text-gray-500 flex items-center gap-1.5 font-medium">
+          <Link to="/" className="hover:text-[#AC666D] transition-colors">Home</Link>
+          <FiChevronRight className="w-3 h-3" />
+          <span className="capitalize">{product.category || 'Category'}</span>
+          <FiChevronRight className="w-3 h-3" />
+          <span className="text-gray-800 truncate max-w-[200px] sm:max-w-xs">{product.title}</span>
         </div>
 
-        {/* Product Info */}
-        <div className="flex flex-col justify-between space-y-6">
-          <div>
-            {/* Category & Badge */}
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-xs font-bold uppercase tracking-widest bg-[#E3BA63]/15 text-[#E3BA63] border border-[#E3BA63]/40 px-3 py-1 rounded-full">
-                {product.category || 'General'}
-              </span>
-              <span className="text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider">
-                {product.itemType === 'SERVICE' ? '🎉 Party Service' : '📦 Product'}
-              </span>
+        {/* Product Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 mb-16">
+          
+          {/* Left: Product Image */}
+          <div className="flex justify-center items-start">
+            <div className="w-full bg-white border border-gray-200 rounded-lg overflow-hidden p-4 flex items-center justify-center sticky top-24 min-h-[400px]">
+              {product.image ? (
+                <img 
+                  src={product.image} 
+                  alt={product.title} 
+                  className="w-full h-auto max-h-[500px] object-contain" 
+                />
+              ) : (
+                <div className="text-gray-400 flex flex-col items-center gap-2">
+                  <span className="text-4xl">📷</span>
+                  <span className="text-sm">No image available</span>
+                </div>
+              )}
             </div>
+          </div>
 
-            {/* Title */}
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-[#FAF7F0] mb-3 leading-tight">
+          {/* Right: Product Details */}
+          <div className="flex flex-col">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-gray-900 mb-2 leading-snug">
               {product.title}
             </h1>
-
-            {/* Rating */}
+            
+            {/* Ratings & Reviews Link */}
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-[#E3BA63] text-[#011E15] px-2.5 py-0.5 rounded-md font-extrabold text-sm flex items-center gap-1 shadow-sm">
-                <span>★</span>
-                <span>{product.averageRating ? product.averageRating.toFixed(1) : '5.0'}</span>
+              <div className="flex items-center text-sm font-medium text-white bg-green-600 px-2 py-0.5 rounded">
+                <span>{product.averageRating ? product.averageRating.toFixed(1) : '0.0'}</span>
+                <FiStar className="ml-1 w-3.5 h-3.5 fill-current" />
               </div>
-              <span className="text-sm text-[#FAF7F0]">
-                {product.reviews?.length || 0} Customer Ratings
+              <span className="text-sm text-gray-500 hover:text-[#AC666D] cursor-pointer transition-colors">
+                {product.reviews?.length || 0} Ratings & Reviews
               </span>
             </div>
 
-            {/* Price */}
-            <div className="mb-4 border-b border-[#E3BA63]/20 pb-4">
-              <div className="text-3xl sm:text-4xl font-bold text-[#E3BA63]">
-                ₹{product.price}
-              </div>
-              <p className="text-xs text-emerald-400 mt-1">Inclusive of all taxes</p>
-            </div>
-
-            {/* Stock Warnings */}
-            {product.stock === 0 ? (
-              <div className="bg-red-500/20 border border-red-500/40 text-red-300 px-4 py-3 rounded-xl font-bold flex items-center gap-2 mb-6">
-                <span className="text-lg">🚫</span>
-                <span>Out of Stock — This item is currently unavailable.</span>
-              </div>
-            ) : product.stock < 3 ? (
-              <div className="bg-amber-500/20 border border-amber-500/40 text-amber-300 px-4 py-3 rounded-xl font-bold flex items-center gap-2 mb-6">
-                <span className="text-lg">⚠️</span>
-                <span>Only {product.stock} {product.stock === 1 ? 'item' : 'items'} left in stock — order soon!</span>
-              </div>
-            ) : null}
-
-            {/* Description */}
-            <div>
-              <h3 className="text-sm font-semibold text-[#E3BA63] uppercase tracking-wider mb-2">Description</h3>
-              <p className="text-[#FAF7F0]/90 leading-relaxed text-sm sm:text-base">
-                {product.description || "No description provided for this item."}
-              </p>
-            </div>
-          </div>
-
-          {/* Quantity Selector */}
-          <div className="flex items-center gap-4 py-3 border-t border-[#E3BA63]/20">
-            <span className="text-sm font-semibold text-[#E3BA63] uppercase tracking-wider">Quantity:</span>
-            <div className="flex items-center bg-black/40 border border-[#E3BA63]/40 rounded-xl p-1">
-              <button 
-                type="button"
-                disabled={product.stock === 0}
-                onClick={() => setSelectedQuantity(prev => Math.max(1, prev - 1))}
-                className="w-9 h-9 rounded-lg bg-[#003725] text-[#E3BA63] hover:bg-[#E3BA63] hover:text-[#011E15] font-extrabold text-lg flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                -
-              </button>
-              <span className="w-12 text-center font-extrabold text-[#FAF7F0] text-base">
-                {product.stock === 0 ? 0 : selectedQuantity}
-              </span>
-              <button 
-                type="button"
-                disabled={product.stock === 0 || selectedQuantity >= product.stock}
-                onClick={() => setSelectedQuantity(prev => Math.min(product.stock, prev + 1))}
-                className="w-9 h-9 rounded-lg bg-[#003725] text-[#E3BA63] hover:bg-[#E3BA63] hover:text-[#011E15] font-extrabold text-lg flex items-center justify-center transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                +
-              </button>
-            </div>
-            <span className="text-xs text-[#FAF7F0] font-medium">
-              Subtotal: <strong className="text-[#E3BA63] font-bold text-sm">₹{product.stock === 0 ? 0 : product.price * selectedQuantity}</strong>
-            </span>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-2">
-            <button 
-              onClick={addToCart} 
-              disabled={addingToCart || product.stock === 0}
-              className={`flex-1 py-3.5 px-6 rounded-xl font-extrabold text-base transition-all duration-200 flex items-center justify-center gap-2 shadow-lg active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed ${
-                addedSuccess 
-                  ? 'bg-emerald-600 text-white border border-emerald-400' 
-                  : 'bg-[#E3BA63] hover:bg-[#cda24d] text-[#011E15] hover:shadow-xl'
-              }`}
-            >
-              {product.stock === 0 ? (
-                <>
-                  <span>🚫</span>
-                  <span>Out of Stock</span>
-                </>
-              ) : addingToCart ? (
-                <>
-                  <svg className="animate-spin h-5 w-5 text-[#011E15]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Adding to Cart...
-                </>
-              ) : addedSuccess ? (
-                <>
-                  <span>✓</span>
-                  <span>Added ({selectedQuantity}) to Cart!</span>
-                </>
-              ) : (
-                <>
-                  <span>🛒</span>
-                  <span>Add to Cart</span>
-                </>
-              )}
-            </button>
-
-            <button 
-              onClick={() => navigate(`/checkout?productId=${product._id}&quantity=${selectedQuantity}`)} 
-              disabled={product.stock === 0}
-              className="flex-1 py-3.5 px-6 rounded-xl font-extrabold text-base bg-[#011E15] hover:bg-black/40 text-[#E3BA63] border-2 border-[#E3BA63] transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
-            >
-              <span>⚡</span>
-              <span>Buy Now</span>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Customer Reviews Section */}
-      <div className="bg-[#011E15] border border-[#E3BA63]/30 rounded-3xl p-6 sm:p-8 shadow-2xl">
-        <h2 className="text-2xl font-bold text-[#E3BA63] mb-6 flex items-center gap-2">
-          <span>💬</span> Customer Reviews & Ratings
-        </h2>
-        
-        {/* Write a Review Box */}
-        {user && !hasReviewed && (
-          <div className="bg-black/30 border border-[#E3BA63]/30 p-6 rounded-2xl mb-8">
-            <h3 className="text-lg font-bold text-[#FAF7F0] mb-4">Write a Product Review</h3>
-            <form onSubmit={submitReview} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-[#FAF7F0] mb-1">Rating</label>
-                <select 
-                  value={rating} 
-                  onChange={(e) => setRating(Number(e.target.value))} 
-                  className="bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#E3BA63]"
-                >
-                  <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
-                  <option value="4">⭐⭐⭐⭐ 4 - Very Good</option>
-                  <option value="3">⭐⭐⭐ 3 - Good</option>
-                  <option value="2">⭐⭐ 2 - Fair</option>
-                  <option value="1">⭐ 1 - Poor</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#FAF7F0] mb-1">Your Feedback</label>
-                <textarea 
-                  placeholder="Share details about what you liked or disliked about this product..." 
-                  value={comment} 
-                  onChange={(e) => setComment(e.target.value)} 
-                  required 
-                  rows={4}
-                  className="w-full bg-[#011E15] text-[#FAF7F0] border border-[#E3BA63]/40 rounded-xl p-3 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E3BA63]"
-                />
-              </div>
-
-              <button 
-                type="submit" 
-                disabled={submittingReview}
-                className="bg-[#E3BA63] hover:bg-[#cda24d] text-[#011E15] px-6 py-2.5 rounded-xl font-bold text-sm transition-colors duration-200 disabled:opacity-50"
-              >
-                {submittingReview ? 'Submitting...' : 'Submit Review'}
-              </button>
-            </form>
-          </div>
-        )}
-
-        {user && hasReviewed && (
-          <div className="bg-emerald-950/60 border border-emerald-500/40 p-4 rounded-xl text-emerald-300 text-sm font-medium mb-8 flex items-center gap-2">
-            <span>✓</span> You have already submitted a review for this product. Thank you!
-          </div>
-        )}
-
-        {!user && (
-          <div className="bg-black/30 border border-[#E3BA63]/20 p-4 rounded-xl text-[#FAF7F0] text-sm mb-8">
-            Want to write a review? Please <Link to="/login" className="text-[#E3BA63] font-bold underline">login to your account</Link>.
-          </div>
-        )}
-
-        {/* Existing Reviews List */}
-        <div className="space-y-4">
-          {!product.reviews || product.reviews.length === 0 ? (
-            <p className="text-[#FAF7F0] italic py-4">No reviews yet for this product. Be the first to share your experience!</p>
-          ) : (
-            product.reviews.map((r, i) => (
-              <div key={i} className="bg-black/30 border border-[#E3BA63]/20 p-4 rounded-xl space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#FAF7F0] text-sm">
-                    {r.user?.name || 'Verified Customer'}
-                  </span>
-                  <div className="bg-[#E3BA63] text-[#011E15] px-2 py-0.5 rounded text-xs font-extrabold">
-                    ★ {r.rating}
-                  </div>
-                </div>
-                <p className="text-[#FAF7F0]/90 text-sm leading-relaxed">{r.comment}</p>
-                {r.createdAt && (
-                  <span className="text-[11px] text-[#FAF7F0] block pt-1">
-                    {new Date(r.createdAt).toLocaleDateString()}
-                  </span>
+            {/* Price Section */}
+            <div className="mb-6 pb-6 border-b border-gray-200">
+              <div className="flex items-end gap-3 mb-1">
+                <span className="text-3xl font-bold text-gray-900">₹{product.price}</span>
+                {product.originalPrice && product.originalPrice > product.price && (
+                  <>
+                    <span className="text-lg text-gray-500 line-through mb-0.5">₹{product.originalPrice}</span>
+                    <span className="text-sm font-bold text-green-600 mb-1">
+                      {Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% off
+                    </span>
+                  </>
                 )}
               </div>
-            ))
-          )}
+              <p className="text-xs text-gray-500 font-medium">Inclusive of all taxes</p>
+            </div>
+
+            {/* Description */}
+            <div className="mb-6">
+              <h3 className="text-sm font-bold text-gray-900 mb-2">Product Details</h3>
+              <div className="text-gray-700 text-sm leading-relaxed whitespace-pre-line">
+                {product.description || "No description provided for this item."}
+              </div>
+            </div>
+
+            {/* Stock / Quantity */}
+            <div className="mb-8">
+              {product.stock === 0 ? (
+                <div className="text-red-600 font-semibold text-lg">
+                  Out of Stock
+                </div>
+              ) : (
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-bold text-gray-900">Quantity</span>
+                  <div className="flex items-center border border-gray-300 rounded">
+                    <button 
+                      type="button"
+                      onClick={() => setSelectedQuantity(prev => Math.max(1, prev - 1))}
+                      className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors disabled:opacity-30"
+                      disabled={product.stock === 0}
+                    >
+                      -
+                    </button>
+                    <span className="w-12 text-center text-gray-900 font-medium">
+                      {selectedQuantity}
+                    </span>
+                    <button 
+                      type="button"
+                      onClick={() => setSelectedQuantity(prev => Math.min(product.stock, prev + 1))}
+                      className="w-10 h-10 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors disabled:opacity-30"
+                      disabled={product.stock === 0 || selectedQuantity >= product.stock}
+                    >
+                      +
+                    </button>
+                  </div>
+                  {product.stock > 0 && product.stock < 5 && (
+                    <span className="text-xs font-semibold text-red-500">Only {product.stock} left in stock!</span>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 mt-auto">
+              <button 
+                onClick={addToCart} 
+                disabled={addingToCart || product.stock === 0 || addedSuccess}
+                className={`flex-1 py-3.5 px-6 rounded font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 ${
+                  addedSuccess 
+                    ? 'bg-green-600 text-white' 
+                    : 'bg-[#AC666D] hover:bg-[#96555b] text-white'
+                } disabled:opacity-60 disabled:cursor-not-allowed`}
+              >
+                {addingToCart ? (
+                  <>
+                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Adding...
+                  </>
+                ) : addedSuccess ? (
+                  <>
+                    <FiCheck className="w-5 h-5" />
+                    Added to Cart
+                  </>
+                ) : (
+                  <>
+                    <FiShoppingCart className="w-4 h-4" />
+                    Add to Cart
+                  </>
+                )}
+              </button>
+
+              <button 
+                onClick={() => navigate(`/checkout?productId=${product._id}&quantity=${selectedQuantity}`)} 
+                disabled={product.stock === 0}
+                className="flex-1 py-3.5 px-6 rounded font-semibold text-sm bg-gray-900 hover:bg-gray-800 text-white transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                <FiCreditCard className="w-4 h-4" />
+                Buy Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Customer Reviews Section */}
+        <div className="border-t border-gray-200 pt-10">
+          <h2 className="text-xl font-bold text-gray-900 mb-8">
+            Ratings & Reviews
+          </h2>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            {/* Reviews Form / Info */}
+            <div className="lg:col-span-1">
+              {user && !hasReviewed && (
+                <div className="bg-gray-50 border border-gray-200 p-6 rounded-lg">
+                  <h3 className="text-base font-bold text-gray-900 mb-4">Write a Review</h3>
+                  <form onSubmit={submitReview} className="space-y-4">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">Rating</label>
+                      <select 
+                        value={rating} 
+                        onChange={(e) => setRating(Number(e.target.value))} 
+                        className="w-full bg-white text-gray-800 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#AC666D]"
+                      >
+                        <option value="5">5 ★ - Excellent</option>
+                        <option value="4">4 ★ - Very Good</option>
+                        <option value="3">3 ★ - Good</option>
+                        <option value="2">2 ★ - Fair</option>
+                        <option value="1">1 ★ - Poor</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">Feedback</label>
+                      <textarea 
+                        placeholder="Write your review here..." 
+                        value={comment} 
+                        onChange={(e) => setComment(e.target.value)} 
+                        required 
+                        rows={3}
+                        className="w-full bg-white text-gray-800 border border-gray-300 rounded p-3 text-sm focus:outline-none focus:border-[#AC666D] resize-none"
+                      />
+                    </div>
+
+                    <button 
+                      type="submit" 
+                      disabled={submittingReview}
+                      className="w-full bg-gray-900 hover:bg-gray-800 text-white px-4 py-2 rounded font-medium text-sm transition-colors duration-200 disabled:opacity-50"
+                    >
+                      {submittingReview ? 'Submitting...' : 'Submit Review'}
+                    </button>
+                  </form>
+                </div>
+              )}
+
+              {user && hasReviewed && (
+                <div className="bg-gray-50 border border-gray-200 p-4 rounded text-sm text-gray-600 text-center">
+                  You have already submitted a review. Thank you!
+                </div>
+              )}
+
+              {!user && (
+                <div className="bg-gray-50 border border-gray-200 p-4 rounded text-sm text-gray-600 text-center">
+                  Please <Link to="/login" className="text-[#AC666D] font-bold hover:underline">log in</Link> to write a review.
+                </div>
+              )}
+            </div>
+
+            {/* Existing Reviews List */}
+            <div className="lg:col-span-2 space-y-6">
+              {!product.reviews || product.reviews.length === 0 ? (
+                <div className="text-gray-500 text-center py-10 border border-gray-100 rounded-lg bg-gray-50/50">
+                  <p>No reviews yet. Be the first to share your thoughts!</p>
+                </div>
+              ) : (
+                product.reviews.map((r, i) => (
+                  <div key={i} className="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center text-xs font-medium text-white bg-green-600 px-1.5 py-0.5 rounded">
+                        <span>{r.rating}</span>
+                        <FiStar className="ml-0.5 w-3 h-3 fill-current" />
+                      </div>
+                      <span className="font-semibold text-gray-800 text-sm">
+                        {r.user?.name || 'Verified Customer'}
+                      </span>
+                    </div>
+                    <p className="text-gray-700 text-sm leading-relaxed mb-1">{r.comment}</p>
+                    {r.createdAt && (
+                      <span className="text-xs text-gray-400">
+                        {new Date(r.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                      </span>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         </div>
 
       </div>
-
     </div>
   );
 }

@@ -20,6 +20,15 @@ const AddressController = {
       next(error);
     }
   },
+  lookupPincode: async (req, res, next) => {
+    const { pincode } = req.params;
+    try {
+      const data = await AddressServices.lookupPincodeService(pincode);
+      res.status(200).send(data);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = AddressController;

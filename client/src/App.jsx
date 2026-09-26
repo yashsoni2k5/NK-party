@@ -7,6 +7,7 @@ import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
 import Checkout from './pages/Checkout';
 import Profile from './pages/Profile';
 import AdminDashboard from './pages/AdminDashboard';
@@ -41,12 +42,13 @@ function AppRoutes() {
   return (
     <>
       <Navbar />
-      <div className="bg-[#003725] min-h-screen text-white">
+      <div className="bg-[#FAFAFA] min-h-screen text-white">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           

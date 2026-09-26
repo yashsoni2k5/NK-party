@@ -23,6 +23,10 @@ const AddressSchema = mongoose.Schema(
       type: String,
       required: [true, "please provide a city"],
     },
+    state: {
+      type: String,
+      default: "",
+    },
     country: {
       type: String,
       default: "India",

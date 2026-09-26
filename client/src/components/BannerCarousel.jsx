@@ -36,8 +36,8 @@ export default function BannerCarousel() {
 
   if (loading) {
     return (
-      <div className="w-full h-48 md:h-80 bg-[#011E15] animate-pulse flex items-center justify-center border-b border-[#E3BA63]/20">
-        <span className="text-[#E3BA63] text-sm font-medium">Loading banners...</span>
+      <div className="w-full h-48 md:h-80 bg-white animate-pulse flex items-center justify-center border-b border-[#AC666D]/20">
+        <span className="text-[#AC666D] text-sm font-medium">Loading banners...</span>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function BannerCarousel() {
   if (banners.length === 0) return null;
 
   return (
-    <div className="relative w-full h-52 md:h-88 lg:h-[380px] overflow-hidden bg-[#011E15] border-b border-[#E3BA63]/30 group shadow-2xl">
+    <div className="relative w-full h-52 md:h-88 lg:h-[380px] overflow-hidden bg-white border-b border-[#AC666D]/30 group shadow-2xl">
       {/* Banner Container Box with #FAF7F0 details highlight border */}
       <div className="absolute inset-0 border-t border-b border-[#FAF7F0]/10 pointer-events-none z-10" />
 
@@ -72,7 +72,7 @@ export default function BannerCarousel() {
         <button 
           onClick={goToPrevious}
           aria-label="Previous Slide"
-          className="absolute left-4 top-1/2 -translate-y-1/2 bg-[#011E15]/90 hover:bg-[#E3BA63] text-[#E3BA63] hover:text-[#011E15] border border-[#E3BA63]/50 w-11 h-11 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-xl backdrop-blur-md z-20"
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-[#AC666D] text-[#AC666D] hover:text-white border border-[#AC666D]/50 w-11 h-11 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-xl backdrop-blur-md z-20"
         >
           &#10094;
         </button>
@@ -83,7 +83,7 @@ export default function BannerCarousel() {
         <button 
           onClick={goToNext}
           aria-label="Next Slide"
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#011E15]/90 hover:bg-[#E3BA63] text-[#E3BA63] hover:text-[#011E15] border border-[#E3BA63]/50 w-11 h-11 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-xl backdrop-blur-md z-20"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-[#AC666D] text-[#AC666D] hover:text-white border border-[#AC666D]/50 w-11 h-11 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-xl backdrop-blur-md z-20"
         >
           &#10095;
         </button>
@@ -91,7 +91,7 @@ export default function BannerCarousel() {
 
       {/* Dot Indicators */}
       {banners.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2.5 z-20 bg-[#011E15]/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#E3BA63]/40 shadow-lg">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2.5 z-20 bg-white/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#AC666D]/40 shadow-lg">
           {banners.map((_, index) => (
             <button 
               key={index}
@@ -99,7 +99,7 @@ export default function BannerCarousel() {
               aria-label={`Go to slide ${index + 1}`}
               className={`h-2.5 rounded-full transition-all duration-300 ${
                 index === currentIndex 
-                  ? "w-8 bg-[#E3BA63]" 
+                  ? "w-8 bg-[#AC666D]" 
                   : "w-2.5 bg-[#FAF7F0]/50 hover:bg-[#FAF7F0]"
               }`}
             />

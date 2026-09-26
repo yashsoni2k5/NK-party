@@ -61,26 +61,6 @@ const PaymentServices = {
       if (error instanceof HttpException) throw error;
       throw new HttpException(500, "Error verifying payment signature");
     }
-  },
-
-  refundPayment: async (paymentId, amount) => {
-    try {
-      if (!process.env.RAZORPAY_KEY_ID || paymentId === "pay_dummy123" || paymentId.startsWith("pay_dummy")) {
-        return { success: true, message: "Refund processed successfully (Mock Mode)" };
-      }
-      
-      const refund = await razorpay.payments.refund(paymentId, {
-        amount: Math.round(amount * 100), // amount in paise
-      });
-      
-      if (!refund) {
-        throw new HttpException(500, "Error initiating razorpay refund");
-      }
-      return refund;
-    } catch (error) {
-      if (error instanceof HttpException) throw error;
-      throw new HttpException(500, error.description || error.message || "Error processing refund");
-    }
   }
 };
 

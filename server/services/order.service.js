@@ -275,51 +275,6 @@ const OrderServices = {
       }
     }
   },
-
-  refundOrderService: async (orderId, refundMethod) => {
-    try {
-      const order = await OrderModel.findById(orderId);
-      if (!order) {
-        throw new HttpException(404, "Order not found");
-      }
-      if (order.status !== "CANCELLED" && order.status !== "RETURNED" && order.status !== "DELIVERED") {
-        throw new HttpException(400, "Order must be CANCELLED or RETURNED to initiate a refund");
-      }
-      if (order.refundStatus !== "NONE") {
-        throw new HttpException(400, "Order is already refunded");
-      }
-
-      if (refundMethod === "WALLET") {
-        const UserModel = require("../models/user.model");
-        const userDoc = await UserModel.findById(order.user);
-        if (userDoc) {
-          userDoc.walletBalance = (userDoc.walletBalance || 0) + order.total;
-          await userDoc.save();
-        }
-        order.refundStatus = "REFUNDED_WALLET";
-        order.status = "REFUNDED";
-        await order.save();
-      } else if (refundMethod === "BANK") {
-        if (order.razorpayPaymentId) {
-          const PaymentServices = require("./payment.service");
-          await PaymentServices.refundPayment(order.razorpayPaymentId, order.total);
-        }
-        order.refundStatus = "REFUNDED_BANK";
-        order.status = "REFUNDED";
-        await order.save();
-      } else {
-        throw new HttpException(400, "Invalid refund method");
-      }
-
-      return order;
-    } catch (error) {
-      if (error instanceof HttpException) {
-        throw error;
-      } else {
-        throw new HttpException(500, "Error processing refund");
-      }
-    }
-  },
 };
 
 module.exports = OrderServices;

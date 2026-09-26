@@ -12,17 +12,17 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-[#003725] text-[#FAF7F0] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FAFAFA] text-gray-800 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center space-y-4">
-          <span className="bg-[#E3BA63]/15 text-[#E3BA63] px-4 py-1.5 rounded-full border border-[#E3BA63]/30 text-xs font-bold uppercase tracking-widest">
+          <span className="bg-[#AC666D]/15 text-[#AC666D] px-4 py-1.5 rounded-full border border-[#AC666D]/30 text-xs font-bold uppercase tracking-widest">
             Get In Touch
           </span>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#FAF7F0] tracking-tight">
-            Contact <span className="text-[#E3BA63]">Customer Support</span>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800 tracking-tight">
+            Contact <span className="text-[#AC666D]">Customer Support</span>
           </h1>
-          <p className="text-[#FAF7F0] max-w-2xl mx-auto text-base sm:text-lg">
+          <p className="text-gray-800 max-w-2xl mx-auto text-base sm:text-lg">
             Have questions about an order, customized requirements, or general inquiries? We are here to ensure your experience is seamless and luxurious.
           </p>
         </div>
@@ -30,42 +30,42 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Info Cards */}
           <div className="space-y-6">
-            <div className="bg-[#011E15] border border-[#E3BA63]/30 rounded-3xl p-6 shadow-xl space-y-6">
-              <h2 className="text-xl font-bold text-[#E3BA63] pb-3 border-b border-[#E3BA63]/20 flex items-center gap-2">
+            <div className="bg-white border border-[#AC666D]/30 rounded-3xl p-6 shadow-xl space-y-6">
+              <h2 className="text-xl font-bold text-[#AC666D] pb-3 border-b border-[#AC666D]/20 flex items-center gap-2">
                 <FiMessageSquare /> Quick Contact Info
               </h2>
 
               <div className="flex items-start gap-4">
-                <div className="bg-[#E3BA63]/10 p-3 rounded-2xl border border-[#E3BA63]/30 text-[#E3BA63] shrink-0">
+                <div className="bg-[#AC666D]/10 p-3 rounded-2xl border border-[#AC666D]/30 text-[#AC666D] shrink-0">
                   <FiMail className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#FAF7F0] font-semibold uppercase tracking-wider">Email Us</p>
-                  <a href="mailto:support@nkparty.com" className="text-[#FAF7F0] font-bold hover:text-[#E3BA63] transition-colors">
+                  <p className="text-xs text-gray-800 font-semibold uppercase tracking-wider">Email Us</p>
+                  <a href="mailto:support@nkparty.com" className="text-gray-800 font-bold hover:text-[#AC666D] transition-colors">
                     support@nkparty.com
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-[#E3BA63]/10 p-3 rounded-2xl border border-[#E3BA63]/30 text-[#E3BA63] shrink-0">
+                <div className="bg-[#AC666D]/10 p-3 rounded-2xl border border-[#AC666D]/30 text-[#AC666D] shrink-0">
                   <FiPhone className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#FAF7F0] font-semibold uppercase tracking-wider">Call Us</p>
-                  <a href="tel:+919999988888" className="text-[#FAF7F0] font-bold hover:text-[#E3BA63] transition-colors">
+                  <p className="text-xs text-gray-800 font-semibold uppercase tracking-wider">Call Us</p>
+                  <a href="tel:+919999988888" className="text-gray-800 font-bold hover:text-[#AC666D] transition-colors">
                     +91 99999 88888
                   </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="bg-[#E3BA63]/10 p-3 rounded-2xl border border-[#E3BA63]/30 text-[#E3BA63] shrink-0">
+                <div className="bg-[#AC666D]/10 p-3 rounded-2xl border border-[#AC666D]/30 text-[#AC666D] shrink-0">
                   <FiMapPin className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#FAF7F0] font-semibold uppercase tracking-wider">Headquarters</p>
-                  <p className="text-[#FAF7F0] font-medium leading-snug">
+                  <p className="text-xs text-gray-800 font-semibold uppercase tracking-wider">Headquarters</p>
+                  <p className="text-gray-800 font-medium leading-snug">
                     123 Party Street, Celebration City, India
                   </p>
                 </div>
@@ -73,11 +73,11 @@ export default function Contact() {
             </div>
 
             {/* WhatsApp Quick Connect Card */}
-            <div className="bg-[#011E15] border border-[#25D366]/40 rounded-3xl p-6 shadow-xl space-y-4">
+            <div className="bg-white border border-[#25D366]/40 rounded-3xl p-6 shadow-xl space-y-4">
               <h3 className="text-lg font-bold text-[#25D366] flex items-center gap-2">
                 💬 Instant WhatsApp Support
               </h3>
-              <p className="text-sm text-[#FAF7F0]">
+              <p className="text-sm text-gray-800">
                 Need immediate response regarding an urgent order? Chat directly with our customer concierge.
               </p>
               <a
@@ -92,13 +92,13 @@ export default function Contact() {
           </div>
 
           {/* Send Message Form */}
-          <div className="lg:col-span-2 bg-[#011E15] border border-[#E3BA63]/30 rounded-3xl p-6 sm:p-10 shadow-2xl">
-            <h2 className="text-2xl font-bold text-[#FAF7F0] mb-6 flex items-center gap-3">
+          <div className="lg:col-span-2 bg-white border border-[#AC666D]/30 rounded-3xl p-6 sm:p-10 shadow-2xl">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
               Send Us a Message
             </h2>
 
             {submitted && (
-              <div className="bg-[#E3BA63]/15 border border-[#E3BA63] text-[#E3BA63] p-4 rounded-2xl mb-6 text-center font-bold">
+              <div className="bg-[#AC666D]/15 border border-[#AC666D] text-[#AC666D] p-4 rounded-2xl mb-6 text-center font-bold">
                 Thank you for contacting us! We will get back to you shortly.
               </div>
             )}
@@ -106,56 +106,56 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Your Name</label>
+                  <label className="block text-xs font-semibold text-gray-800 uppercase tracking-wider mb-2">Your Name</label>
                   <input
                     type="text"
                     required
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                    className="w-full bg-white border border-[#AC666D]/20 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#AC666D]"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Email Address</label>
+                  <label className="block text-xs font-semibold text-gray-800 uppercase tracking-wider mb-2">Email Address</label>
                   <input
                     type="email"
                     required
                     placeholder="john@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                    className="w-full bg-white border border-[#AC666D]/20 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#AC666D]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Subject</label>
+                <label className="block text-xs font-semibold text-gray-800 uppercase tracking-wider mb-2">Subject</label>
                 <input
                   type="text"
                   required
                   placeholder="Order Inquiry / Feedback"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63]"
+                  className="w-full bg-white border border-[#AC666D]/20 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#AC666D]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#FAF7F0] uppercase tracking-wider mb-2">Message</label>
+                <label className="block text-xs font-semibold text-gray-800 uppercase tracking-wider mb-2">Message</label>
                 <textarea
                   rows={5}
                   required
                   placeholder="Describe your inquiry in detail..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full bg-[#011E15] border border-[#E3BA63]/20 rounded-xl px-4 py-3 text-[#FAF7F0] placeholder-gray-500 focus:outline-none focus:border-[#E3BA63] resize-none"
+                  className="w-full bg-white border border-[#AC666D]/20 rounded-xl px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-[#AC666D] resize-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#E3BA63] hover:bg-[#cda24d] text-[#011E15] font-extrabold py-4 rounded-xl transition-all shadow-xl flex items-center justify-center gap-2 text-base tracking-wide"
+                className="w-full bg-[#AC666D] hover:bg-[#96555b] text-white font-extrabold py-4 rounded-xl transition-all shadow-xl flex items-center justify-center gap-2 text-base tracking-wide"
               >
                 <FiSend /> Send Message
               </button>

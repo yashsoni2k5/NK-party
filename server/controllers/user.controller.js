@@ -40,6 +40,26 @@ const UserController = {
     }
   },
 
+  verifyEmailOTP: async (req, res, next) => {
+    const { email, otp } = req.body;
+    try {
+      const response = await UserServices.verifyEmailOTPService(email, otp);
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  resendEmailOTP: async (req, res, next) => {
+    const { email } = req.body;
+    try {
+      const response = await UserServices.resendEmailOTPService(email);
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   loginUser: async (req, res, next) => {
     const loginDetails = req.body;
     try {
@@ -61,8 +81,18 @@ const UserController = {
 
   forgotPassword: async (req, res, next) => {
     try {
-      const { identifier } = req.body;
+      const { identifier } = req.body; // Actually using email now
       const response = await UserServices.forgotPasswordService(identifier);
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  verifyResetPasswordOTP: async (req, res, next) => {
+    try {
+      const { email, otp } = req.body;
+      const response = await UserServices.verifyResetPasswordOTPService(email, otp);
       res.status(200).send(response);
     } catch (error) {
       next(error);
@@ -72,6 +102,17 @@ const UserController = {
   resetPassword: async (req, res, next) => {
     try {
       const response = await UserServices.resetPasswordService(req.body);
+      res.status(200).send(response);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  addWalletPoints: async (req, res, next) => {
+    const { userId } = req.params;
+    const { amount } = req.body;
+    try {
+      const response = await UserServices.addWalletPointsService(userId, amount);
       res.status(200).send(response);
     } catch (error) {
       next(error);
