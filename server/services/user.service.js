@@ -205,9 +205,10 @@ const UserServices = {
         throw new HttpException(401, "Invalid mobile number or password");
       }
 
-      if (!user.isEmailVerified) {
-        throw new HttpException(403, "Please verify your email before logging in.");
-      }
+      // TEMPORARY: Allow all users to log in even if they haven't verified their email
+      // if (!user.isEmailVerified) {
+      //   throw new HttpException(403, "Please verify your email before logging in.");
+      // }
 
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
