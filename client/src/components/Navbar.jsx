@@ -48,8 +48,25 @@ export default function Navbar() {
           </Link>
         </div>
         
-        {/* Right Side - Search, Cart, Home, Profile Icons */}
+        {/* Right Side - Search, Home, Cart, Profile Icons */}
         <div className="flex items-center gap-2 sm:gap-4 md:gap-5 z-10">
+
+          {/* Permanently Open Rectangular Search */}
+          <form onSubmit={handleSearchSubmit} className="flex relative items-center">
+            <input 
+              type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search..."
+              className="bg-gray-50 text-gray-800 border border-gray-300 px-3 py-1.5 pr-8 rounded-md outline-none text-xs sm:text-sm w-28 sm:w-48 md:w-52 focus:border-[#AC666D] focus:ring-1 focus:ring-[#AC666D] transition-all"
+            />
+            <button 
+              type="submit"
+              className="absolute right-2 text-gray-500 hover:text-[#AC666D] transition-colors"
+            >
+              <FiSearch />
+            </button>
+          </form>
 
           <Link 
             to="/" 
@@ -58,28 +75,6 @@ export default function Navbar() {
           >
             <FiHome />
           </Link>
-
-          {/* Expandable Search */}
-          <div className="flex items-center relative">
-            {isSearchOpen && (
-              <form onSubmit={handleSearchSubmit} className="absolute right-8 top-1/2 -translate-y-1/2 z-20">
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search..."
-                  autoFocus
-                  className="bg-white text-gray-800 border border-gray-300 px-3 py-1.5 rounded-full outline-none text-xs sm:text-sm w-36 sm:w-48 md:w-52 shadow-sm focus:border-[#AC666D]"
-                />
-              </form>
-            )}
-            <button 
-              onClick={() => setIsSearchOpen(!isSearchOpen)} 
-              className="text-xl sm:text-2xl hover:text-[#AC666D] transition-colors p-1"
-            >
-              <FiSearch />
-            </button>
-          </div>
 
           <Link 
             to="/cart" 

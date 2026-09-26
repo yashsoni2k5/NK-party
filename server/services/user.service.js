@@ -35,7 +35,7 @@ const UserServices = {
   registerUserService: async (registrationDetails) => {
     try {
       const { mobile, email, password, name } = registrationDetails;
-      
+
       if (!name || name.trim().length === 0) {
         throw new HttpException(400, "Please provide a valid name");
       }
@@ -59,7 +59,7 @@ const UserServices = {
 
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
-      
+
       // Generate secure OTP
       const otp = generateSecureOTP();
       const hashedOTP = await bcrypt.hash(otp, salt);
@@ -76,13 +76,13 @@ const UserServices = {
       });
 
       await newUser.save();
-      
+
       // Send the email
       await EmailService.sendVerificationEmail(email, name, otp, process.env.OTP_EXPIRY_MINUTES || 10);
 
-      return { 
-        success: true, 
-        message: "Registration successful. Please verify your email.", 
+      return {
+        success: true,
+        message: "Registration successful. Please verify your email.",
         requiresVerification: true,
         email: email
       };
@@ -142,10 +142,10 @@ const UserServices = {
       user.emailVerificationExpires = null;
       user.otpAttempts = 0;
       await user.save();
-      
+
       // Now login the user
       const token = jwt.sign(
-        { userId: user._id }, 
+        { userId: user._id },
         process.env.jwtsecret || "your-secret-key",
         { expiresIn: "7d" }
       );
@@ -204,9 +204,9 @@ const UserServices = {
       if (!user) {
         throw new HttpException(401, "Invalid mobile number or password");
       }
-      
+
       if (!user.isEmailVerified) {
-         throw new HttpException(403, "Please verify your email before logging in.");
+        throw new HttpException(403, "Please verify your email before logging in.");
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -215,7 +215,7 @@ const UserServices = {
       }
 
       const token = jwt.sign(
-        { userId: user._id }, 
+        { userId: user._id },
         process.env.jwtsecret || "your-secret-key",
         { expiresIn: "7d" }
       );
@@ -278,7 +278,7 @@ const UserServices = {
           message: "If an account exists with this email, a password reset OTP has been sent."
         };
       }
-      
+
       // Cooldown check for password reset OTP
       const cooldownSeconds = parseInt(process.env.OTP_RESEND_COOLDOWN_SECONDS) || 60;
       if (user.lastOtpSentAt && (new Date() - new Date(user.lastOtpSentAt)) < (cooldownSeconds * 1000)) {
@@ -295,7 +295,7 @@ const UserServices = {
       user.otpAttempts = 0;
       user.lastOtpSentAt = new Date();
       await user.save();
-      
+
       try {
         await EmailService.sendPasswordResetEmail(user.email, user.name, otp, process.env.OTP_EXPIRY_MINUTES || 15);
       } catch (emailErr) {
@@ -312,46 +312,46 @@ const UserServices = {
       throw new HttpException(500, error.message || "Error processing forgot password request");
     }
   },
-  
+
   verifyResetPasswordOTPService: async (email, otp) => {
-     try {
-       if (!email || !otp) throw new HttpException(400, "Please provide email and OTP");
-       
-       const user = await UserModel.findOne({ email: email.trim() });
-       if (!user) {
-          throw new HttpException(400, "Invalid or incorrect OTP"); // Generic error
-       }
-       
-       // Max attempts check
-       const maxAttempts = parseInt(process.env.OTP_MAX_ATTEMPTS) || 5;
-       if (user.otpAttempts >= maxAttempts) {
-         user.resetPasswordOTP = null;
-         await user.save();
-         throw new HttpException(429, "Too many failed attempts. Please request a new OTP.");
-       }
-       
-       if (!user.resetPasswordExpires || new Date() > new Date(user.resetPasswordExpires)) {
-         throw new HttpException(400, "OTP has expired. Please request a new one.");
-       }
-       
-       if (!user.resetPasswordOTP) throw new HttpException(400, "No OTP requested");
-       
-       const isMatch = await bcrypt.compare(otp.toString(), user.resetPasswordOTP);
-       if (!isMatch) {
-         user.otpAttempts += 1;
-         await user.save();
-         throw new HttpException(400, "Invalid or incorrect OTP");
-       }
-       
-       // Note: Don't invalidate OTP here yet! They need it (or a reset token) to submit the new password.
-       // We'll return a temporary resetToken
-       const resetToken = jwt.sign({ userId: user._id, purpose: 'password_reset' }, process.env.jwtsecret || "your-secret-key", { expiresIn: '15m' });
-       
-       return { success: true, message: "OTP verified. Proceed to reset password.", resetToken };
-     } catch (error) {
-        if (error instanceof HttpException) throw error;
-        throw new HttpException(500, "Error verifying OTP");
-     }
+    try {
+      if (!email || !otp) throw new HttpException(400, "Please provide email and OTP");
+
+      const user = await UserModel.findOne({ email: email.trim() });
+      if (!user) {
+        throw new HttpException(400, "Invalid or incorrect OTP"); // Generic error
+      }
+
+      // Max attempts check
+      const maxAttempts = parseInt(process.env.OTP_MAX_ATTEMPTS) || 5;
+      if (user.otpAttempts >= maxAttempts) {
+        user.resetPasswordOTP = null;
+        await user.save();
+        throw new HttpException(429, "Too many failed attempts. Please request a new OTP.");
+      }
+
+      if (!user.resetPasswordExpires || new Date() > new Date(user.resetPasswordExpires)) {
+        throw new HttpException(400, "OTP has expired. Please request a new one.");
+      }
+
+      if (!user.resetPasswordOTP) throw new HttpException(400, "No OTP requested");
+
+      const isMatch = await bcrypt.compare(otp.toString(), user.resetPasswordOTP);
+      if (!isMatch) {
+        user.otpAttempts += 1;
+        await user.save();
+        throw new HttpException(400, "Invalid or incorrect OTP");
+      }
+
+      // Note: Don't invalidate OTP here yet! They need it (or a reset token) to submit the new password.
+      // We'll return a temporary resetToken
+      const resetToken = jwt.sign({ userId: user._id, purpose: 'password_reset' }, process.env.jwtsecret || "your-secret-key", { expiresIn: '15m' });
+
+      return { success: true, message: "OTP verified. Proceed to reset password.", resetToken };
+    } catch (error) {
+      if (error instanceof HttpException) throw error;
+      throw new HttpException(500, "Error verifying OTP");
+    }
   },
 
   resetPasswordService: async ({ resetToken, newPassword }) => {
@@ -363,14 +363,14 @@ const UserServices = {
       if (newPassword.length < 6) {
         throw new HttpException(400, "New password must be at least 6 characters long");
       }
-      
+
       let decoded;
       try {
         decoded = jwt.verify(resetToken, process.env.jwtsecret || "your-secret-key");
       } catch (err) {
         throw new HttpException(400, "Invalid or expired reset token. Please restart the password reset process.");
       }
-      
+
       if (decoded.purpose !== 'password_reset') throw new HttpException(400, "Invalid token");
 
       const user = await UserModel.findById(decoded.userId);
