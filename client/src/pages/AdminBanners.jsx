@@ -1,27 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api';
 import { Link } from 'react-router-dom';
 import { FiImage, FiArrowLeft, FiPlus, FiUpload, FiTrash2, FiCheckCircle, FiXCircle } from 'react-icons/fi';
+import { useQuery } from '@tanstack/react-query';
 
 export default function AdminBanners() {
-  const [banners, setBanners] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [order, setOrder] = useState(0);
 
-  const loadBanners = () => {
-    setLoading(true);
-    api.get('/banners/all')
-      .then(res => setBanners(res.data || []))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+  const fetchBanners = async () => {
+    const res = await api.get('/banners/all');
+    return res.data || [];
   };
 
-  useEffect(() => {
-    loadBanners();
-  }, []);
+  const { data: banners = [], isLoading: loading, refetch: loadBanners } = useQuery({
+    queryKey: ['admin-banners'],
+    queryFn: fetchBanners,
+  });
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];

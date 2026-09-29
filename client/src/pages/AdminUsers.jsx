@@ -1,28 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api';
 import { Link } from 'react-router-dom';
 import { FiUsers, FiArrowLeft, FiUser, FiPhone, FiMail, FiCreditCard, FiPlusCircle, FiX } from 'react-icons/fi';
+import { useQuery } from '@tanstack/react-query';
 
 export default function AdminUsers() {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
   // Wallet modal state
   const [selectedUser, setSelectedUser] = useState(null);
   const [pointsInput, setPointsInput] = useState('');
   const [submittingWallet, setSubmittingWallet] = useState(false);
 
-  const fetchUsers = () => {
-    setLoading(true);
-    api.get('/users/all')
-      .then(res => setUsers(res.data || []))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+  const fetchUsersFn = async () => {
+    const res = await api.get('/users/all');
+    return res.data || [];
   };
 
-  useEffect(() => {
-    fetchUsers();
-  }, []);
+  const { data: users = [], isLoading: loading, refetch: fetchUsers } = useQuery({
+    queryKey: ['admin-users'],
+    queryFn: fetchUsersFn,
+  });
 
   const handleAddWalletPoints = async (e) => {
     e.preventDefault();

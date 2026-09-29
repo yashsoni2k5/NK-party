@@ -1,14 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api';
 import { useAuth } from '../context/AuthContext';
 import { FiUser, FiPhone, FiMapPin, FiPlus, FiX, FiCreditCard, FiCheckCircle } from 'react-icons/fi';
 import { usePincodeLookup } from '../hooks/usePincodeLookup';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Profile() {
   const { user } = useAuth();
-  const [addresses, setAddresses] = useState([]);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [newAddress, setNewAddress] = useState({
     name: '',
     mobile: '',
@@ -37,17 +36,15 @@ export default function Profile() {
     handleSelectLocality
   } = usePincodeLookup(newAddress.pincode, handleLocationFound);
 
-  const loadAddresses = () => {
-    setLoading(true);
-    api.get('/address')
-      .then(res => setAddresses(res.data || []))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+  const fetchAddresses = async () => {
+    const res = await api.get('/address');
+    return res.data || [];
   };
 
-  useEffect(() => {
-    loadAddresses();
-  }, []);
+  const { data: addresses = [], isLoading: loading, refetch: loadAddresses } = useQuery({
+    queryKey: ['addresses'],
+    queryFn: fetchAddresses,
+  });
 
   const handleChange = (e) => {
     setNewAddress({ ...newAddress, [e.target.name]: e.target.value });

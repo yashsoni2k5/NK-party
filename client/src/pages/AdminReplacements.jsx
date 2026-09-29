@@ -1,23 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api';
 import { Link } from 'react-router-dom';
 import { FiRefreshCw, FiArrowLeft, FiAlertTriangle, FiImage, FiPackage, FiUser } from 'react-icons/fi';
+import { useQuery } from '@tanstack/react-query';
 
 export default function AdminReplacements() {
-  const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const loadRequests = () => {
-    setLoading(true);
-    api.get('/replacements')
-      .then(res => setRequests(res.data || []))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+  const fetchRequests = async () => {
+    const res = await api.get('/replacements');
+    return res.data || [];
   };
 
-  useEffect(() => {
-    loadRequests();
-  }, []);
+  const { data: requests = [], isLoading: loading, refetch: loadRequests } = useQuery({
+    queryKey: ['admin-replacements'],
+    queryFn: fetchRequests,
+  });
 
   const handleStatusChange = async (requestId, newStatus) => {
     try {

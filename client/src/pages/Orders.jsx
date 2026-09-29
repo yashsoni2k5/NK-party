@@ -1,29 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Orders() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchOrders = () => {
-    setLoading(true);
-    api.get('/order')
-      .then(res => setOrders(res.data))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+  const fetchOrders = async () => {
+    const res = await api.get('/order');
+    return res.data || [];
   };
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+  const { data: orders = [], isLoading: loading, refetch: refetchOrders } = useQuery({
+    queryKey: ['orders'],
+    queryFn: fetchOrders,
+  });
 
   const handleCancelOrder = async (orderId) => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
     try {
       await api.patch(`/order/${orderId}/cancel`);
       alert("Order cancelled successfully.");
-      fetchOrders();
+      refetchOrders();
     } catch (error) {
       alert(error.response?.data?.message || "Failed to cancel order");
     }

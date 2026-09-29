@@ -1,24 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart, FiArrowLeft, FiMapPin, FiPackage, FiUser, FiFilter } from 'react-icons/fi';
+import { useQuery } from '@tanstack/react-query';
 
 export default function AdminAllOrders() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('ALL');
 
-  const loadOrders = () => {
-    setLoading(true);
-    api.get('/order/all')
-      .then(res => setOrders(res.data || []))
-      .catch(console.error)
-      .finally(() => setLoading(false));
+  const fetchOrders = async () => {
+    const res = await api.get('/order/all');
+    return res.data || [];
   };
 
-  useEffect(() => {
-    loadOrders();
-  }, []);
+  const { data: orders = [], isLoading: loading, refetch: loadOrders } = useQuery({
+    queryKey: ['admin-orders'],
+    queryFn: fetchOrders,
+  });
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {

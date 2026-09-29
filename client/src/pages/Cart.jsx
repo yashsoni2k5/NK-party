@@ -1,27 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
   const navigate = useNavigate();
   
-  const loadCart = async () => {
-    try {
-      const res = await api.get('/cart');
-      setCartItems(res.data.cart || []);
-    } catch (error) {
-      console.error("Error loading cart:", error);
-    } finally {
-      setLoading(false);
-    }
+  const fetchCart = async () => {
+    const res = await api.get('/cart');
+    return res.data.cart || [];
   };
 
-  useEffect(() => {
-    loadCart();
-  }, []);
+  const { data: cartItems = [], isLoading: loading, refetch: loadCart } = useQuery({
+    queryKey: ['cart'],
+    queryFn: fetchCart,
+  });
 
   const handleUpdateQuantity = async (productId, type) => {
     setUpdatingId(productId);

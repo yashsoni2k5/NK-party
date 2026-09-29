@@ -1,27 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import api from '../api';
 import { Link } from 'react-router-dom';
 import { FiPlus, FiEdit3, FiTrash2, FiPackage, FiArrowLeft } from 'react-icons/fi';
+import { useQuery } from '@tanstack/react-query';
 
 export default function AdminProducts() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchProducts = async () => {
-    try {
-      const res = await api.get('/products?perPage=100');
-      setProducts(res.data.products || []);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to load products");
-    } finally {
-      setLoading(false);
-    }
+  const fetchProductsFn = async () => {
+    const res = await api.get('/products?perPage=100');
+    return res.data.products || [];
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const { data: products = [], isLoading: loading, refetch: fetchProducts } = useQuery({
+    queryKey: ['admin-products'],
+    queryFn: fetchProductsFn,
+  });
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
