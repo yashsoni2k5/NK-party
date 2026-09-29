@@ -152,7 +152,7 @@ export default function AdminReplacements() {
                           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" 
                         />
                         <div className="absolute inset-0 bg-gray-100 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-bold text-[#AC666D]">
-                          Click to View Full Image 🔍
+                          Click to View Full Image 
                         </div>
                       </a>
                     ) : (

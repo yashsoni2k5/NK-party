@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import api from '../api';
 import { useAuth } from '../context/AuthContext';
-import { FiStar, FiShoppingCart, FiCreditCard, FiChevronRight, FiCheck } from 'react-icons/fi';
+import { FiStar, FiShoppingCart, FiCreditCard, FiChevronRight, FiCheck, FiImage } from 'react-icons/fi';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   
   const [addingToCart, setAddingToCart] = useState(false);
   const [addedSuccess, setAddedSuccess] = useState(false);
@@ -34,6 +35,7 @@ export default function ProductDetails() {
     setAddingToCart(true);
     try {
       await api.post(`/cart/${id}`, { quantity: selectedQuantity });
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
       setAddedSuccess(true);
       setTimeout(() => {
         setAddedSuccess(false);
@@ -123,7 +125,7 @@ export default function ProductDetails() {
                 />
               ) : (
                 <div className="text-gray-400 flex flex-col items-center gap-2">
-                  <span className="text-4xl">📷</span>
+                  <FiImage className="w-10 h-10 mb-1" />
                   <span className="text-sm">No image available</span>
                 </div>
               )}
@@ -272,11 +274,11 @@ export default function ProductDetails() {
                         onChange={(e) => setRating(Number(e.target.value))} 
                         className="w-full bg-white text-gray-800 border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-[#AC666D]"
                       >
-                        <option value="5">5 ★ - Excellent</option>
-                        <option value="4">4 ★ - Very Good</option>
-                        <option value="3">3 ★ - Good</option>
-                        <option value="2">2 ★ - Fair</option>
-                        <option value="1">1 ★ - Poor</option>
+                        <option value="5">5 Stars - Excellent</option>
+                        <option value="4">4 Stars - Very Good</option>
+                        <option value="3">3 Stars - Good</option>
+                        <option value="2">2 Stars - Fair</option>
+                        <option value="1">1 Star - Poor</option>
                       </select>
                     </div>
 

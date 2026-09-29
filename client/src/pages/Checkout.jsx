@@ -251,13 +251,13 @@ export default function Checkout() {
     <div className="min-h-screen bg-[#FAFAFA] text-gray-800 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-8 flex items-center gap-3">
-          <span className="bg-[#AC666D]/15 text-[#AC666D] p-2 rounded-xl border border-[#AC666D]/30">🔒</span>
+          <span className="bg-[#AC666D]/15 text-[#AC666D] p-2 rounded-xl border border-[#AC666D]/30"></span>
           Secure Checkout
         </h1>
         
         {total < 500 && (
           <div className="bg-red-500/20 border border-red-500/40 text-red-800 p-4 rounded-xl mb-8 flex items-start gap-3">
-            <span className="text-xl">⚠️</span>
+            <span className="text-xl">️</span>
             <div>
               <strong className="block font-bold mb-1">Attention Required</strong>
               <p className="text-sm">Minimum order value is ₹500. Your current total is ₹{total}. You must add more items to place an order.</p>
@@ -270,7 +270,7 @@ export default function Checkout() {
           {/* Order Summary */}
           <div className="flex-1 lg:max-w-md bg-white border border-[#AC666D]/30 p-6 rounded-2xl shadow-xl h-fit sticky top-24">
             <h2 className="text-xl font-bold text-[#AC666D] border-b border-[#AC666D]/20 pb-4 mb-4 flex items-center gap-2">
-              <span>🛒</span> Order Summary
+              <span></span> Order Summary
             </h2>
             <div className="flex flex-col gap-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
               {checkoutItems.map((item, idx) => {
@@ -348,7 +348,7 @@ export default function Checkout() {
                 </span>
               </div>
               <p className="text-[10px] text-gray-800 text-right uppercase tracking-wider flex items-center justify-end gap-1">
-                <span className="text-[#AC666D]">✓</span> Secure Backend Verification
+                <span className="text-[#AC666D]"></span> Secure Backend Verification
               </p>
             </div>
           </div>
@@ -356,7 +356,7 @@ export default function Checkout() {
           {/* Address Form */}
           <div className="flex-[2] bg-white border border-[#AC666D]/30 p-6 sm:p-8 rounded-2xl shadow-xl">
             <h2 className="text-xl font-bold text-[#AC666D] border-b border-[#AC666D]/20 pb-4 mb-6 flex items-center gap-2">
-              <span>📍</span> Delivery Address
+              <span></span> Delivery Address
             </h2>
             <form onSubmit={handlePlaceOrder} className="flex flex-col gap-6">
               
@@ -449,7 +449,7 @@ export default function Checkout() {
               >
                 {total >= 500 ? (
                   <>
-                    <span>💳</span> {useWallet && Math.max(0, total - walletBalance) === 0 ? "Place Order using Wallet" : `Place Secure Order (₹${useWallet ? Math.max(0, total - walletBalance) : total})`}
+                    <span></span> {useWallet && Math.max(0, total - walletBalance) === 0 ? "Place Order using Wallet" : `Place Secure Order (₹${useWallet ? Math.max(0, total - walletBalance) : total})`}
                   </>
                 ) : (
                   'Add more items (Min ₹500)'

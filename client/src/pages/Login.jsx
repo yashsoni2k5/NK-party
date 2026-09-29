@@ -36,7 +36,7 @@ export default function Login() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-block bg-[#AC666D]/15 text-[#AC666D] p-3 rounded-2xl mb-3 border border-[#AC666D]/30">
-            <span className="text-2xl">🔐</span>
+            <span className="text-2xl"></span>
           </div>
           <h1 className="text-3xl font-extrabold text-gray-800">Welcome Back</h1>
           <p className="text-gray-800 text-sm mt-1">Login to access your NKparty account</p>

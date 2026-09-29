@@ -31,7 +31,7 @@ export default function SupportWidget() {
         }}
         title="Chat on WhatsApp"
       >
-        💬
+        
       </a>
       
       <a 
@@ -51,7 +51,7 @@ export default function SupportWidget() {
         }}
         title="Call Support"
       >
-        📞
+        
       </a>
     </div>
   );

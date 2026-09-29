@@ -2,6 +2,7 @@ import { useState } from 'react';
 import api from '../api';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { FiPackage, FiShoppingBag } from 'react-icons/fi';
 
 export default function Orders() {
   const fetchOrders = async () => {
@@ -54,13 +55,13 @@ export default function Orders() {
     <div className="min-h-screen bg-[#FAFAFA] text-gray-800 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-8 flex items-center gap-3 pb-4 border-b border-[#AC666D]/20">
-          <span className="bg-[#AC666D]/15 text-[#AC666D] p-2 rounded-2xl border border-[#AC666D]/30 text-xl sm:text-2xl">📦</span>
+          <span className="bg-[#AC666D]/15 text-[#AC666D] p-2 rounded-2xl border border-[#AC666D]/30 text-xl sm:text-2xl flex items-center justify-center"><FiPackage /></span>
           Your Orders
         </h1>
         
         {orders?.length === 0 && (
           <div className="bg-white border border-[#AC666D]/30 p-12 rounded-3xl text-center shadow-xl">
-            <div className="text-6xl mb-4">🛍️</div>
+            <div className="text-6xl mb-4 text-gray-300 flex justify-center"><FiShoppingBag /></div>
             <h2 className="text-2xl font-bold text-[#AC666D] mb-2">No Orders Found</h2>
             <p className="text-gray-800 mb-6">Looks like you haven't placed any orders yet.</p>
             <Link to="/" className="bg-[#AC666D] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#96555b] transition-colors shadow-lg">

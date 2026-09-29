@@ -27,7 +27,7 @@ export default function Navbar() {
       <nav className="bg-white text-gray-800 px-3 sm:px-6 py-3 md:py-4 flex items-center justify-between border-b border-gray-100 sticky top-0 z-50 shadow-sm">
         
         {/* Left Side - Burger Menu */}
-        <div className="flex items-center gap-2 sm:gap-4 z-10">
+        <div className="flex-1 flex items-center gap-2 sm:gap-4 z-10">
           <button 
             onClick={toggleMenu} 
             className="text-xl sm:text-2xl text-gray-800 hover:text-[#AC666D] transition-colors p-1"
@@ -37,8 +37,8 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Center - Logo (Perfectly centered) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 flex flex-col items-center">
+        {/* Center - Logo */}
+        <div className="flex-shrink-0 flex justify-center z-10">
           <Link to="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
             <img src="/nkparty.jpeg" alt="Logo" className="h-8 sm:h-10 w-8 sm:w-10 object-cover rounded-md" />
             <div className="flex flex-col">
@@ -49,7 +49,7 @@ export default function Navbar() {
         </div>
         
         {/* Right Side - Search, Home, Cart, Profile Icons */}
-        <div className="flex items-center gap-2 sm:gap-4 md:gap-5 z-10">
+        <div className="flex-1 flex items-center justify-end gap-2 sm:gap-4 md:gap-5 z-10">
 
           {/* Permanently Open Rectangular Search */}
           <form onSubmit={handleSearchSubmit} className="flex relative items-center">
@@ -58,7 +58,7 @@ export default function Navbar() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search..."
-              className="bg-gray-50 text-gray-800 border border-gray-300 px-3 py-1.5 pr-8 rounded-md outline-none text-xs sm:text-sm w-28 sm:w-48 md:w-52 focus:border-[#AC666D] focus:ring-1 focus:ring-[#AC666D] transition-all"
+              className="bg-gray-50 text-gray-800 border border-gray-300 px-3 py-1.5 pr-8 rounded-md outline-none text-xs sm:text-sm w-24 sm:w-48 md:w-52 focus:border-[#AC666D] focus:ring-1 focus:ring-[#AC666D] transition-all"
             />
             <button 
               type="submit"
@@ -136,7 +136,7 @@ export default function Navbar() {
               
               {user.role === 'admin' && (
                 <Link to="/admin" onClick={toggleMenu} className="text-sm font-bold text-[#AC666D] hover:underline uppercase tracking-wide">
-                  ⭐ Admin Panel
+                   Admin Panel
                 </Link>
               )}
               

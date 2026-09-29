@@ -75,7 +75,7 @@ export default function Contact() {
             {/* WhatsApp Quick Connect Card */}
             <div className="bg-white border border-[#25D366]/40 rounded-3xl p-6 shadow-xl space-y-4">
               <h3 className="text-lg font-bold text-[#25D366] flex items-center gap-2">
-                💬 Instant WhatsApp Support
+                 Instant WhatsApp Support
               </h3>
               <p className="text-sm text-gray-800">
                 Need immediate response regarding an urgent order? Chat directly with our customer concierge.

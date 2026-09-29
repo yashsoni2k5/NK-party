@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../api';
 import { useQuery } from '@tanstack/react-query';
+import { FiShoppingCart, FiShoppingBag, FiTrash2, FiFileText, FiAlertTriangle, FiZap, FiLock } from 'react-icons/fi';
 
 export default function Cart() {
   const [updatingId, setUpdatingId] = useState(null);
@@ -59,7 +60,7 @@ export default function Cart() {
     return (
       <div className="min-h-screen bg-[#FAFAFA] py-16 px-4 flex items-center justify-center">
         <div className="max-w-lg w-full bg-white border border-[#AC666D]/30 rounded-3xl p-8 sm:p-12 text-center shadow-2xl">
-          <div className="text-6xl mb-6">🛒</div>
+          <div className="text-6xl mb-6 text-gray-300 flex justify-center"><FiShoppingCart /></div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-3">Your Cart is Empty</h2>
           <p className="text-gray-800 mb-8 text-sm sm:text-base leading-relaxed">
             Looks like you haven't added any luxury items or party essentials to your shopping cart yet.
@@ -68,7 +69,7 @@ export default function Cart() {
             onClick={() => navigate('/')} 
             className="w-full py-4 bg-[#AC666D] hover:bg-[#96555b] text-white font-extrabold text-base rounded-xl transition-all duration-200 shadow-lg active:scale-95 flex items-center justify-center gap-2"
           >
-            <span>🛍️</span>
+            <span><FiShoppingBag /></span>
             <span>Explore Products & Start Shopping</span>
           </button>
         </div>
@@ -83,7 +84,7 @@ export default function Cart() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#AC666D]/20">
           <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-800 flex items-center gap-3">
-            <span className="bg-[#AC666D]/15 text-[#AC666D] p-2 rounded-2xl border border-[#AC666D]/30 text-xl sm:text-2xl">🛒</span>
+            <span className="bg-[#AC666D]/15 text-[#AC666D] p-2 rounded-2xl border border-[#AC666D]/30 text-xl sm:text-2xl flex items-center justify-center"><FiShoppingCart /></span>
             Shopping Cart ({cartItems.reduce((acc, item) => acc + item.quantity, 0)} Items)
           </h1>
           <Link to="/" className="text-xs sm:text-sm font-semibold text-[#AC666D] hover:underline flex items-center gap-1">
@@ -163,7 +164,7 @@ export default function Cart() {
                         disabled={isUpdating}
                         className="text-xs font-semibold text-red-600 hover:text-red-800 hover:underline flex items-center gap-1 disabled:opacity-50"
                       >
-                        <span>🗑️</span> Remove
+                        <FiTrash2 /> Remove
                       </button>
                     </div>
 
@@ -176,7 +177,7 @@ export default function Cart() {
           {/* Cart Summary Card */}
           <div className="w-full lg:w-96 bg-white border border-[#AC666D]/30 p-6 rounded-3xl shadow-2xl h-fit sticky top-24">
             <h2 className="text-xl font-extrabold text-[#AC666D] border-b border-[#AC666D]/20 pb-4 mb-4 flex items-center gap-2">
-              <span>🧾</span> Cart Summary
+              <FiFileText /> Cart Summary
             </h2>
             
             <div className="space-y-3 mb-6">
@@ -197,7 +198,7 @@ export default function Cart() {
             {/* Minimum Order Warning */}
             {cartTotal < 500 && (
               <div className="bg-red-500/15 border border-red-500/30 p-3.5 rounded-xl mb-6 text-xs text-red-800 leading-relaxed flex items-start gap-2">
-                <span className="text-base">⚠️</span>
+                <FiAlertTriangle className="text-base text-amber-500" />
                 <div>
                   <strong>Minimum Order Value ₹500</strong>
                   <p>Add <strong>₹{500 - cartTotal}</strong> more to qualify for checkout.</p>
@@ -217,7 +218,7 @@ export default function Cart() {
             >
               {cartTotal >= 500 ? (
                 <>
-                  <span>⚡</span>
+                  <FiZap className="text-green-500" />
                   <span>Proceed to Checkout</span>
                 </>
               ) : (
@@ -227,7 +228,7 @@ export default function Cart() {
 
             <div className="mt-4 text-center">
               <span className="text-[11px] text-gray-800 uppercase tracking-widest flex items-center justify-center gap-1">
-                <span className="text-[#AC666D]">🔒</span> 100% Safe & Secure Checkout
+                <FiLock className="text-[#AC666D]" /> 100% Safe & Secure Checkout
               </span>
             </div>
 

@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import api from '../api';
 import BannerCarousel from '../components/BannerCarousel';
-import { FiStar } from 'react-icons/fi';
+import { FiStar, FiPackage, FiGift } from 'react-icons/fi';
 
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 export default function Home() {
   const [addingId, setAddingId] = useState(null);
   
+  const queryClient = useQueryClient();
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
@@ -32,15 +33,16 @@ export default function Home() {
     queryFn: fetchProducts,
   });
 
-  const products = allItems.filter(item => item.itemType !== 'SERVICE');
-  const services = allItems.filter(item => item.itemType === 'SERVICE');
+  const products = allItems.filter(item => item.itemType !== 'SERVICE').slice(0, 8);
+  const services = allItems.filter(item => item.itemType === 'SERVICE').slice(0, 4);
 
   const handleAddToCart = async (e, item) => {
     e.stopPropagation();
     setAddingId(item._id);
     try {
-      await api.post(`/cart/${item._id}`);
-      // alert('Added to cart!'); 
+      await api.post(`/cart/${item._id}`, { quantity: 1 });
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      alert(`Successfully added ${item.title} to your cart!`); 
     } catch (error) {
       if (error.response?.status === 401) {
         alert('Please login to add items to your cart.');
@@ -141,8 +143,11 @@ export default function Home() {
             <section>
               <div className="flex justify-between items-end mb-8 border-b border-gray-200 pb-2">
                 <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                  <span className="text-[#AC666D]">📦</span> Products
+                  <FiPackage className="text-[#AC666D]" /> Products
                 </h2>
+                <Link to="/all-products?type=PRODUCT" className="text-[#AC666D] font-medium text-sm hover:underline">
+                  See All
+                </Link>
               </div>
               
               {products.length === 0 ? (
@@ -158,8 +163,11 @@ export default function Home() {
             <section>
               <div className="flex justify-between items-end mb-8 border-b border-gray-200 pb-2">
                 <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-                  <span className="text-[#AC666D]">🎉</span> Party Services
+                  <FiGift className="text-[#AC666D]" /> Party Services
                 </h2>
+                <Link to="/all-products?type=SERVICE" className="text-[#AC666D] font-medium text-sm hover:underline">
+                  See All
+                </Link>
               </div>
               {services.length === 0 ? (
                 <p className="text-gray-500">No party services available right now.</p>

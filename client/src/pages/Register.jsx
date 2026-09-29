@@ -98,7 +98,7 @@ export default function Register() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-block bg-[#AC666D]/15 text-[#AC666D] p-3 rounded-2xl mb-3 border border-[#AC666D]/30">
-            <span className="text-2xl">{verificationPending ? '📧' : '✨'}</span>
+            <span className="text-2xl">{verificationPending ? '' : ''}</span>
           </div>
           <h1 className="text-3xl font-extrabold text-gray-800">
             {verificationPending ? 'Verify Email' : 'Create Account'}

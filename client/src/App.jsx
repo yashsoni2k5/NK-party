@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
+import AllProducts from './pages/AllProducts';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
@@ -43,9 +44,10 @@ function AppRoutes() {
   return (
     <>
       <Navbar />
-      <div className="bg-[#FAFAFA] min-h-screen text-white">
+      <div className="bg-[#FAFAFA] min-h-screen text-gray-800 overflow-x-hidden w-full max-w-[100vw]">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/all-products" element={<AllProducts />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
