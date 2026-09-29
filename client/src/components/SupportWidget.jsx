@@ -1,57 +1,28 @@
+import { FaWhatsapp } from 'react-icons/fa';
+import { FiPhoneCall } from 'react-icons/fi';
+
 export default function SupportWidget() {
   const whatsappNumber = "919999999999"; // Replace with real number
   const phoneNumber = "+919999999999";
 
   return (
-    <div style={{
-      position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '10px',
-      zIndex: 1000
-    }}>
+    <div className="fixed bottom-5 right-5 flex flex-col gap-3 z-50">
       <a 
         href={`https://wa.me/${whatsappNumber}?text=Hi%20PartyStore%20Support`} 
         target="_blank" 
         rel="noopener noreferrer"
-        style={{
-          width: '50px',
-          height: '50px',
-          backgroundColor: '#25D366',
-          borderRadius: '50%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-          textDecoration: 'none',
-          color: 'white',
-          fontSize: '24px'
-        }}
+        className="w-[50px] h-[50px] bg-[#25D366] text-white rounded-full flex justify-center items-center shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 border border-white/20"
         title="Chat on WhatsApp"
       >
-        
+        <FaWhatsapp size={28} />
       </a>
       
       <a 
         href={`tel:${phoneNumber}`} 
-        style={{
-          width: '50px',
-          height: '50px',
-          backgroundColor: '#007bff',
-          borderRadius: '50%',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-          textDecoration: 'none',
-          color: 'white',
-          fontSize: '24px'
-        }}
+        className="w-[50px] h-[50px] bg-[#007bff] text-white rounded-full flex justify-center items-center shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 border border-white/20"
         title="Call Support"
       >
-        
+        <FiPhoneCall size={22} />
       </a>
     </div>
   );

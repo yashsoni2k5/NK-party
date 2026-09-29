@@ -24,7 +24,7 @@ export default function Navbar() {
     <>
 
 
-      <nav className="bg-white text-gray-800 px-3 sm:px-6 py-3 md:py-4 flex items-center justify-between border-b border-gray-100 sticky top-0 z-50 shadow-sm">
+      <nav className="bg-white text-gray-800 px-3 sm:px-6 py-3 md:py-4 flex items-center justify-between border-b border-gray-100 z-50 shadow-sm">
         
         {/* Left Side - Burger Menu */}
         <div className="flex-1 flex items-center gap-2 sm:gap-4 z-10">
