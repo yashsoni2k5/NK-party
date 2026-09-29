@@ -4,10 +4,9 @@ import api from '../api';
 import BannerCarousel from '../components/BannerCarousel';
 import { FiStar } from 'react-icons/fi';
 
+import { useQuery } from '@tanstack/react-query';
+
 export default function Home() {
-  const [products, setProducts] = useState([]);
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [addingId, setAddingId] = useState(null);
   
   const location = useLocation();
@@ -15,32 +14,26 @@ export default function Home() {
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get('search') || '';
 
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      if (searchQuery.trim()) {
-        const res = await api.get(`/products/search/${searchQuery}`);
-        const allItems = res.data || [];
-        setProducts(allItems.filter(item => item.itemType !== 'SERVICE'));
-        setServices(allItems.filter(item => item.itemType === 'SERVICE'));
-      } else {
-        const [prodRes, servRes] = await Promise.all([
-          api.get('/products?itemType=PRODUCT'),
-          api.get('/products?itemType=SERVICE')
-        ]);
-        setProducts(prodRes.data.products || []);
-        setServices(servRes.data.products || []);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+  const fetchProducts = async () => {
+    if (searchQuery.trim()) {
+      const res = await api.get(`/products/search/${searchQuery}`);
+      return res.data || [];
+    } else {
+      const [prodRes, servRes] = await Promise.all([
+        api.get('/products?itemType=PRODUCT'),
+        api.get('/products?itemType=SERVICE')
+      ]);
+      return [...(prodRes.data.products || []), ...(servRes.data.products || [])];
     }
   };
 
-  useEffect(() => {
-    loadData();
-  }, [searchQuery]);
+  const { data: allItems = [], isLoading: loading } = useQuery({
+    queryKey: ['products', searchQuery],
+    queryFn: fetchProducts,
+  });
+
+  const products = allItems.filter(item => item.itemType !== 'SERVICE');
+  const services = allItems.filter(item => item.itemType === 'SERVICE');
 
   const handleAddToCart = async (e, item) => {
     e.stopPropagation();

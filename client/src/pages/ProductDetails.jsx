@@ -4,13 +4,13 @@ import api from '../api';
 import { useAuth } from '../context/AuthContext';
 import { FiStar, FiShoppingCart, FiCreditCard, FiChevronRight, FiCheck } from 'react-icons/fi';
 
+import { useQuery } from '@tanstack/react-query';
+
 export default function ProductDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
   
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [addingToCart, setAddingToCart] = useState(false);
   const [addedSuccess, setAddedSuccess] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
@@ -21,20 +21,14 @@ export default function ProductDetails() {
   const [submittingReview, setSubmittingReview] = useState(false);
 
   const fetchProduct = async () => {
-    setLoading(true);
-    try {
-      const res = await api.get(`/products/${id}`);
-      setProduct(res.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    const res = await api.get(`/products/${id}`);
+    return res.data;
   };
 
-  useEffect(() => {
-    fetchProduct();
-  }, [id]);
+  const { data: product, isLoading: loading, refetch: refetchProduct } = useQuery({
+    queryKey: ['product', id],
+    queryFn: fetchProduct,
+  });
 
   const addToCart = async () => {
     setAddingToCart(true);
@@ -69,7 +63,7 @@ export default function ProductDetails() {
       setComment('');
       setRating(5);
       alert("Review submitted successfully!");
-      fetchProduct();
+      refetchProduct();
     } catch (error) {
       alert(error.response?.data?.message || error.message || "Failed to submit review");
     } finally {
