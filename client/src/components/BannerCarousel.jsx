@@ -1,20 +1,19 @@
 import { useState, useEffect } from 'react';
 import api from '../api';
+import { useQuery } from '@tanstack/react-query';
 
 export default function BannerCarousel() {
-  const [banners, setBanners] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    // Fetch active banners from backend
-    api.get('/banners')
-      .then(res => {
-        setBanners(res.data || []);
-      })
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
+  const fetchBanners = async () => {
+    const res = await api.get('/banners');
+    return res.data || [];
+  };
+
+  const { data: banners = [], isLoading: loading } = useQuery({
+    queryKey: ['banners'],
+    queryFn: fetchBanners,
+  });
 
   // Auto-swiping logic
   useEffect(() => {
